@@ -9,11 +9,11 @@ options{
 cv 	:	info form*
 	;
 	
-info:	'@info {' name email nationalitys contacts birthdate gender nativel web '}'
+info:	'@info {' name email nationalities contacts birthdate gender natlang web '}'
 	;
 	
-nationalitys
-	:	'Nationalitys: [' STRING (',' STRING)? ']';
+nationalities
+	:	'Nationalities: [' STRING (',' STRING)? ']';
 name
 	:	'Name: ' STRING;
 email
@@ -28,7 +28,7 @@ data:	INT '/' INT '/' INT;
 gender
 	:	'Gender: ' ('M' | 'F');
 
-nativel
+natlang
 	:	'NativeLang: [' STRING (',' STRING)? ']';
 	
 web	:	'Web: ' STRING;
