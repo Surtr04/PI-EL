@@ -9,17 +9,23 @@ options{
 cv 	:	info form*
 	;
 	
-info:	'@info {' name email nationalities contacts birthdate gender natlang web '}'
+info:	'@info {' name nationalities contacts birthdate gender natlang web '}'
 	;
 	
 nationalities
 	:	'Nationalities: [' STRING (',' STRING)? ']';
 name
 	:	'Name: ' STRING;
-email
-	:	'Email: ' STRING;
+
 contacts
-	:	'Contacts: [' STRING (',' STRING)* ']';
+	:	'Contacts: [' contact (',' contact)* ']';
+	
+
+contact
+	:	'Phone:' STRING
+	|	'Fax:' STRING
+	|	'Email:'ID'@'ID'.'ID;	
+	
 birthdate
 	:	'Birthdate: ' data;
 	
@@ -31,9 +37,9 @@ gender
 natlang
 	:	'NativeLang: [' STRING (',' STRING)? ']';
 	
-web	:	'Web: ' STRING;
+web	:	'Web: ' ('http'|'https')'://'ID('.'ID)+;
 
-form:	'@form {' begin end institutions title result '}'
+form:	'@form {' begin end institutions degree result '}'
 	;
 	
 begin
@@ -41,8 +47,11 @@ begin
 	
 end	:	'End: ' data;
 
-title
-	:	'Title: ' STRING;
+degree
+	:	'Degree: ' degreeType STRING;
+
+degreeType
+	:	('BSc'|'MSc'|'Phd');	
 	
 result
 	:	'Result: ' (INT|STRING);
@@ -60,9 +69,13 @@ address
 country
 	:	'Country: ' STRING;
 
-type:	'Type: ' STRING;
+type:	'Type: ' COUNTRY;
+
 ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
+    
+COUNTRY
+	:	(('A'..'Z')('a'..'z')*)+;
 
 INT :	'0'..'9'+
     ;
