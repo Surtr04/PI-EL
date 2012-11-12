@@ -4,7 +4,7 @@ use strict;
 
 my $pasta = shift;
 
-my $base = $pasta || 'el1213/pln/data/musica/*.lyr';
+my $base = $pasta || '../../SPLN/el1213/pln/data/musica/*.lyr';
 
 my @lyr = glob $base;
 
@@ -12,7 +12,7 @@ my %meta ; ## ficheiro --> string de metadados
 
 my %oco; ## id --> int
 
-my $index = "<html><head></head><body><h1>Índice</h1>";
+my $index = "";
 
 
 for my $f (@lyr) {
@@ -21,10 +21,12 @@ for my $f (@lyr) {
 	while(<F>){
 		last if (not $_ =~ /\S/); ## last unless /\S/
 		$m .= $_;
-		if ($_ =~ /^([^:]+):(.*)\n/){
+		if ($_ =~ /^([^:]+):([^\n]*)\n/){
 			$oco{$1}++;
 			if ($1 eq "title") {
-				$index .= "<a href='$f'>$2</a><br/>";
+				my $q = $2;
+				$q =~ s{\s+}{ }g;
+				$index .= "$q;<a href='$f'>$q</a><br/>\n";
 			}
 		}
 	}
@@ -32,7 +34,9 @@ for my $f (@lyr) {
 	close F;
 };
 
-$index .= "</body></html>";
+$index = join("\n",sort(split("\n",$index)));
+$index =~ s{([^;])*;(.*)\n}{$2\n}g;
+$index = "<html><head></head><body><h1>Índice</h1>" . $index . "</body></html>";
 open (F, ">", "index.html");
 print F $index;
 close F;
