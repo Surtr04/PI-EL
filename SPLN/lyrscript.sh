@@ -20,7 +20,7 @@ sed -i '' -e 's/Lyrics:/lyrics:/g' $MUSIC_DIR/*
 sed -i '' -e 's/ntitle:/''/g' $MUSIC_DIR/*
 sed -i '' -e 's/Arranjo:/arrangement:/g' $MUSIC_DIR/*
 sed -i '' -e 's/arranjo:/arrangement:/g' $MUSIC_DIR/*
-sed -i '' -e 's/Tom:/tone/g' $MUSIC_DIR/*
+sed -i '' -e 's/Tom:/tone:/g' $MUSIC_DIR/*
 sed -i '' -e 's/In:/in:/g' $MUSIC_DIR/*
 sed -i '' -e 's/Comm:/comm:/g' $MUSIC_DIR/*
 sed -i '' -e 's/commp:/comm:/g' $MUSIC_DIR/*
