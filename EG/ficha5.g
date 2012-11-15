@@ -62,11 +62,11 @@ local
 	;
 	
 estados
-	:	estado ('.' estado)*
+	:	estado (',' estado)*
 	;
 
 estado
-	:	codigoBarras ';' disponib
+	:	codigoBarras disponib
 	;
 	
 codigoBarras

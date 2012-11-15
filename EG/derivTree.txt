@@ -1,0 +1,82 @@
+digraph Tree {
+
+	Biblioteca -> Registos
+	Registos -> Registo
+	
+	subgraph T0 {
+			
+		"[" [style = filled,fillcolor = lightgrey]
+		Registo -> "[" 
+		REGISTO [style = filled,fillcolor = lightgrey]
+		Registo -> REGISTO
+		Registo -> Descricao
+		
+		Descricao -> Referencia
+		id1122 [style = filled,fillcolor = lightgrey]
+		Referencia -> id1122
+		
+		Descricao -> Tipo
+		LIVRO [style = filled,fillcolor = lightgrey]
+		Tipo -> LIVRO
+		
+		Descricao -> Titulo
+		"nome_do_livro" [style = filled,fillcolor = lightgrey]
+		Titulo -> "nome_do_livro"
+
+
+		Open1 [label = "(" , style = filled,fillcolor = lightgrey]
+		Descricao -> Open1
+		Descricao -> Autor
+		Close1 [label = ")",style = filled,fillcolor = lightgrey]
+		Descricao -> Close1
+
+		"nome_autor" [style = filled,fillcolor = lightgrey]
+		Autor -> "nome_autor"
+
+		Descricao -> Editora
+		"nome_editora" [style = filled,fillcolor = lightgrey]
+		Editora -> "nome_editora"
+		
+		Descricao -> Ano
+		2010 [style = filled,fillcolor = lightgrey]
+		Ano -> 2010
+
+		Descricao -> Catalogo
+		BGUM [style = filled,fillcolor = lightgrey]
+		Catalogo -> BGUM
+	}
+	
+	subgraph T1 {
+
+		
+		
+		EXISTENCIAS [style = filled,fillcolor = lightgrey]
+		Registo -> EXISTENCIAS
+		Registo -> Existencias
+
+		LOCAL [style = filled,fillcolor = lightgrey]
+		Existencias -> LOCAL
+		Existencias -> Local
+		Braga [style = filled,fillcolor = lightgrey]
+		Local -> Braga
+
+		Open2 [label = "(",style = filled,fillcolor = lightgrey]
+		Existencias -> Open2
+		Existencias -> Estados
+
+		Estados -> Estado
+		Estado -> CodigoBarras
+		cb54433231 [style = filled,fillcolor = lightgrey]
+		CodigoBarras -> cb54433231
+		Estado -> Disponib
+		PERMANENTE [style = filled,fillcolor = lightgrey]
+		Disponib -> PERMANENTE
+
+		Close2 [label = ")",style = filled,fillcolor = lightgrey]
+		Existencias -> Close2
+
+		"]" [style = filled,fillcolor = lightgrey]
+		Registo -> "]"
+	}
+
+}
