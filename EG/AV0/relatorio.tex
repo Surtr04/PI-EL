@@ -1,0 +1,90 @@
+\documentclass[a4paper,11pt,openright,openbib]{article}
+\usepackage[portuges]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{ae}
+\usepackage[utf8]{inputenc}
+\usepackage[pdftex]{graphicx}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{enumerate}
+\usepackage[a4paper, pdftex, bookmarks, colorlinks, linkcolor=black, urlcolor=blue]{hyperref} 
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=3.5cm,bottom=3.5cm]{geometry}
+\usepackage{colortbl}
+\usepackage[margin=10pt,font=small,labelfont=bf]{caption}
+\usepackage{mdwlist}
+
+
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{2pt}
+
+
+%Como não sei de que formas costumas colocar os autores (se com o \author ou outro), não coloquei,
+%mas depois podes colocar tu:
+%--> António Silva, pg22820
+%--> Rui Brito, pg.....
+
+
+\title{
+	\large{\includegraphics[width=0.3\textwidth]{../../report-template/UM}} \\
+	\large{Universidade do Minho} \\
+	\date{\today}
+}
+
+
+\begin{document}
+
+\maketitle
+
+
+\pagestyle{headings}
+\pagenumbering{arabic}
+\newpage
+\tableofcontents
+\newpage
+%Ele disse que o relatório não precisa de ser uma coisa muito complexa. Essencialmente é para explicar o que foi feito,
+%e no caso de haver respostas a dar, serem dadas aqui.
+\section{Introdução}
+Este primeiro trabalho de \emph{Engenharia Gramatical} de avaliação, da Unidade Curricular de Especialização 
+\emph{Engenharia de Linguagens}, consiste na realização da ficha 3 e 5 disponiblizadas no Blackboard.
+\section{Ficha 3}
+\subsection{Composição do Corpo}
+Para escrever uma gramática tradutora, foi necessário completar a informação sobre o corpo. Assim incialmente o corpo da
+factura era um conjunto de linhas, em que cada linhas era \emph{'(' codartigo ',' designacao ',' pvu ',' quantidade ')'}.
+Depois para suportar o pedido da alínea c, cada linhas passou a ser somente \emph{'(' codartigo ',' quantidade ')'}.
+\subsection{Código Java}
+Para conseguirmos saber os totais dos produtos, com várias facturas (sendo que cada factura possuia um id alfanumérico),
+foi criado um \emph{hashmap} para associar a cada id de factura uma lista de valores, que era o total de cada linha
+da factura. No final, é possível apresentar o o total de cada linha em cada factura e ainda o tal de cada factura (que 
+mais não é que a soma dos totais das linhas).
+Para se obter o Preço Unitário, que a pedido da alínea c) deveria já ter sido indicado no ínicio, foi também criada um
+\emph{hashmap} com a correspondência entre o código do produto e os seus atributos (guardados numa classe). Assim, por
+cada linha só era necessário obter o PVU através do código do artigo, e multiplicá-lo pela quantidade.
+\subsection{Exemplo de Input}
+\begin{verbatim}
+a1 "xpto" 3.6 50
+a2 "outro" 1 60.5
+a3 "mais um" 4.99 4
+---
+
+f1
+	"Nome 1" "NIF 1" "Morada 1" "NIB 1"
+	"Nome 2" "NIF 2" "Morada 2"
+	(a1,5) (a3,2)
+;
+
+f2
+	"Nome 3" "NIF 3" "Morada 3" "NIB 3"
+	"Nome 4" "NIF 4" "Morada 4"
+	(a2,9.5) (a1,5) (a3,2)
+;
+
+f3
+	"Nome 5" "NIF 5" "Morada 5" "NIB 5"
+	"Nome 6" "NIF 6" "Morada 5"
+	(a2,2.25)
+.
+\end{verbatim}
+\section{Conclusão}
+... %O que será para escrever
+\end{document}

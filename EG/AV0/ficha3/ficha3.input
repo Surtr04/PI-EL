@@ -1,0 +1,22 @@
+a1 "xpto" 3.6 50
+a2 "outro" 1 60.5
+a3 "mais um" 4.99 4
+---
+
+f1
+	"Nome 1" "NIF 1" "Morada 1" "NIB 1"
+	"Nome 2" "NIF 2" "Morada 2"
+	(a1,5) (a3,2)
+;
+
+f2
+	"Nome 3" "NIF 3" "Morada 3" "NIB 3"
+	"Nome 4" "NIF 4" "Morada 4"
+	(a2,9.5) (a1,5) (a3,2)
+;
+
+f3
+	"Nome 5" "NIF 5" "Morada 5" "NIB 5"
+	"Nome 6" "NIF 6" "Morada 6"
+	(a2,2.25)
+.
