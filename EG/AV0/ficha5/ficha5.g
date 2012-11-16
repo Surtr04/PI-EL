@@ -6,7 +6,7 @@ options{
 }
 
 @header{
-
+	import java.util.TreeSet;
 }
 
 @members{
@@ -17,6 +17,11 @@ options{
 	int reservados = 0;
 	int permanentes = 0;
 	int estante = 0;
+	
+	Boolean isBook = false;
+	
+	TreeSet<String> bookNames = new TreeSet<String>();
+	TreeSet<String> refs = new TreeSet<String>();
 }
 
 biblioteca 
@@ -24,6 +29,12 @@ biblioteca
 System.out.println ("Livros Reservados: " + reservados);
 System.out.println ("Livros Permanentes: " + permanentes);
 System.out.println ("Livros em Estante: " + estante);
+
+System.out.println("=== Livros ===");
+for (String s : bookNames) {
+	System.out.println(s);
+}
+
 }
 	:	registos
 	;
@@ -42,7 +53,7 @@ registo
 	;
 	
 descricao
-	:	referencia {refReg = $referencia.text;} tipo titulo '(' autores ')' editora ano catalogo
+	:	referencia {refReg = $referencia.text; if(!refs.add($referencia.text)){System.out.println("Referencia ja existente: " + $referencia.text);} } tipo titulo {if(isBook) {bookNames.add($titulo.text);isBook = false;}} '(' autores ')' editora ano catalogo
 	;
 	
 autores
@@ -53,7 +64,7 @@ referencia
 	:	ID
 	;
 	
-tipo:	'LIVRO' {numLivros++;}
+tipo:	'LIVRO' {numLivros++; isBook = true;}
 	|	'CDROM'
 	|	'OUTRO'
 	;

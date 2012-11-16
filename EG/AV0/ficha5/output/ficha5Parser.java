@@ -1,6 +1,6 @@
-// $ANTLR 3.4 /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g 2012-11-16 18:02:58
+// $ANTLR 3.4 /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g 2012-11-16 18:48:28
 
-
+	import java.util.TreeSet;
 
 
 import org.antlr.runtime.*;
@@ -53,10 +53,10 @@ public class ficha5Parser extends DebugParser {
 
 
 public static final String[] ruleNames = new String[] {
-    "invalidRule", "local", "titulo", "autor", "referencia", "registos", 
-    "descricao", "existencias", "editora", "dataDev", "codigoBarras", "estado", 
-    "registo", "catalogo", "autores", "tipo", "ano", "estados", "mes", "disponib", 
-    "dia", "biblioteca"
+    "invalidRule", "estado", "tipo", "catalogo", "codigoBarras", "editora", 
+    "ano", "registo", "existencias", "autores", "local", "biblioteca", "registos", 
+    "autor", "estados", "descricao", "dia", "dataDev", "referencia", "disponib", 
+    "mes", "titulo"
 };
 
 public static final boolean[] decisionCanBacktrack = new boolean[] {
@@ -106,24 +106,29 @@ protected boolean evalPredicate(boolean result, String predicate) {
     	int reservados = 0;
     	int permanentes = 0;
     	int estante = 0;
+    	
+    	Boolean isBook = false;
+    	
+    	TreeSet<String> bookNames = new TreeSet<String>();
+    	TreeSet<String> refs = new TreeSet<String>();
 
 
 
     // $ANTLR start "biblioteca"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:22:1: biblioteca : registos ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:27:1: biblioteca : registos ;
     public final void biblioteca() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "biblioteca");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(22, 0);
+        dbg.location(27, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:28:2: ( registos )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:39:2: ( registos )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:28:4: registos
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:39:4: registos
             {
-            dbg.location(28,4);
+            dbg.location(39,4);
             pushFollow(FOLLOW_registos_in_biblioteca43);
             registos();
 
@@ -137,6 +142,12 @@ protected boolean evalPredicate(boolean result, String predicate) {
             System.out.println ("Livros Permanentes: " + permanentes);
             System.out.println ("Livros em Estante: " + estante);
 
+            System.out.println("=== Livros ===");
+            for (String s : bookNames) {
+            	System.out.println(s);
+            }
+
+
         }
         catch (RecognitionException re) {
             reportError(re);
@@ -146,7 +157,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(29, 1);
+        dbg.location(40, 1);
 
         }
         finally {
@@ -162,29 +173,29 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "registos"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:31:1: registos : registo ( ',' registo )* ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:42:1: registos : registo ( ',' registo )* ;
     public final void registos() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "registos");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(31, 0);
+        dbg.location(42, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:32:2: ( registo ( ',' registo )* )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:43:2: ( registo ( ',' registo )* )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:32:4: registo ( ',' registo )*
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:43:4: registo ( ',' registo )*
             {
-            dbg.location(32,4);
+            dbg.location(43,4);
             pushFollow(FOLLOW_registo_in_registos56);
             registo();
 
             state._fsp--;
 
-            dbg.location(32,11);
+            dbg.location(43,11);
             numRegistos++;
-            dbg.location(32,28);
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:32:28: ( ',' registo )*
+            dbg.location(43,28);
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:43:28: ( ',' registo )*
             try { dbg.enterSubRule(1);
 
             loop1:
@@ -205,17 +216,17 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:32:29: ',' registo
+            	    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:43:29: ',' registo
             	    {
-            	    dbg.location(32,29);
+            	    dbg.location(43,29);
             	    match(input,17,FOLLOW_17_in_registos60); 
-            	    dbg.location(32,33);
+            	    dbg.location(43,33);
             	    pushFollow(FOLLOW_registo_in_registos62);
             	    registo();
 
             	    state._fsp--;
 
-            	    dbg.location(32,40);
+            	    dbg.location(43,40);
             	    numRegistos++;
 
             	    }
@@ -239,7 +250,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(33, 1);
+        dbg.location(44, 1);
 
         }
         finally {
@@ -255,36 +266,36 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "registo"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:35:1: registo : '[ REGISTO ' descricao ' EXISTENCIAS ' existencias ']' ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:46:1: registo : '[ REGISTO ' descricao ' EXISTENCIAS ' existencias ']' ;
     public final void registo() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "registo");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(35, 0);
+        dbg.location(46, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:41:2: ( '[ REGISTO ' descricao ' EXISTENCIAS ' existencias ']' )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:52:2: ( '[ REGISTO ' descricao ' EXISTENCIAS ' existencias ']' )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:41:4: '[ REGISTO ' descricao ' EXISTENCIAS ' existencias ']'
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:52:4: '[ REGISTO ' descricao ' EXISTENCIAS ' existencias ']'
             {
-            dbg.location(41,4);
+            dbg.location(52,4);
             match(input,28,FOLLOW_28_in_registo81); 
-            dbg.location(41,17);
+            dbg.location(52,17);
             pushFollow(FOLLOW_descricao_in_registo83);
             descricao();
 
             state._fsp--;
 
-            dbg.location(41,27);
+            dbg.location(52,27);
             match(input,14,FOLLOW_14_in_registo85); 
-            dbg.location(41,43);
+            dbg.location(52,43);
             pushFollow(FOLLOW_existencias_in_registo87);
             existencias();
 
             state._fsp--;
 
-            dbg.location(41,55);
+            dbg.location(52,55);
             match(input,29,FOLLOW_29_in_registo89); 
 
             }
@@ -303,7 +314,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(42, 1);
+        dbg.location(53, 1);
 
         }
         finally {
@@ -319,66 +330,70 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "descricao"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:44:1: descricao : referencia tipo titulo '(' autores ')' editora ano catalogo ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:55:1: descricao : referencia tipo titulo '(' autores ')' editora ano catalogo ;
     public final void descricao() throws RecognitionException {
         ficha5Parser.referencia_return referencia1 =null;
+
+        ficha5Parser.titulo_return titulo2 =null;
 
 
         try { dbg.enterRule(getGrammarFileName(), "descricao");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(44, 0);
+        dbg.location(55, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:45:2: ( referencia tipo titulo '(' autores ')' editora ano catalogo )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:56:2: ( referencia tipo titulo '(' autores ')' editora ano catalogo )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:45:4: referencia tipo titulo '(' autores ')' editora ano catalogo
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:56:4: referencia tipo titulo '(' autores ')' editora ano catalogo
             {
-            dbg.location(45,4);
+            dbg.location(56,4);
             pushFollow(FOLLOW_referencia_in_descricao101);
             referencia1=referencia();
 
             state._fsp--;
 
-            dbg.location(45,15);
-            refReg = (referencia1!=null?input.toString(referencia1.start,referencia1.stop):null);
-            dbg.location(45,44);
+            dbg.location(56,15);
+            refReg = (referencia1!=null?input.toString(referencia1.start,referencia1.stop):null); if(!refs.add((referencia1!=null?input.toString(referencia1.start,referencia1.stop):null))){System.out.println("Referencia ja existente: " + (referencia1!=null?input.toString(referencia1.start,referencia1.stop):null));} 
+            dbg.location(56,146);
             pushFollow(FOLLOW_tipo_in_descricao105);
             tipo();
 
             state._fsp--;
 
-            dbg.location(45,49);
+            dbg.location(56,151);
             pushFollow(FOLLOW_titulo_in_descricao107);
-            titulo();
+            titulo2=titulo();
 
             state._fsp--;
 
-            dbg.location(45,56);
-            match(input,15,FOLLOW_15_in_descricao109); 
-            dbg.location(45,60);
-            pushFollow(FOLLOW_autores_in_descricao111);
+            dbg.location(56,158);
+            if(isBook) {bookNames.add((titulo2!=null?input.toString(titulo2.start,titulo2.stop):null));isBook = false;}
+            dbg.location(56,217);
+            match(input,15,FOLLOW_15_in_descricao111); 
+            dbg.location(56,221);
+            pushFollow(FOLLOW_autores_in_descricao113);
             autores();
 
             state._fsp--;
 
-            dbg.location(45,68);
-            match(input,16,FOLLOW_16_in_descricao113); 
-            dbg.location(45,72);
-            pushFollow(FOLLOW_editora_in_descricao115);
+            dbg.location(56,229);
+            match(input,16,FOLLOW_16_in_descricao115); 
+            dbg.location(56,233);
+            pushFollow(FOLLOW_editora_in_descricao117);
             editora();
 
             state._fsp--;
 
-            dbg.location(45,80);
-            pushFollow(FOLLOW_ano_in_descricao117);
+            dbg.location(56,241);
+            pushFollow(FOLLOW_ano_in_descricao119);
             ano();
 
             state._fsp--;
 
-            dbg.location(45,84);
-            pushFollow(FOLLOW_catalogo_in_descricao119);
+            dbg.location(56,245);
+            pushFollow(FOLLOW_catalogo_in_descricao121);
             catalogo();
 
             state._fsp--;
@@ -395,7 +410,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(46, 1);
+        dbg.location(57, 1);
 
         }
         finally {
@@ -411,27 +426,27 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "autores"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:48:1: autores : autor ( ',' autor )* ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:59:1: autores : autor ( ',' autor )* ;
     public final void autores() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "autores");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(48, 0);
+        dbg.location(59, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:49:2: ( autor ( ',' autor )* )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:60:2: ( autor ( ',' autor )* )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:49:4: autor ( ',' autor )*
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:60:4: autor ( ',' autor )*
             {
-            dbg.location(49,4);
-            pushFollow(FOLLOW_autor_in_autores131);
+            dbg.location(60,4);
+            pushFollow(FOLLOW_autor_in_autores133);
             autor();
 
             state._fsp--;
 
-            dbg.location(49,10);
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:49:10: ( ',' autor )*
+            dbg.location(60,10);
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:60:10: ( ',' autor )*
             try { dbg.enterSubRule(2);
 
             loop2:
@@ -452,12 +467,12 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:49:11: ',' autor
+            	    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:60:11: ',' autor
             	    {
-            	    dbg.location(49,11);
-            	    match(input,17,FOLLOW_17_in_autores134); 
-            	    dbg.location(49,15);
-            	    pushFollow(FOLLOW_autor_in_autores136);
+            	    dbg.location(60,11);
+            	    match(input,17,FOLLOW_17_in_autores136); 
+            	    dbg.location(60,15);
+            	    pushFollow(FOLLOW_autor_in_autores138);
             	    autor();
 
             	    state._fsp--;
@@ -484,7 +499,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(50, 1);
+        dbg.location(61, 1);
 
         }
         finally {
@@ -503,7 +518,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "referencia"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:52:1: referencia : ID ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:63:1: referencia : ID ;
     public final ficha5Parser.referencia_return referencia() throws RecognitionException {
         ficha5Parser.referencia_return retval = new ficha5Parser.referencia_return();
         retval.start = input.LT(1);
@@ -512,16 +527,16 @@ protected boolean evalPredicate(boolean result, String predicate) {
         try { dbg.enterRule(getGrammarFileName(), "referencia");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(52, 0);
+        dbg.location(63, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:53:2: ( ID )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:64:2: ( ID )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:53:4: ID
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:64:4: ID
             {
-            dbg.location(53,4);
-            match(input,ID,FOLLOW_ID_in_referencia150); 
+            dbg.location(64,4);
+            match(input,ID,FOLLOW_ID_in_referencia152); 
 
             }
 
@@ -537,7 +552,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(54, 1);
+        dbg.location(65, 1);
 
         }
         finally {
@@ -553,15 +568,15 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "tipo"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:56:1: tipo : ( 'LIVRO' | 'CDROM' | 'OUTRO' );
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:67:1: tipo : ( 'LIVRO' | 'CDROM' | 'OUTRO' );
     public final void tipo() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "tipo");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(56, 0);
+        dbg.location(67, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:56:5: ( 'LIVRO' | 'CDROM' | 'OUTRO' )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:67:5: ( 'LIVRO' | 'CDROM' | 'OUTRO' )
             int alt3=3;
             try { dbg.enterDecision(3, decisionCanBacktrack[3]);
 
@@ -596,32 +611,32 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 1 :
                     dbg.enterAlt(1);
 
-                    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:56:7: 'LIVRO'
+                    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:67:7: 'LIVRO'
                     {
-                    dbg.location(56,7);
-                    match(input,24,FOLLOW_24_in_tipo160); 
-                    dbg.location(56,15);
-                    numLivros++;
+                    dbg.location(67,7);
+                    match(input,24,FOLLOW_24_in_tipo162); 
+                    dbg.location(67,15);
+                    numLivros++; isBook = true;
 
                     }
                     break;
                 case 2 :
                     dbg.enterAlt(2);
 
-                    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:57:4: 'CDROM'
+                    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:68:4: 'CDROM'
                     {
-                    dbg.location(57,4);
-                    match(input,21,FOLLOW_21_in_tipo167); 
+                    dbg.location(68,4);
+                    match(input,21,FOLLOW_21_in_tipo169); 
 
                     }
                     break;
                 case 3 :
                     dbg.enterAlt(3);
 
-                    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:58:4: 'OUTRO'
+                    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:69:4: 'OUTRO'
                     {
-                    dbg.location(58,4);
-                    match(input,26,FOLLOW_26_in_tipo172); 
+                    dbg.location(69,4);
+                    match(input,26,FOLLOW_26_in_tipo174); 
 
                     }
                     break;
@@ -636,7 +651,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(59, 1);
+        dbg.location(70, 1);
 
         }
         finally {
@@ -650,25 +665,35 @@ protected boolean evalPredicate(boolean result, String predicate) {
     // $ANTLR end "tipo"
 
 
+    public static class titulo_return extends ParserRuleReturnScope {
+    };
+
 
     // $ANTLR start "titulo"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:61:1: titulo : STRING ;
-    public final void titulo() throws RecognitionException {
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:72:1: titulo : STRING ;
+    public final ficha5Parser.titulo_return titulo() throws RecognitionException {
+        ficha5Parser.titulo_return retval = new ficha5Parser.titulo_return();
+        retval.start = input.LT(1);
+
+
         try { dbg.enterRule(getGrammarFileName(), "titulo");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(61, 0);
+        dbg.location(72, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:62:2: ( STRING )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:73:2: ( STRING )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:62:4: STRING
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:73:4: STRING
             {
-            dbg.location(62,4);
-            match(input,STRING,FOLLOW_STRING_in_titulo183); 
+            dbg.location(73,4);
+            match(input,STRING,FOLLOW_STRING_in_titulo185); 
 
             }
+
+            retval.stop = input.LT(-1);
+
 
         }
         catch (RecognitionException re) {
@@ -679,7 +704,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(63, 1);
+        dbg.location(74, 1);
 
         }
         finally {
@@ -688,28 +713,28 @@ protected boolean evalPredicate(boolean result, String predicate) {
             if ( getRuleLevel()==0 ) {dbg.terminate();}
         }
 
-        return ;
+        return retval;
     }
     // $ANTLR end "titulo"
 
 
 
     // $ANTLR start "autor"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:65:1: autor : STRING ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:76:1: autor : STRING ;
     public final void autor() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "autor");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(65, 0);
+        dbg.location(76, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:66:2: ( STRING )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:77:2: ( STRING )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:66:4: STRING
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:77:4: STRING
             {
-            dbg.location(66,4);
-            match(input,STRING,FOLLOW_STRING_in_autor194); 
+            dbg.location(77,4);
+            match(input,STRING,FOLLOW_STRING_in_autor196); 
 
             }
 
@@ -722,7 +747,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(67, 1);
+        dbg.location(78, 1);
 
         }
         finally {
@@ -738,21 +763,21 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "editora"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:69:1: editora : STRING ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:80:1: editora : STRING ;
     public final void editora() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "editora");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(69, 0);
+        dbg.location(80, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:70:2: ( STRING )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:81:2: ( STRING )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:70:4: STRING
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:81:4: STRING
             {
-            dbg.location(70,4);
-            match(input,STRING,FOLLOW_STRING_in_editora205); 
+            dbg.location(81,4);
+            match(input,STRING,FOLLOW_STRING_in_editora207); 
 
             }
 
@@ -765,7 +790,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(71, 1);
+        dbg.location(82, 1);
 
         }
         finally {
@@ -781,21 +806,21 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "ano"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:73:1: ano : INT ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:84:1: ano : INT ;
     public final void ano() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "ano");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(73, 0);
+        dbg.location(84, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:73:5: ( INT )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:84:5: ( INT )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:73:8: INT
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:84:8: INT
             {
-            dbg.location(73,8);
-            match(input,INT,FOLLOW_INT_in_ano217); 
+            dbg.location(84,8);
+            match(input,INT,FOLLOW_INT_in_ano219); 
 
             }
 
@@ -808,7 +833,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(74, 1);
+        dbg.location(85, 1);
 
         }
         finally {
@@ -824,20 +849,20 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "catalogo"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:75:1: catalogo : ( 'BGUM' | 'ALFA' | 'OUTRO' );
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:86:1: catalogo : ( 'BGUM' | 'ALFA' | 'OUTRO' );
     public final void catalogo() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "catalogo");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(75, 0);
+        dbg.location(86, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:76:2: ( 'BGUM' | 'ALFA' | 'OUTRO' )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:87:2: ( 'BGUM' | 'ALFA' | 'OUTRO' )
             dbg.enterAlt(1);
 
             // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:
             {
-            dbg.location(76,2);
+            dbg.location(87,2);
             if ( (input.LA(1) >= 19 && input.LA(1) <= 20)||input.LA(1)==26 ) {
                 input.consume();
                 state.errorRecovery=false;
@@ -860,7 +885,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(79, 1);
+        dbg.location(90, 1);
 
         }
         finally {
@@ -876,37 +901,37 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "existencias"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:81:1: existencias : 'LOCAL ' local '(' estados ')' ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:92:1: existencias : 'LOCAL ' local '(' estados ')' ;
     public final void existencias() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "existencias");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(81, 0);
+        dbg.location(92, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:82:2: ( 'LOCAL ' local '(' estados ')' )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:93:2: ( 'LOCAL ' local '(' estados ')' )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:82:4: 'LOCAL ' local '(' estados ')'
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:93:4: 'LOCAL ' local '(' estados ')'
             {
-            dbg.location(82,4);
-            match(input,25,FOLLOW_25_in_existencias248); 
-            dbg.location(82,13);
-            pushFollow(FOLLOW_local_in_existencias250);
+            dbg.location(93,4);
+            match(input,25,FOLLOW_25_in_existencias250); 
+            dbg.location(93,13);
+            pushFollow(FOLLOW_local_in_existencias252);
             local();
 
             state._fsp--;
 
-            dbg.location(82,19);
-            match(input,15,FOLLOW_15_in_existencias252); 
-            dbg.location(82,23);
-            pushFollow(FOLLOW_estados_in_existencias254);
+            dbg.location(93,19);
+            match(input,15,FOLLOW_15_in_existencias254); 
+            dbg.location(93,23);
+            pushFollow(FOLLOW_estados_in_existencias256);
             estados();
 
             state._fsp--;
 
-            dbg.location(82,31);
-            match(input,16,FOLLOW_16_in_existencias256); 
+            dbg.location(93,31);
+            match(input,16,FOLLOW_16_in_existencias258); 
 
             }
 
@@ -919,7 +944,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(83, 1);
+        dbg.location(94, 1);
 
         }
         finally {
@@ -935,21 +960,21 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "local"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:85:1: local : STRING ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:96:1: local : STRING ;
     public final void local() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "local");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(85, 0);
+        dbg.location(96, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:86:2: ( STRING )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:97:2: ( STRING )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:86:4: STRING
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:97:4: STRING
             {
-            dbg.location(86,4);
-            match(input,STRING,FOLLOW_STRING_in_local268); 
+            dbg.location(97,4);
+            match(input,STRING,FOLLOW_STRING_in_local270); 
 
             }
 
@@ -962,7 +987,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(87, 1);
+        dbg.location(98, 1);
 
         }
         finally {
@@ -978,27 +1003,27 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "estados"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:89:1: estados : estado ( ',' estado )* ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:100:1: estados : estado ( ',' estado )* ;
     public final void estados() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "estados");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(89, 0);
+        dbg.location(100, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:90:2: ( estado ( ',' estado )* )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:101:2: ( estado ( ',' estado )* )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:90:4: estado ( ',' estado )*
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:101:4: estado ( ',' estado )*
             {
-            dbg.location(90,4);
-            pushFollow(FOLLOW_estado_in_estados280);
+            dbg.location(101,4);
+            pushFollow(FOLLOW_estado_in_estados282);
             estado();
 
             state._fsp--;
 
-            dbg.location(90,11);
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:90:11: ( ',' estado )*
+            dbg.location(101,11);
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:101:11: ( ',' estado )*
             try { dbg.enterSubRule(4);
 
             loop4:
@@ -1019,12 +1044,12 @@ protected boolean evalPredicate(boolean result, String predicate) {
             	case 1 :
             	    dbg.enterAlt(1);
 
-            	    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:90:12: ',' estado
+            	    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:101:12: ',' estado
             	    {
-            	    dbg.location(90,12);
-            	    match(input,17,FOLLOW_17_in_estados283); 
-            	    dbg.location(90,16);
-            	    pushFollow(FOLLOW_estado_in_estados285);
+            	    dbg.location(101,12);
+            	    match(input,17,FOLLOW_17_in_estados285); 
+            	    dbg.location(101,16);
+            	    pushFollow(FOLLOW_estado_in_estados287);
             	    estado();
 
             	    state._fsp--;
@@ -1051,7 +1076,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(91, 1);
+        dbg.location(102, 1);
 
         }
         finally {
@@ -1067,27 +1092,27 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "estado"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:93:1: estado : codigoBarras disponib ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:104:1: estado : codigoBarras disponib ;
     public final void estado() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "estado");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(93, 0);
+        dbg.location(104, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:94:2: ( codigoBarras disponib )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:105:2: ( codigoBarras disponib )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:94:4: codigoBarras disponib
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:105:4: codigoBarras disponib
             {
-            dbg.location(94,4);
-            pushFollow(FOLLOW_codigoBarras_in_estado298);
+            dbg.location(105,4);
+            pushFollow(FOLLOW_codigoBarras_in_estado300);
             codigoBarras();
 
             state._fsp--;
 
-            dbg.location(94,17);
-            pushFollow(FOLLOW_disponib_in_estado300);
+            dbg.location(105,17);
+            pushFollow(FOLLOW_disponib_in_estado302);
             disponib();
 
             state._fsp--;
@@ -1104,7 +1129,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(95, 1);
+        dbg.location(106, 1);
 
         }
         finally {
@@ -1120,21 +1145,21 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "codigoBarras"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:97:1: codigoBarras : ID ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:108:1: codigoBarras : ID ;
     public final void codigoBarras() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "codigoBarras");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(97, 0);
+        dbg.location(108, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:98:2: ( ID )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:109:2: ( ID )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:98:4: ID
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:109:4: ID
             {
-            dbg.location(98,4);
-            match(input,ID,FOLLOW_ID_in_codigoBarras312); 
+            dbg.location(109,4);
+            match(input,ID,FOLLOW_ID_in_codigoBarras314); 
 
             }
 
@@ -1147,7 +1172,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(99, 1);
+        dbg.location(110, 1);
 
         }
         finally {
@@ -1163,15 +1188,15 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "disponib"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:100:1: disponib : ( 'ESTANTE' | 'PERMANENTE' | 'EMPRESTADO' dataDev );
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:111:1: disponib : ( 'ESTANTE' | 'PERMANENTE' | 'EMPRESTADO' dataDev );
     public final void disponib() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "disponib");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(100, 0);
+        dbg.location(111, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:101:2: ( 'ESTANTE' | 'PERMANENTE' | 'EMPRESTADO' dataDev )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:112:2: ( 'ESTANTE' | 'PERMANENTE' | 'EMPRESTADO' dataDev )
             int alt5=3;
             try { dbg.enterDecision(5, decisionCanBacktrack[5]);
 
@@ -1206,11 +1231,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 1 :
                     dbg.enterAlt(1);
 
-                    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:101:4: 'ESTANTE'
+                    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:112:4: 'ESTANTE'
                     {
-                    dbg.location(101,4);
-                    match(input,23,FOLLOW_23_in_disponib322); 
-                    dbg.location(101,14);
+                    dbg.location(112,4);
+                    match(input,23,FOLLOW_23_in_disponib324); 
+                    dbg.location(112,14);
                     estante++;
 
                     }
@@ -1218,11 +1243,11 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 2 :
                     dbg.enterAlt(2);
 
-                    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:102:4: 'PERMANENTE'
+                    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:113:4: 'PERMANENTE'
                     {
-                    dbg.location(102,4);
-                    match(input,27,FOLLOW_27_in_disponib329); 
-                    dbg.location(102,16);
+                    dbg.location(113,4);
+                    match(input,27,FOLLOW_27_in_disponib331); 
+                    dbg.location(113,16);
                     permanentes++;
 
                     }
@@ -1230,14 +1255,14 @@ protected boolean evalPredicate(boolean result, String predicate) {
                 case 3 :
                     dbg.enterAlt(3);
 
-                    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:103:4: 'EMPRESTADO' dataDev
+                    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:114:4: 'EMPRESTADO' dataDev
                     {
-                    dbg.location(103,4);
-                    match(input,22,FOLLOW_22_in_disponib335); 
-                    dbg.location(103,17);
+                    dbg.location(114,4);
+                    match(input,22,FOLLOW_22_in_disponib337); 
+                    dbg.location(114,17);
                     reservados++;
-                    dbg.location(103,32);
-                    pushFollow(FOLLOW_dataDev_in_disponib338);
+                    dbg.location(114,32);
+                    pushFollow(FOLLOW_dataDev_in_disponib340);
                     dataDev();
 
                     state._fsp--;
@@ -1256,7 +1281,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(104, 1);
+        dbg.location(115, 1);
 
         }
         finally {
@@ -1272,37 +1297,37 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "dataDev"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:106:1: dataDev : ano '-' mes '-' dia ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:117:1: dataDev : ano '-' mes '-' dia ;
     public final void dataDev() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "dataDev");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(106, 0);
+        dbg.location(117, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:107:2: ( ano '-' mes '-' dia )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:118:2: ( ano '-' mes '-' dia )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:107:4: ano '-' mes '-' dia
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:118:4: ano '-' mes '-' dia
             {
-            dbg.location(107,4);
-            pushFollow(FOLLOW_ano_in_dataDev350);
+            dbg.location(118,4);
+            pushFollow(FOLLOW_ano_in_dataDev352);
             ano();
 
             state._fsp--;
 
-            dbg.location(107,8);
-            match(input,18,FOLLOW_18_in_dataDev352); 
-            dbg.location(107,12);
-            pushFollow(FOLLOW_mes_in_dataDev354);
+            dbg.location(118,8);
+            match(input,18,FOLLOW_18_in_dataDev354); 
+            dbg.location(118,12);
+            pushFollow(FOLLOW_mes_in_dataDev356);
             mes();
 
             state._fsp--;
 
-            dbg.location(107,16);
-            match(input,18,FOLLOW_18_in_dataDev356); 
-            dbg.location(107,20);
-            pushFollow(FOLLOW_dia_in_dataDev358);
+            dbg.location(118,16);
+            match(input,18,FOLLOW_18_in_dataDev358); 
+            dbg.location(118,20);
+            pushFollow(FOLLOW_dia_in_dataDev360);
             dia();
 
             state._fsp--;
@@ -1319,7 +1344,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(108, 1);
+        dbg.location(119, 1);
 
         }
         finally {
@@ -1335,21 +1360,21 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "mes"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:109:1: mes : INT ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:120:1: mes : INT ;
     public final void mes() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "mes");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(109, 0);
+        dbg.location(120, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:109:5: ( INT )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:120:5: ( INT )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:109:7: INT
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:120:7: INT
             {
-            dbg.location(109,7);
-            match(input,INT,FOLLOW_INT_in_mes367); 
+            dbg.location(120,7);
+            match(input,INT,FOLLOW_INT_in_mes369); 
 
             }
 
@@ -1362,7 +1387,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(109, 9);
+        dbg.location(120, 9);
 
         }
         finally {
@@ -1378,21 +1403,21 @@ protected boolean evalPredicate(boolean result, String predicate) {
 
 
     // $ANTLR start "dia"
-    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:110:1: dia : INT ;
+    // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:121:1: dia : INT ;
     public final void dia() throws RecognitionException {
         try { dbg.enterRule(getGrammarFileName(), "dia");
         if ( getRuleLevel()==0 ) {dbg.commence();}
         incRuleLevel();
-        dbg.location(110, 0);
+        dbg.location(121, 0);
 
         try {
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:110:5: ( INT )
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:121:5: ( INT )
             dbg.enterAlt(1);
 
-            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:110:7: INT
+            // /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV0/ficha5/ficha5.g:121:7: INT
             {
-            dbg.location(110,7);
-            match(input,INT,FOLLOW_INT_in_dia374); 
+            dbg.location(121,7);
+            match(input,INT,FOLLOW_INT_in_dia376); 
 
             }
 
@@ -1405,7 +1430,7 @@ protected boolean evalPredicate(boolean result, String predicate) {
         finally {
         	// do for sure before leaving
         }
-        dbg.location(110, 9);
+        dbg.location(121, 9);
 
         }
         finally {
@@ -1435,45 +1460,45 @@ protected boolean evalPredicate(boolean result, String predicate) {
     public static final BitSet FOLLOW_referencia_in_descricao101 = new BitSet(new long[]{0x0000000005200000L});
     public static final BitSet FOLLOW_tipo_in_descricao105 = new BitSet(new long[]{0x0000000000000800L});
     public static final BitSet FOLLOW_titulo_in_descricao107 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_descricao109 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_autores_in_descricao111 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_descricao113 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_editora_in_descricao115 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_ano_in_descricao117 = new BitSet(new long[]{0x0000000004180000L});
-    public static final BitSet FOLLOW_catalogo_in_descricao119 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_autor_in_autores131 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_17_in_autores134 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_autor_in_autores136 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_ID_in_referencia150 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_24_in_tipo160 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_21_in_tipo167 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_26_in_tipo172 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STRING_in_titulo183 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STRING_in_autor194 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STRING_in_editora205 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INT_in_ano217 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_25_in_existencias248 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_local_in_existencias250 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_existencias252 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_estados_in_existencias254 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_existencias256 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STRING_in_local268 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_estado_in_estados280 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_17_in_estados283 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_estado_in_estados285 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_codigoBarras_in_estado298 = new BitSet(new long[]{0x0000000008C00000L});
-    public static final BitSet FOLLOW_disponib_in_estado300 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ID_in_codigoBarras312 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_disponib322 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_disponib329 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_disponib335 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_dataDev_in_disponib338 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ano_in_dataDev350 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_dataDev352 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_mes_in_dataDev354 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_dataDev356 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_dia_in_dataDev358 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INT_in_mes367 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INT_in_dia374 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_15_in_descricao111 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_autores_in_descricao113 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_descricao115 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_editora_in_descricao117 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_ano_in_descricao119 = new BitSet(new long[]{0x0000000004180000L});
+    public static final BitSet FOLLOW_catalogo_in_descricao121 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_autor_in_autores133 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_17_in_autores136 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_autor_in_autores138 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_ID_in_referencia152 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_24_in_tipo162 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_21_in_tipo169 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_26_in_tipo174 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRING_in_titulo185 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRING_in_autor196 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRING_in_editora207 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INT_in_ano219 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_25_in_existencias250 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_local_in_existencias252 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_existencias254 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_estados_in_existencias256 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_existencias258 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRING_in_local270 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_estado_in_estados282 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_17_in_estados285 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_estado_in_estados287 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_codigoBarras_in_estado300 = new BitSet(new long[]{0x0000000008C00000L});
+    public static final BitSet FOLLOW_disponib_in_estado302 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ID_in_codigoBarras314 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_disponib324 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_disponib331 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_22_in_disponib337 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_dataDev_in_disponib340 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ano_in_dataDev352 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_dataDev354 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_mes_in_dataDev356 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_dataDev358 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_dia_in_dataDev360 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INT_in_mes369 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INT_in_dia376 = new BitSet(new long[]{0x0000000000000002L});
 
 }
