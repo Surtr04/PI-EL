@@ -1,1 +1,0 @@
-a) [ REGISTO id1122 LIVRO "nome_livro" ("nome_autor") "nome_editora" 2010 BGUM EXISTENCIAS LOCAL "Braga" ( cb54433231 ; PERMANENTE ) ]
