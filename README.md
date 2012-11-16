@@ -16,17 +16,17 @@ Já pus a árvore de derivação no repositório, o mais cedo possível dá-me a
 ###PED
 
 1. Autenticação do user.
-	*id,nome,morada,email,password,foto
+	* id,nome,morada,email,password,foto
 2. Listar, Adicionar, Remover, Alterar
 3. Perfis
-	*Consumidor: consultar, listar
-	*produtor: consultar, listar, inserir
-	*admin: tudo
+	* Consumidor: consultar, listar
+	* produtor: consultar, listar, inserir
+	* admin: tudo
 4. SIP
-	*inserção
-	*consulta
-	*listagem
-	*remoção
+	* inserção
+	* consulta
+	* listagem
+	* remoção
 5. Exportação: tudo ou sips selecionados
 6. logs
 
