@@ -159,6 +159,23 @@ As diferenças quando à árvore de derivação são apresentadas a seguir:
 \section{Gramática Tradutora} % (fold)
 \label{sec:gram_tica_tradutora}
 
+Os pontos pedidos foram os seguintes:
+
+\begin{enumerate}
+	\item calcular e imprimir: o número de registos; e o número de livros existentes para cada registo.
+	\item o número total de livros com estado RESERVADO/PERMNENTE/ESTANTE.
+	\item identificar e listar por ordem alfabética os títulos dos livros.
+	\item verificar se não existem registos com a mesma referência.
+\end{enumerate}
+
+Para resolver o ponto 1, simplesmente foram criados contadores e os mesmo incrementados nos pontos apropriados, como se pode ver abaixo.
+A resolução do ponto 2 não difere muito da do ponto 1, mais uma vez, foi feita com contadores.
+Para o ponto 3, criou-se uma variável booleana que é posta a \textit{true} sempre que o literal 'LIVRO' é encontrado, posteriormente o valor é inserido num \textit{TreeSet},
+estrutura esta que garante a ordenação do output.
+Quanto ao ponto 4, mais uma vez tiramos partido das propriedades da estrutura \textit{TreeSet} sendo que esta não permite elementos repetidos, no caso da inserção falhar,
+o valor de referência actual é impresso para o ecrã.
+Abaixo pode ser visto o código integral. 
+
 \begin{verbatim}
 	grammar ficha5;
 
