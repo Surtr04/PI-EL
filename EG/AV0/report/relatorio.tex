@@ -21,11 +21,11 @@
 
 
 \title{
-	\large{\includegraphics[width=0.3\textwidth]{../../report-template/UM}} \\
-	\large{Universidade do Minho} \\
-	\large{Mestrado em Engenharia Informática} \\
-	\large{Engenharia de Linguagens} \\
-	\large{Engenharia Gramatical - Grupo 1} \\	
+	\large{\includegraphics[width=0.3\textwidth]{../../../report-template/UM.jpg}} \\
+	\large{Universidade do Minho}  \\
+	\large{Mestrado em Engenharia Informática}  \\
+	\large{Engenharia de Linguagens}  \\
+	\large{Engenharia Gramatical - Grupo 1}  \\	
 	\large{\textbf{Resolução das Fichas 3 e 5}} \\
 	\large{Ano Lectivo de 2012/2013} \\
 	\date{\today}
@@ -92,6 +92,91 @@ f3
 	(a2,2.25)
 .
 \end{verbatim}
+
+\section{Ficha 5} % (fold)
+\label{sec:ficha_5}
+
+\subsection{Exemplo de frase válida e Árvore de Derivação}
+
+Um exemplo rudimentar de frase válida seria: 
+\begin{verbatim}
+[ REGISTO id1122 LIVRO "nome_livro" ("nome_autor") "nome_editora" 2010 BGUM 
+EXISTENCIAS LOCAL "Braga" ( cb54433231 ; PERMANENTE ) ]
+\end{verbatim}
+
+A árvore de derivação corresponde seria como se segue:
+
+\begin{figure}[!htb]
+	\begin{center}
+		\includegraphics[width=\textwidth,keepaspectratio]{../ficha5/g.png}
+	\end{center}	
+	\caption{\label{parse_tree}Árvore de Derivação}
+\end{figure}
+
+\small{Imagem em maior detalho na figura \ref{parse_tree_ap}}
+
+\subsection{Lista de Autores}
+Para permitir uma lista de autores ao contrário de apenas um, basta extender a produção dez.
+Ficaria, então, algo como segue abaixo:
+
+\begin{verbatim}
+	p10: Autores --> Autor
+	p11:           | Autores ',' Autor
+\end{verbatim}
+
+\subsection{Recursividade à esquerda para Recursividade à direita}
+
+Recursividade à esquerda:
+\begin{verbatim}
+	p1: Registos --> Registo
+	p2:            | Registos ',' Registo
+\end{verbatim}
+
+O que transformado para recursividade à direita (assumindo a notação eBNF):
+
+\begin{verbatim}
+	p1: Registos --> Registo
+	p2:            | Registo ',' Registos
+\end{verbatim}
+
+As diferenças quando à árvore de derivação são apresentadas a seguir:
+
+\begin{figure}[!htb]
+	\begin{center}
+		\includegraphics[scale=.5]{../ficha5/lr.png}
+	\end{center}	
+	\caption{\label{lrec}Recursivo à esquerda}
+\end{figure}
+
+\begin{figure}[!htb]
+	\begin{center}
+		\includegraphics[scale=.5]{../ficha5/rr.png}
+	\end{center}	
+	\caption{\label{lrec}Recursivo à direita}
+\end{figure}
+
+\section{Gramática Tradutora} % (fold)
+\label{sec:gram_tica_tradutora}
+
+
+
+% section gram_tica_tradutora (end)
+
+% section ficha_5 (end)
+
 \section{Conclusão}
 ... %O que será para escrever
+
+
+\newpage
+\appendix
+\section{Imagens}
+\label{ap:imagens}
+\begin{figure}[!htb]
+	\begin{center}
+		\includegraphics[scale=.33,angle=-90,keepaspectratio]{../ficha5/g.png}
+	\end{center}
+	\caption{\label{parse_tree_ap}Árvore de Derivação}
+\end{figure}
+
 \end{document}

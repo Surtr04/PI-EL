@@ -2,22 +2,47 @@ grammar ficha5;
 
 options{
 	k=2;
+	language=Java;
+}
+
+@header{
+
+}
+
+@members{
+	int numRegistos = 0;
+	int numLivros = 0;
+	String refReg = null;
+	
+	int reservados = 0;
+	int permanentes = 0;
+	int estante = 0;
 }
 
 biblioteca 
+@after{
+System.out.println ("Livros Reservados: " + reservados);
+System.out.println ("Livros Permanentes: " + permanentes);
+System.out.println ("Livros em Estante: " + estante);
+}
 	:	registos
 	;
 	
 registos 
-	:	registo (',' registo)*
+	:	registo{numRegistos++;} (',' registo{numRegistos++;})*
 	;
 
 registo
+@after {
+	System.out.println(refReg + ": " + numLivros);
+	numLivros = 0;
+	refReg = null;
+}
 	:	'[ REGISTO ' descricao ' EXISTENCIAS ' existencias ']'
 	;
 	
 descricao
-	:	referencia tipo titulo '(' autores ')' editora ano catalogo
+	:	referencia {refReg = $referencia.text;} tipo titulo '(' autores ')' editora ano catalogo
 	;
 	
 autores
@@ -28,7 +53,7 @@ referencia
 	:	ID
 	;
 	
-tipo:	'LIVRO'
+tipo:	'LIVRO' {numLivros++;}
 	|	'CDROM'
 	|	'OUTRO'
 	;
@@ -73,9 +98,9 @@ codigoBarras
 	:	ID
 	;
 disponib
-	:	'ESTANTE'
-	|	'PERMANENTE'
-	|	'EMPRESTADO' dataDev
+	:	'ESTANTE' {estante++;}
+	|	'PERMANENTE'{permanentes++;}
+	|	'EMPRESTADO' {reservados++;}dataDev
 	;
 	
 dataDev

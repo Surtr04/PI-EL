@@ -1,0 +1,20 @@
+digraph LeftRecursive {
+
+	Registos1 [label = "Registos"]
+
+	Registos -> Registos1
+	Registos -> ","
+	Registo1 [label = "Registo"]
+	Registos -> Registo1
+
+	Registos2 [label = "Registos"]
+
+	Registos1 -> Registos2
+	Comma2 [label = ","]	
+	Registos1 -> Comma2
+	Registo2 [label = "Registo"]
+	Registos1 -> Registo2
+	Registos2 -> "..."
+	
+
+}
