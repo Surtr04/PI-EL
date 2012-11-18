@@ -53,20 +53,20 @@
 %Ele disse que o relatório não precisa de ser uma coisa muito complexa. Essencialmente é para explicar o que foi feito,
 %e no caso de haver respostas a dar, serem dadas aqui.
 \section{Introdução}
-Este primeiro trabalho de \emph{Engenharia Gramatical} de avaliação, da Unidade Curricular de Especialização 
-\emph{Engenharia de Linguagens}, consiste na realização da ficha 3 e 5 disponiblizadas no Blackboard.
+Este primeiro trabalho de avaliação \emph{Engenharia Gramatical} da Unidade Curricular de Especialização 
+\emph{Engenharia de Linguagens}, consiste na realização das fichas 3 e 5 disponiblizadas no Blackboard. Apresentamos neste documento a resolução das mesmas.
 \section{Ficha 3}
 \subsection{Composição do Corpo}
-Para escrever uma gramática tradutora, foi necessário completar a informação sobre o corpo. Assim incialmente o corpo da
-factura era um conjunto de linhas, em que cada linhas era \emph{'(' codartigo ',' designacao ',' pvu ',' quantidade ')'}.
-Depois para suportar o pedido da alínea c, cada linhas passou a ser somente \emph{'(' codartigo ',' quantidade ')'}.
+Para escrever uma gramática tradutora, foi necessário completar a informação sobre o corpo. Assim, incialmente, o corpo da
+factura era um conjunto de linhas em que cada linha era \emph{'(' codartigo ',' designacao ',' pvu ',' quantidade ')'}.
+Depois para suportar o pedido da alínea c), cada linha passou a ser somente \emph{'(' codartigo ',' quantidade ')'}.
 \subsection{Código Java}
 Para conseguirmos saber os totais dos produtos, com várias facturas (sendo que cada factura possuia um id alfanumérico),
-foi criado um \emph{hashmap} para associar a cada id de factura uma lista de valores, que era o total de cada linha
-da factura. No final, é possível apresentar o o total de cada linha em cada factura e ainda o tal de cada factura (que 
-mais não é que a soma dos totais das linhas).
+foi criado um \emph{HashMap} para associar a cada id de factura uma lista de valores, que era o total de cada linha
+da factura. No final, é possível apresentar o total de cada linha em cada factura e ainda o total de cada factura (que 
+mais não é do que a soma dos totais das linhas).
 Para se obter o Preço Unitário, que a pedido da alínea c) deveria já ter sido indicado no ínicio, foi também criada um
-\emph{hashmap} com a correspondência entre o código do produto e os seus atributos (guardados numa classe). Assim, por
+\emph{HashMap} com a correspondência entre o código do produto e os seus atributos (guardados numa classe). Assim, por
 cada linha só era necessário obter o PVU através do código do artigo, e multiplicá-lo pela quantidade.
 \subsection{Exemplo de Input}
 \begin{verbatim}
@@ -92,6 +92,192 @@ f3
 	"Nome 6" "NIF 6" "Morada 5"
 	(a2,2.25)
 .
+\end{verbatim}
+
+
+\subsection{Gramatica Tradutora}
+
+Segue abaixo a Gramática Tradutora usado para a resolução do problema:
+
+\begin{verbatim}
+	grammar ficha3;
+
+options{
+	language=Java;
+	k=1;
+}
+
+@header{
+import java.util.HashMap;
+import java.util.Map;
+	
+}
+
+@members{
+	class Artigos{
+		public String codigo;
+		public String designacao;
+		public Double preco;
+		public Double stock;
+		public Artigos(String c, String d, Double p, Double s)
+				            {this.codigo = c; this.designacao = d; this.preco = p; this.stock = s;}
+	}
+	
+	private HashMap<String,ArrayList<Double>> _totais;
+	private HashMap<String,Artigos> _artigos;
+	private String _fct;
+}
+
+facturas
+@init{
+    this._totais = new HashMap<String, ArrayList<Double>>(); 
+    this._artigos = new HashMap<String,Artigos>();
+}
+@after{
+    int i;
+    Double soma;
+    for (Map.Entry<String, ArrayList<Double>> entry : this._totais.entrySet()) { 
+    	System.out.println("Factura " + entry.getKey()); 
+    	i = 0; 
+    	soma = 0.0;
+    	for(Double d : entry.getValue()){
+    		i++;
+    		soma += d;
+    		System.out.println("\tLinha " + i + ": " + d.toString());
+    	}
+    	System.out.println("Total factura: " + soma);
+    	System.out.println("----------------------");
+    }
+    System.out.println("");
+    System.out.println("==============================");
+    System.out.println("");
+    for (Artigos a : this._artigos.values()){
+    	System.out.println("Artigo " + a.codigo);
+    	System.out.println("\tDesignacao: " + a.designacao);
+    	System.out.println("\tPreço: " + a.preco);
+    	System.out.println("\tStock: " + a.stock);
+    	System.out.println("----------------------");
+    }
+}
+	: descs+ '---' factura (';' factura)* '.'
+	;
+
+descs
+	: 	codartigo designacao pvu stock {
+		String c = $codartigo.text;
+		String d = $designacao.text;
+		Double p = Double.parseDouble($pvu.text);
+		Double s = Double.parseDouble($stock.text);
+		this._artigos.put(c, new Artigos(c, d, p, s));
+		}
+	;
+
+factura
+	:	cabec corpo
+	;
+	
+cabec
+	:	idfact {
+	            this._fct = $idfact.text; 
+	            this._totais.put(this._fct, new ArrayList<Double>());
+	            } ide idr
+	;
+	
+corpo
+	:	linha+
+	;
+	
+	
+linha
+	:	'(' codartigo ',' quantidade ')'  {
+			Double qt = Double.parseDouble($quantidade.text);
+			Artigos ag = this._artigos.get($codartigo.text);
+			this._totais.get(this._fct).add(ag.preco * qt);
+			ag.stock -= qt;
+		}
+	;
+	
+codartigo
+	:	ID;
+
+designacao
+	:	STR;
+	
+pvu	:	FLOAT;
+
+stock
+	:	FLOAT;
+
+quantidade
+	:	FLOAT;
+
+	
+idfact
+	:	numfact
+	;
+	
+numfact
+	:	ID
+	;
+	
+
+ide	:	nome nif morada nib
+	;
+nome:	STR;
+nif	:	STR;
+morada
+	:	STR;
+nib	:	STR;	
+idr	:	nome nif morada
+	;
+	
+
+FLOAT
+    :   ('0'..'9')+ '.' ('0'..'9')* EXPONENT?
+    |   '.' ('0'..'9')+ EXPONENT?
+    |   ('0'..'9')+ EXPONENT?
+    ;
+
+fragment
+EXPONENT : ('e'|'E') ('+'|'-')? ('0'..'9')+ ;
+
+ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+    ;
+
+
+WS  :   ( ' '
+        | '\t'
+        | '\r'
+        | '\n'
+        ) {$channel=HIDDEN;}
+    ;
+
+STR
+    :  '"' ( ESC_SEQ | ~('\\'|'"') )* '"'
+    ;
+
+fragment
+HEX_DIGIT : ('0'..'9'|'a'..'f'|'A'..'F') ;
+
+fragment
+ESC_SEQ
+    :   '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')
+    |   UNICODE_ESC
+    |   OCTAL_ESC
+    ;
+
+fragment
+OCTAL_ESC
+    :   '\\' ('0'..'3') ('0'..'7') ('0'..'7')
+    |   '\\' ('0'..'7') ('0'..'7')
+    |   '\\' ('0'..'7')
+    ;
+
+fragment
+UNICODE_ESC
+    :   '\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
+    ;
+
 \end{verbatim}
 
 \section{Ficha 5} % (fold)
@@ -168,12 +354,12 @@ Os pontos pedidos foram os seguintes:
 	\item verificar se não existem registos com a mesma referência.
 \end{enumerate}
 
-Para resolver o ponto 1, simplesmente foram criados contadores e os mesmo incrementados nos pontos apropriados, como se pode ver abaixo.
-A resolução do ponto 2 não difere muito da do ponto 1, mais uma vez, foi feita com contadores.
+Para resolver o ponto 1, simplesmente foram criados contadores e os mesmo incrementados nos pontos apropriados, como se pode ver abaixo.\\
+A resolução do ponto 2 não difere muito da do ponto 1, mais uma vez, foi feita com contadores.\\
 Para o ponto 3, criou-se uma variável booleana que é posta a \textit{true} sempre que o literal 'LIVRO' é encontrado, posteriormente o valor é inserido num \textit{TreeSet},
-estrutura esta que garante a ordenação do output.
+estrutura esta que garante a ordenação do output.\\
 Quanto ao ponto 4, mais uma vez tiramos partido das propriedades da estrutura \textit{TreeSet} sendo que esta não permite elementos repetidos, no caso da inserção falhar,
-o valor de referência actual é impresso para o ecrã.
+o valor de referência actual é impresso para o ecrã.\\
 Abaixo pode ser visto o código integral. 
 
 \begin{verbatim}
@@ -358,10 +544,6 @@ UNICODE_ESC
 % section gram_tica_tradutora (end)
 
 % section ficha_5 (end)
-
-\section{Conclusão}
-... %O que será para escrever
-
 
 \newpage
 \appendix

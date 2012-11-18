@@ -4,10 +4,10 @@
 \contentsline {subsection}{\numberline {2.1}Composi\IeC {\c c}\IeC {\~a}o do Corpo}{3}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}C\IeC {\'o}digo Java}{3}{subsection.2.2}
 \contentsline {subsection}{\numberline {2.3}Exemplo de Input}{3}{subsection.2.3}
-\contentsline {section}{\numberline {3}Ficha 5}{4}{section.3}
-\contentsline {subsection}{\numberline {3.1}Exemplo de frase v\IeC {\'a}lida e \IeC {\'A}rvore de Deriva\IeC {\c c}\IeC {\~a}o}{4}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Lista de Autores}{4}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Recursividade \IeC {\`a} esquerda para Recursividade \IeC {\`a} direita}{4}{subsection.3.3}
-\contentsline {section}{\numberline {4}Gram\IeC {\'a}tica Tradutora}{5}{section.4}
-\contentsline {section}{\numberline {5}Conclus\IeC {\~a}o}{9}{section.5}
-\contentsline {section}{\numberline {A}Imagens}{10}{appendix.A}
+\contentsline {subsection}{\numberline {2.4}Gramatica Tradutora}{4}{subsection.2.4}
+\contentsline {section}{\numberline {3}Ficha 5}{8}{section.3}
+\contentsline {subsection}{\numberline {3.1}Exemplo de frase v\IeC {\'a}lida e \IeC {\'A}rvore de Deriva\IeC {\c c}\IeC {\~a}o}{8}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Lista de Autores}{8}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Recursividade \IeC {\`a} esquerda para Recursividade \IeC {\`a} direita}{8}{subsection.3.3}
+\contentsline {section}{\numberline {4}Gram\IeC {\'a}tica Tradutora}{9}{section.4}
+\contentsline {section}{\numberline {A}Imagens}{14}{appendix.A}
