@@ -18,7 +18,13 @@
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{2pt}
 
-
+\newcommand{\addimg}[3]{\begin{figure}[h!]
+	\begin{center}
+		\includegraphics[width=\textwidth,keepaspectratio]{#1}
+	\end{center}	
+	\caption{\label{#2}#3}
+\end{figure}
+}
 
 
 \title{
@@ -52,14 +58,64 @@
 \newpage
 
 \section{Introdução}
+O objectivo desta avaliação era desenvolver uma Gramática de Atributos, com recurso da ferramenta VisualLisa, para o exercício
+já estudado da Lista não vazia.
 \section{Resolução}
-\subsecion{Lista-Conteudo}
-\subsecion{Conteudo-Conteudo_Elemento}
-\subsecion{Conteudo-Elemento}
-\subsecion{Elemento-String}
-\subsecion{Elemento-Integer}
-%Colocar as imagens nos vários locais com uma pequena explicação, não há muito a dizer, só mesmo nas duas 
-%últimas produções é que nécessário explicar mais um bocado.
+Essencialmente a resolução consistiu num \emph{ArrayList} com os vários conjuntos de somas que iam sendo passadas para cada
+elemento e caso fosse inteiro e tivesse 3 ou mais caracteres antes.
+\addimg{../imgs/NEList.png}{producoes}{Produções}
+\\Na figura \ref{producoes} podemos ver todas as produções da Gramática de Atributos.
+
+\subsection{Lista-Conteudo}
+\addimg{../imgs/lista-conteudo.png}{lista_conteudo}{Produção 0: Lista - Conteudo}
+Na figura \ref{lista_conteudo} podemos ver a constituição da primeira produção, enquanto na figura \ref{fn1_lista_conteudo}
+podemos ver a inicialização dos atributos (que serão passados para o conteudo) assim como a obtenção do resultado.
+\addimg{../imgs/fn1_lista-conteudo.png}{fn1_lista_conteudo}{Inicialização dos atributos herdados e obtenção do valor do atributo sintetizado.}
+
+\subsection{Conteudo-Conteudo-Virg-Elemento}
+\addimg{../imgs/conteudo-conteudo-virg-elemento.png}{conteudo_conteudo_virg_elemento}{Produção 1: Conteudo - Conteudo ',' Elemento}
+Na figura \ref{conteudo_conteudo_virg_elemento} podemos ver a constituição da segunda produção, enquanto na figura 
+\ref{fn1_conteudo_conteudo_virg_elemento} podemos ver o fluxo dos valores dos atributos (não existe neste ponto nenhum tipo
+de alteração dos valores, são simplesmente copiados).
+\addimg{../imgs/fn1_conteudo-conteudo-virg-elemento.png}{fn1_conteudo_conteudo_virg_elemento}{Transferência de valores entre os atributos.}
+
+\subsection{Conteudo-Elemento}
+\addimg{../imgs/conteudo-elemento.png}{conteudo_elemento}{Produção 2: Conteudo - Elemento}
+Na figura \ref{conteudo_elemento} podemos ver a constituição da terceira produção (tal como a anterior, derivação de conteudo),
+enquanto na figura \ref{fn1_conteudo_elemento} podemos ver o fluxo dos valores dos atributos (tal como na produção anterior
+são simplesmente copiados).
+\addimg{../imgs/fn1_conteudo-elemento.png}{fn1_conteudo_elemento}{Transferência de valores entre os atributos.}
+
+\subsection{Elemento-String}
+\addimg{../imgs/elemento-STRING.png}{elemento_string}{Produção 3: Elemento - STRING}
+Na figura \ref{elemento_string} podemos ver a constituição da quarta produção, que necessita de mais computação dos
+seus atributos como podemos ver respectivamente nas figuras \ref{fn1_elemento_STRING} e \ref{fn2_elemento_STRING}. Como
+nesta produção o elemento é uma \emph{String}, então a contagem de caracteres é incrementada, e o caso de se ter chegado
+ao terceiro caracter, é colocado o valor zero na nova \emph{slot} no \emph{ArrayList} das somas.
+Assim a função \emph{maisUm} possuirá o seguinte código:
+\begin{verbatim}return $1 + 1;\end{verbatim} %$
+Enquanto a função \emph{add2Soma} será:
+\begin{verbatim}if ($1 == 0) $2.add(-1); else {if ($1 == 2) $2.get($2.size()-1) = 0;} return $2;\end{verbatim} %$
+Deste modo sempre que detectar o primeiro caracter adicionará um slot negativo para impedir futuras somas até haver
+mais de três caracteres seguidos.
+\addimg{../imgs/fn1_elemento-STRING.png}{fn1_elemento_STRING}{Adição na contagem de caracteres.}
+\addimg{../imgs/fn2_elemento-STRING.png}{fn2_elemento_STRING}{Devolução do \emph{ArrayList} com as somas.}
+
+\subsection{Elemento-Integer}
+\addimg{../imgs/elemento-INTEGER.png}{elemento_integer}{Produção 4: Elemento - INTEGER}
+Na figura \ref{elemento_integer} podemos ver a constituição da quinta produção, que  tal como a anterior necessita de 
+mais computação dos seus atributos como podemos ver respectivamente nas figuras \ref{fn1_elemento_INTEGER} e 
+\ref{fn2_elemento_INTEGER}. 
+Assim a função \emph{eqchars} possuirá o seguinte código:
+\begin{verbatim}return 0;\end{verbatim}
+Enquanto a função \emph{addSoma} será:
+\begin{verbatim}if ($1.get($1.size()-1) >= 0) $1.get($1.size()-1) += $2; return $1;\end{verbatim} %$
+Deste modo o valor inteiro só será somado na última \emph{slot} se o número de caracteres imediatamente anterior for
+maior ou igual a 3 (ou seja a \emph{slot} respectiva já tenha sida inicializada).
+\addimg{../imgs/fn1_elemento-INTEGER.png}{fn1_elemento_INTEGER}{Reinicialização na contagem de caracteres.}
+\addimg{../imgs/fn2_elemento-INTEGER.png}{fn2_elemento_INTEGER}{Devolução do \emph{ArrayList} com as somas.}
+
 \section{Conclusão}
+Infelizmente este trabalho foi um pouco mais pesaroso de realizar pelo facto de o VisualLisa fechar muitas vezes inexplicavelmente.
 
 \end{document}

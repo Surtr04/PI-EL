@@ -10,7 +10,7 @@ A partir de agora, este readme serve para nós trocarmos informação. Convém q
 Já pus a árvore de derivação no repositório, o mais cedo possível dá-me a tua opinião. 
 Já coloquei a parte da ficha 3 toda completa (ficheiro .g, o código java pedido e um exemplo de input). Chamei-lhe AV0, porque como não estava programada, e a próxima é que é AV1. Fiz também o relatório da ficha 3 apesar de não haver muito a escrever (as questões são todas respondidas na GT). Ele também tinha dito que não queria um relatório muito complicado. Só não coloquei os autores. Não sei como querias aquilo.
 ------------------
-AV1: Quase completo, só me falta terminar o relatório.
+AV1: Quase completo, só falta reler novamente. Convinha que também desses uma vista de olhos para dares a tua opinião.
 
 
 ###SPLN
