@@ -5,12 +5,12 @@ PI-EL
 
 A partir de agora, este readme serve para nós trocarmos informação. Convém que se veja isto todos os dias para saber os últimos updates.
 
+###PI
+
+Em relação à criação da gramática de atributos convinha que visses e desses uma opinião. O que lá coloquei é um exemplo do que eu acho bom para a criação da linguagem de atributos (assim criámos um json que pode ser lido no servidor sem riscos de segurança). O exemplo não está completo é mais para saber a tua opinião se vale a pena continuar ou não.
+
 ###EG
 
-Já pus a árvore de derivação no repositório, o mais cedo possível dá-me a tua opinião. 
-Já coloquei a parte da ficha 3 toda completa (ficheiro .g, o código java pedido e um exemplo de input). Chamei-lhe AV0, porque como não estava programada, e a próxima é que é AV1. Fiz também o relatório da ficha 3 apesar de não haver muito a escrever (as questões são todas respondidas na GT). Ele também tinha dito que não queria um relatório muito complicado. Só não coloquei os autores. Não sei como querias aquilo.
-------------------
-AV1: Quase completo, só falta reler novamente. Convinha que também desses uma vista de olhos para dares a tua opinião.
 
 
 ###SPLN
