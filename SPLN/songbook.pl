@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 
 use strict;
 use Getopt::Long;
@@ -6,16 +7,15 @@ use File::Copy;
 
 my $byAuthor;
 my $bySinger;
-my $musicDir;
 my $archive;
 
 Getopt::Long::Configure('bundling');
-GetOptions('a' => \$byAuthor,'s' => \$bySinger, 'd:s' => \$archive);
+GetOptions('a:s' => \$byAuthor,'s:s' => \$bySinger, 'd:s' => \$archive);
 
 
 sub trim {
 	my $str = shift;
-	$str =~ s/^\s+//g;
+	$str =~ s/^\s+//g;	
 
 	return $str;
 }
@@ -47,14 +47,16 @@ if($byAuthor) {
 		
 		while (<FILE>) {
 			if ($_ =~ m/author:(.*)/g) {
-				my $curr_auth = trim($1);
-				chdir $archive_path;				
-				
-				unless (-d $curr_auth) {
-					mkdir $curr_auth;
-				}			
+				if(trim($1) eq $byAuthor) {
+					my $curr_auth = trim($1);
+					chdir $archive_path;				
+					
+					unless (-d $curr_auth) {
+						mkdir $curr_auth;
+					}			
 
-				copy($file_path,$archive_path . "/$curr_auth");				
+					copy($file_path,$archive_path . "/$curr_auth");		
+				}		
 				last;
 			}
 
@@ -93,14 +95,16 @@ if($bySinger) {
 		
 		while (<FILE>) {
 			if ($_ =~ m/singer:(.*)/g) {
-				my $curr_sing = trim($1);
-				chdir $archive_path;				
-				
-				unless (-d $curr_sing) {
-					mkdir $curr_sing;
-				}			
+				if($1 eq $bySinger) {
+					my $curr_sing = trim($1);
+					chdir $archive_path;				
+					
+					unless (-d $curr_sing) {
+						mkdir $curr_sing;
+					}			
 
-				copy($file_path,$archive_path . "/$curr_sing");				
+					copy($file_path,$archive_path . "/$curr_sing");				
+				}
 				last;
 			}
 
@@ -110,3 +114,4 @@ if($bySinger) {
 	}
 
 }
+
