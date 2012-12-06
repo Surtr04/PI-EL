@@ -1,0 +1,23 @@
+@info {
+	Name: "xpto"
+	Nationalities: [Portuguese,Canadian]
+	PersonalContacts: [
+					Phone: "252000000" , 
+					Email: xpto@st.pt
+					]
+	Birthdate: 13/05/2001
+	Gender: M
+	NativeLang: [Portuguese,English]
+	Web: http://xpto.com
+}
+@form {
+	Begin: 01/01/2008
+	End: 01/02/2012
+	Institution: 
+		Name: "Universidade do Minho"
+		Address: "Gualtar xpto"
+		Country: Portugal
+		Type: University
+	Degree: BSc "Engenharia Informática"
+	Result: 20
+}

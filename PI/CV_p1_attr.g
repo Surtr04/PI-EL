@@ -1,30 +1,32 @@
-grammar CV_p1;
+grammar CV_p1_attr;
 
 options{
 	language=Java;
-	k=1;
+	k=2;
 }
 
 
-cv 	:	info form*
+cv 	returns [String valor]
+	:	info {$cv.valor = $info.valor;} (form {$cv.valor += "\n" + $form.valor;})*
+	{System.out.println($cv.valor);}
 	;
 	
 info returns [String valor]
 	: '@info {' name nationalities contacts birthdate gender natlang web '}'
 	{
-		$info.valor= '{info:{"name":' + $name.valor + 
-					 ',"nationalities":' + $nationalities.valor + 
-					 ',"contacts":' + $contacts.valor +  
- 					 ',"birthdate":' + $birthdate.valor +  
- 					 ',"gender":' + $gender.valor + 
- 					 ',"natlang":' + $natlang.valor + 
- 					 ',"web":' + $web.valor + 
-					 + '}}'
+		$info.valor= "{\"info\":{\"name\":" + $name.valor + 
+					 ",\"nationalities\":" + $nationalities.valor + 
+					 ",\"contacts\":" + $contacts.valor +  
+ 					 ",\"birthdate\":" + $birthdate.valor +  
+ 					 ",\"gender\":" + $gender.valor + 
+ 					 ",\"natlang\":" + $natlang.valor + 
+ 					 ",\"web\":" + $web.valor + 
+					 "}}";
 	}
 	;
-	
+
 nationalities returns [String valor]
-	:	'Nationalities: [' a=STRING {$nationalities.valor='['+a.text;} (',' b=STRING {$nationalities.valor+=','+b.text;})? ']' {$nationalities.valor+=']';}
+	:	'Nationalities: [' a=SPID {$nationalities.valor="[\""+$a.text;} (',' b=SPID {$nationalities.valor+="\",\""+$b.text;})? ']' {$nationalities.valor+="\"]";}
 	;
 name returns [String valor]
 	:	'Name: ' STRING
@@ -32,73 +34,104 @@ name returns [String valor]
 	;
 
 contacts returns [String valor]
-	:	'PersonalContacts: [' a=contact{$contacts.valor='{"'+a.tipo+'":'+a.valor;} (',' b=contact{$contacts.valor+=',"'+a.tipo+'":'+a.valor})* ']';
+	:	'PersonalContacts: [' a=contact{$contacts.valor="[{\"type\":"+$a.tipo+",\"value\":"+$a.valor+"}";} (',' b=contact{$contacts.valor+=",{\"type\":"+$b.tipo+",\"value\":"+$b.valor+"}";})* ']' {$contacts.valor += "]";};
 	
 
 contact returns [String tipo, String valor]
-	:	'Phone:' STRING {$contact.tipo='p'; $contact.valor=$STRING.text;}
-	|	'Fax:' STRING {$contact.tipo='f'; $contact.valor=$STRING.text;}
-	|	'Email:'ID'@'ID'.'ID {$contact.tipo='e'; $contact.valor=$ID.text + "@" + $ID.text + "." + $ID.text;}
+	:	'Phone:' STRING {$contact.tipo="\"p\""; $contact.valor=$STRING.text;}
+	|	'Fax:' STRING {$contact.tipo="\"f\""; $contact.valor=$STRING.text;}
+	|	'Email:' a=ID '@' b=ID '.' c=ID {$contact.tipo="\"e\""; $contact.valor= "\"" + $a.text + "@" + $b.text + "." + $c.text + "\"";}
 	;	
 	
 birthdate returns [String valor]
-	:	'Birthdate: ' data {$birthdate.valor = $data.valor}
+	:	'Birthdate: ' data {$birthdate.valor = $data.valor;}
 	;
 	
 data returns [String valor]
-	:	d=INT '/' m=INT '/' y=INT {$data.valor = d.text+"/"+m.text+"/"+y.text;}
+	:	d=INT '/' m=INT '/' y=INT {$data.valor = "\"" + $d.text+"/"+$m.text+"/"+$y.text + "\"";}
 	;
 
 gender returns [String valor]
-	:	'Gender: ' ('M' {$gender.valor='m';} | 'F'{$gender.valor='f';})
+	:	'Gender: ' ('M' {$gender.valor="\"m\"";} | 'F'{$gender.valor="\"f\"";})
 	;
 
 natlang returns [String valor]
-	:	'NativeLang: [' a=STRING {$natlang.valor='['+a.text;} (',' b=STRING {$natlang.valor+=','+b.text;})? ']' {$natlang.valor+=']';}
+	:	'NativeLang: [' a=SPID {$natlang.valor="[\""+$a.text;} (',' b=SPID {$natlang.valor+="\",\""+$b.text;})? ']' {$natlang.valor+="\"]";}
 	;
 	
 web	returns [String valor]
-	:	'Web: http' {$web.valor='http';} ('s' {$web.valor+='s';})? '://' a=ID{$web.valor+='://'+a.text;} ('.'b=ID{$web.valor+='.'+b.text;})+;
+	:	'Web: http' {$web.valor="\"http";} ('s' {$web.valor+="s";})? '://' a=ID{$web.valor+="://"+$a.text;} ('.'b=ID{$web.valor+="."+$b.text;})+ {$web.valor += "\"";}
+	;
 
 form returns [String valor]
 	:	'@form {' begin end institutions degree result '}'
+	{
+		$form.valor= "{\"form\":{\"begin\":" + $begin.valor + 
+					 ",\"end\":" + $end.valor + 
+					 ",\"institutions\":" + $institutions.valor +  
+ 					 ",\"degree\":" + $degree.valor +  
+ 					 ",\"result\":" + $result.valor + 
+					 "}}";
+	}
 	;
 	
-begin
-	:	'Begin: ' data;
+begin returns [String valor]
+	:	'Begin: ' data {$begin.valor = $data.valor;}
+	;
 	
-end	:	'End: ' data;
+end	returns [String valor]
+	:	'End: ' data {$end.valor = $data.valor;}
+	;
 
-degree
-	:	'Degree: ' degreeType STRING;
+degree returns [String valor]
+	:	'Degree: ' degreeType STRING {$degree.valor = "{\"type\":" + $degreeType.valor + ", \"value\":" + $STRING.text + "}"; }
+	;
 
-degreeType
-	:	('BSc'|'MSc'|'Phd');	
+degreeType returns [String valor]
+	:	'BSc' {$degreeType.valor="1";}
+	|	'MSc' {$degreeType.valor="2";}
+	|	'Phd' {$degreeType.valor="3";}
+	;	
 	
-result
-	:	'Result: ' (INT|STRING);
+result returns [String valor]
+	:	'Result: ' (INT {$result.valor=$INT.text; }|STRING {$result.valor= "\"" + $STRING.text + "\"";})
+	;
 
-institutions
-	:	'[' institution (',' institution)* ']'
-	|	institution;
+institutions returns [String valor]
+	:	'Institutions: [' a=institution {$institutions.valor = "[" + $a.valor;} (',' b=institution {$institutions.valor = "," + $b.valor;})* ']' {$institutions.valor = "]";}
+	|	'Institution: ' institution { $institutions.valor = "[" + $institution.valor + "]";}
+	;
 	
-institution
-	:	name address country type;
+institution returns [String valor]
+	:	name address country type
+	{
+		$institution.valor= "{\"institution\":{\"name\":" + $name.valor + 
+					 ",\"address\":" + $address.valor + 
+					 ",\"country\":" + $country.valor +  
+ 					 ",\"type\":" + $type.valor +  
+					 "}}";
+	}
+	;
 	
-address
-	:	'Address: ' STRING;
+address returns [String valor]
+	:	'Address: ' STRING {$address.valor=$STRING.text; }
+	;
 
-country
-	:	'Country: ' COUNTRY;
+country returns [String valor]
+	:	'Country: ' SPID  {$country.valor= "\"" +$SPID.text  + "\""; }
+	;
 
-type:	'Type: ' STRING;
+type returns [String valor]
+	:	'Type: ' SPID  {$type.valor= "\"" + $SPID.text  + "\""; }
+	;
+
+SPID
+	:	(('A'..'Z')('a'..'z')*)+
+	;
 
 ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
-   
-fragment
-COUNTRY
-	:	(('A'..'Z')('a'..'z')*)+;
+
 
 INT :	'0'..'9'+
     ;
