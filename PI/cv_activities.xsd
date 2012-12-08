@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="activities">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="activity">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="begin_date" type="xs:date"/>
+                            <xs:element minOccurs="0" name="end_date" type="xs:date"/>
+                            <xs:element name="description" type="xs:string"/>
+                        </xs:sequence>
+                        <xs:attribute form="unqualified" name="role" use="required">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="teaching"/>
+                                    <xs:enumeration value="research"/>
+                                    <xs:enumeration value="management"/>
+                                    <xs:enumeration value="psec"/>
+                                    <xs:whiteSpace value="preserve"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
