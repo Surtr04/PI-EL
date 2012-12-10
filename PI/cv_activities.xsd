@@ -8,7 +8,10 @@
                         <xs:sequence>
                             <xs:element name="begin_date" type="xs:date"/>
                             <xs:element minOccurs="0" name="end_date" type="xs:date"/>
-                            <xs:element name="description" type="xs:string"/>
+                            <xs:sequence>
+                                <xs:element name="description" type="xs:string"/>
+                                <xs:element minOccurs="0" name="publication" type="xs:string"/>
+                            </xs:sequence>
                         </xs:sequence>
                         <xs:attribute form="unqualified" name="role" use="required">
                             <xs:simpleType>
@@ -24,7 +27,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="code" type="xs:integer"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>
