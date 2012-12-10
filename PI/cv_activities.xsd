@@ -3,9 +3,13 @@
     <xs:element name="activities">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="activity">
+                <xs:element name="activity" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
+                            <xs:choice>
+                                <xs:element name="name" type="xs:string"/>
+                                <xs:element name="username" type="xs:string"/>
+                            </xs:choice>
                             <xs:element name="begin_date" type="xs:date"/>
                             <xs:element minOccurs="0" name="end_date" type="xs:date"/>
                             <xs:sequence>
@@ -13,6 +17,7 @@
                                 <xs:element minOccurs="0" name="publication" type="xs:string"/>
                             </xs:sequence>
                         </xs:sequence>
+                        <xs:attribute name="code" type="xs:integer"/>
                         <xs:attribute form="unqualified" name="role" use="required">
                             <xs:simpleType>
                                 <xs:restriction base="xs:string">
@@ -27,7 +32,6 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="code" type="xs:integer"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>
