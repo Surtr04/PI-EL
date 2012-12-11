@@ -5,6 +5,18 @@ options{
 	k=2;
 }
 
+@header{
+	import java.util.GregorianCalendar;
+}
+
+@members{
+
+	public void showError(String txt, int linha, int coluna){
+		System.out.println("Error: '" + txt + "' in " + linha + ":"+coluna);
+	}
+
+}
+
 
 cv 	returns [String valor]
 	:	info {$cv.valor = $info.valor;} (form {$cv.valor += "\n" + $form.valor;})*
@@ -47,8 +59,12 @@ birthdate returns [String valor]
 	:	'Birthdate: ' data {$birthdate.valor = $data.valor;}
 	;
 	
-data returns [String valor]
-	:	d=INT '/' m=INT '/' y=INT {$data.valor = "\"" + $d.text+"/"+$m.text+"/"+$y.text + "\"";}
+data returns [String valor, GregorianCalendar data]
+	:	d=INT '/' m=INT '/' y=INT 
+	{
+		$data.valor = "\"" + $d.text+"/"+$m.text+"/"+$y.text + "\"";
+		$data.data = new GregorianCalendar($y.int, $m.int, $d.int);
+	}
 	;
 
 gender returns [String valor]
@@ -64,8 +80,10 @@ web	returns [String valor]
 	;
 
 form returns [String valor]
-	:	'@form {' begin end institutions degree result '}'
+	:	'@form {' a=begin b=end institutions degree result '}'
 	{
+		GregorianCalendar gc = $a.data;
+		if (gc.after($b.data)) this.showError("Data de inicio superior ao fim (" + $a.valor + " > " + $b.valor + ")", 0, 0);
 		$form.valor= "{\"form\":{\"begin\":" + $begin.valor + 
 					 ",\"end\":" + $end.valor + 
 					 ",\"institutions\":" + $institutions.valor +  
@@ -75,11 +93,11 @@ form returns [String valor]
 	}
 	;
 	
-begin returns [String valor]
+begin returns [String valor, GregorianCalendar data]
 	:	'Begin: ' data {$begin.valor = $data.valor;}
 	;
 	
-end	returns [String valor]
+end	returns [String valor, GregorianCalendar data]
 	:	'End: ' data {$end.valor = $data.valor;}
 	;
 
@@ -98,8 +116,10 @@ result returns [String valor]
 	;
 
 institutions returns [String valor]
-	:	'Institutions: [' a=institution {$institutions.valor = "[" + $a.valor;} (',' b=institution {$institutions.valor = "," + $b.valor;})* ']' {$institutions.valor = "]";}
-	|	'Institution: ' institution { $institutions.valor = "[" + $institution.valor + "]";}
+@init{ $institutions.valor = "{\"institutions\": ";}
+	:	'Institutions: [' a=institution {$institutions.valor += "institutions: [" + $a.valor;} (',' b=institution {$institutions.valor = "," + $b.valor;})* ']' {$institutions.valor = "]";}
+	|	'Institution: ' institution { $institutions.valor += "[" + $institution.valor + "]";}
+	{ $institutions.valor = "}";}
 	;
 	
 institution returns [String valor]

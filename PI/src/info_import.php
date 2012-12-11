@@ -38,23 +38,33 @@
 	function insertForm($db, $person_id, $txt){
 		$db->beginTransaction();
 		
-		$query = $db->prepare("INSERT INTO institutions VALUES(null, :name, :address, :country, :type)");
-		$query->bindValue(':name', $person_id, PDO::PARAM_STR);
-		$query->bindValue(':address', $person_id, PDO::PARAM_STR);
-		$query->bindValue(':country', $person_id, PDO::PARAM_STR);
-		$query->bindValue(':type', $person_id, PDO::PARAM_STR);
-		$query->execute() or die($db->errorInfo());
-		
-		$inst = $db->lastInsertId();
-		
 		$query = $db->prepare("INSERT INTO forms VALUES(null, :pid, :begin, :end, :inst, :degreet, :degree, :result)");
 		$query->bindValue(':pid', $person_id, PDO::PARAM_STR);
 		$query->bindValue(':begin', $txt->begin, PDO::PARAM_STR);
 		$query->bindValue(':end', $txt->end, PDO::PARAM_STR);
-		$query->bindValue(':inst', $inst, PDO::PARAM_STR);
 		$query->bindValue(':degreet', $txt->degree->type, PDO::PARAM_STR);
 		$query->bindValue(':degree', $txt->degree->value, PDO::PARAM_STR);
 		$query->execute() or die($db->errorInfo());
+		
+		$form = $db->lastInsertId();
+		
+		foreach($txt->institutions as $valor){
+			$query = $db->prepare("INSERT INTO institutions VALUES(null, :name, :address, :country, :type)");
+			$query->bindValue(':name', $valor->name, PDO::PARAM_STR);
+			$query->bindValue(':address', $valor->address, PDO::PARAM_STR);
+			$query->bindValue(':country', $valor->country, PDO::PARAM_STR);
+			$query->bindValue(':type', $valor->type, PDO::PARAM_STR);
+			$query->execute() or die($db->errorInfo());
+			
+			$inst = $db->lastInsertId();
+			
+			$query = $db->prepare("INSERT INTO forms_institutions VALUES(:form, :inst)");
+			$query->bindValue(':form', $form, PDO::PARAM_STR);			
+			$query->bindValue(':inst', $inst, PDO::PARAM_STR);			
+			$query->execute() or die($db->errorInfo());
+		}
+		
+		
 		
 		$db->commit();
 	}
