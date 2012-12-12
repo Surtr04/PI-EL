@@ -53,17 +53,30 @@
 \newpage
 
 \section{Introdução}
-O projecto consiste no desenvolvimento de um sistema de informação que permita gerir os dados curriculares de um docente universitário.\\
+O projecto consiste no desenvolvimento de um sistema de informação que permita gerir a informação curriculares de um docente universitário.\\
 Essa informação a recolher, armazenar e publicar inclui, além da identificação completa do docente, dados sobre a formação, as várias actividades académicas desenvolvidas e resultados atingidos.\\
-Neste primeira fase eram pedidos o planeamento, a modelação (Diagrama de classes, Esquema de Base de Dados, Use Cases...), uma gramática e respectivo processador para uma linguagem de informação e formação, e ainda uma esquema de uma linguagem de anotação para as actividades desenvolvidas.
-
+Nesta primeira fase foram-nos pedidos o planeamento das actividades a desenvolver, a modelação do problema em mãos (Diagrama de classes, Esquema de Base de Dados, Use Cases...), uma gramática e respectivo processador para uma linguagem de informação e formação
+Adicionalmente, foi pedido ainda um esquema de uma linguagem de anotação para as actividades desenvolvidas.
 
 \section{Planeamento}
+
+A figura abaixo apresenta o planeamento do projecto.\\
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{timeline_net_plan.png}
+\caption{Planeamento do projecto}
+\label{fig:timelinenetplan}
+\end{figure}
+
+\scriptsize 
+Nota: a figura apresenta um "net plan"  pois não era possível por motivos de espaço inserir uma organização por semanas
+\normalsize
+\newpage
 
 \section{Modelação}
 
 \subsection{Diagrama de Classes}
-\begin{figure}[!ht]
+\begin{figure}[!htb]
 \centering
 \includegraphics[scale=.4]{Diagrama_Classes.jpg}
 \caption{Diagrama de Classes}
@@ -105,17 +118,17 @@ A estrutura da base de dados (figura \ref{fig:basededados}) foi pensada de forma
 \section{Linguagem formal para Identificação e Formação}
 \subsection{Gramática}
 A Gramática para a linguagem de identificação e formação foi facilmente criada, recorrendo ao que já tínhamos analisado para o diagrama de classes. No entanto, permitiu-nos também enriquecer mais o diagrama de classes, pois ao irmos escrevendo a gramática lembramo-nos de coisas que nos poderiam fazer falta.\\
-Apesar de tudo não refinámos ainda muito certos campos como o email e o web porque são coisas definidas por normas externas, que queríamos tentar seguir e adaptar à gramática desenvolvida no AntLR.\\
-Também aqui decidimos fazer, que permita futuras actualizações em implicar uma completa reestruturação da gramática. Uma delas foi aquilo a que nos chamamos \emph{Special ID} (SPID), por exemplo para valores como o País. Isto porque o País é um cujo os valores podem ser normalizados de modo a que não existam dois países iguais com nomes diferentes, e poderá permitir mais para a frente se acharmos conveniente criar mais uma relação na Base de Dados, de modo a reduzir o espaço ocupado, por exemplo pelas nacionalidades.
+Apesar de tudo não refinámos ainda muito certos campos como o email e o url porque são coisas definidas por normas externas, que queríamos tentar seguir e adaptar à gramática desenvolvida no \emph{AntLR}.\\
+Também aqui decidimos fazer algo que permita futuras actualizações sem implicar uma completa reestruturação da gramática. Uma delas foi aquilo a que nos chamamos \emph{Special ID} (SPID), por exemplo para valores como o País. Isto porque o País é um campo cujos valores podem ser normalizados de modo a que não existam dois países iguais com nomes diferentes, e poderá permitir mais para a frente se acharmos conveniente criar mais uma relação na Base de Dados, de modo a reduzir o espaço ocupado, por exemplo pelas nacionalidades.
 \begin{verbatim}
 SPID
 	:	('A'..'Z')('a'..'z')* (' '('A'..'Z')('a'..'z')*)*
 	;
 \end{verbatim}
 \subsection{Processador}
-Quando discutimos o nosso processador, foi ponto assente, que queríamos evitar a repetição de código, assim sendo tentamos passar grande parte da responsabilidade para o ficheiro \emph{info\_import.php}, que seria um \emph{template}. Assim grande parte das coisas geradas pelo Parser seriam simplesmente valores etiquetados que ele saberia onde colocar.\\
-Infelizmente não tivemos muito tempo para implementar a detecção de erros semânticos e assim, apesar de ele já detectar erros, como a data de início ser superior às de fim, apenas mostra essa mensagem mas continua o processamento.\\
-Também neste momento o formulário para importação do documento é bastante reduzido, e serve simplesmente para indicar o ficheiro em questão.
+Quando discutimos o nosso processador, decidimos desde uma fase embrionária que queríamos evitar a repetição de código. Assim sendo tentamos passar grande parte da responsabilidade para o ficheiro \emph{info\_import.php}, que seria um \emph{template}. Assim grande parte das coisas geradas pelo Parser seriam simplesmente valores etiquetados que ele saberia onde colocar.\\
+Apesar de parcialmente implementada, a detecção de erros semânticos não está completa por falta de tempo. Erros como a data de início ser superior à de fim são apanhados,mas apenas é mostrada uma mensagem e o processamento continua.\\
+Também neste momento o formulário para importação do documento é bastante reduzido e serve unicamente para indicar o ficheiro em questão.
 \begin{verbatim}
 <html>
 	<head></head>
@@ -130,7 +143,7 @@ Também neste momento o formulário para importação do documento é bastante r
 	</body>
 </html>
 \end{verbatim}
-O código de execução do \emph{parser} e leitura dos resultados também não é muito complexa. No entanto permite que estejam vários utilizadores simultâneos a executar a aplicação web, sem existir nenhum tipo de conflitos já que o \emph{stdout} é redireccionado para a leitura do php através de um \emph{handler}.
+O código de execução do \emph{parser} e leitura dos resultados também não é muito complexo. No entanto permite que estejam vários utilizadores simultâneos a executar a aplicação web, sem existir nenhum tipo de conflitos já que o \emph{stdout} é redireccionado para a leitura do php através de um \emph{handler}.
 \begin{verbatim}
 $f = (popen('java -jar AntLRParser.jar "'.$_FILES['ficheiro']['tmp_name'].'"', "r"));
 
