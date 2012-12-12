@@ -7,7 +7,7 @@ A partir de agora, este readme serve para nós trocarmos informação. Convém q
 
 ###PI
 
-Em relação à criação da gramática de atributos convinha que visses e desses uma opinião. O que lá coloquei é um exemplo do que eu acho bom para a criação da linguagem de atributos (assim criámos um json que pode ser lido no servidor sem riscos de segurança). O exemplo não está completo é mais para saber a tua opinião se vale a pena continuar ou não.
+Falta terminar somente o relatório e depois imprimir.
 
 ###EG
 

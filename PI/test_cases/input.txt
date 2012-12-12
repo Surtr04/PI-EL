@@ -1,4 +1,4 @@
-@info {
+﻿@info {
 	Name: "xpto"
 	Nationalities: [Portuguese,Canadian]
 	PersonalContacts: [
@@ -16,7 +16,7 @@
 	Institution: 
 		Name: "Universidade do Minho"
 		Address: "Gualtar xpto"
-		Country: Portugal
+		Country: Portugal Europeu
 		Type: University
 	Degree: BSc "Engenharia Informática"
 	Result: 20

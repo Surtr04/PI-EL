@@ -6,7 +6,7 @@
                 <xs:element name="activity" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:choice>
+                            <xs:choice maxOccurs="unbounded">
                                 <xs:element name="name" type="xs:string"/>
                                 <xs:element name="username" type="xs:string"/>
                             </xs:choice>
