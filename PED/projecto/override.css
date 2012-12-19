@@ -1,0 +1,59 @@
+/*
+	(C) António Silva e Rui Brito - 2012/2013
+*/
+
+.splink{
+	text-decoration: none !important;
+}
+
+.th_normal{
+	padding: 5px;
+	text-align: center;
+}
+
+.td_normal a:hover, .td_normal a{
+	display: inline !important;
+}
+.td_normal, .td_normal a:hover, .td_normal a{
+	background: none !important;
+
+}
+
+.td_normal{
+	padding: 5px;
+	height: auto !important;
+	width: auto !important;
+}
+
+.class_links{
+    border: medium none !important;
+    height: 16px !important;
+    padding: 0 !important;
+    width: 16px !important;
+	float: none !important;
+	background-color: transparent !important;
+}
+
+.class_edit {
+    background-image: url("images/icons/page_edit.png");
+}
+
+.class_add {
+    background-image: url("images/icons/page_add.png");
+}
+
+.class_delete {
+    background-image: url("images/icons/page_delete.png");
+}
+
+.class_accept {
+    background-image: url("images/icons/accept.png") !important;
+}
+
+.class_cancel {
+    background-image: url("images/icons/cancel.png");
+}
+
+.class_find {
+    background-image: url("images/icons/page_find.png");
+}
