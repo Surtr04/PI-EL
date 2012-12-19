@@ -1,13 +1,42 @@
 grammar IMC;
 
-imc	:	
+options{
+	language=Java;
+}
+
+@header{
+	import java.util.HashSet;
+}
+
+@members{
+	HashSet<String> states;
+}
+
+imc	
+	@init{
+		states = new HashSet<String>();
+	}
+	:	
 	INITIAL_STATE a=state[""]+ FINAL_STATE b=state[""]+ TRANSITION_STATE transitions+;
 
 transitions
-	:	st=state[""] (action|markovian_trans)  transition_def[$markovian_trans.isMarkovian, $action.isAction,$state.actual_st]+;
+	:	st=state[""] {
+	
+		if (!states.add($st.actual_st)) {
+			System.out.println("ERROR (multiple definitions of state " + $st.actual_st + "): " + "line -> " + $st.line + " column -> " + $st.pos);
+		}					
+	}
+	  (ac=action|mt=markovian_trans) {
+	  	if(mt == false) {
+		  	if($ac.action_value.equals("tau")) {
+				System.out.println("Warning (source is unstable state): " + "line -> " + $st.line + " column -> " + $st.pos);
+			}
+		}
+	  }
+	   transition_def[$markovian_trans.isMarkovian, $action.isAction,$state.actual_st]+;
 
 transition_def [boolean isM, boolean isA,String root_state]
-	:	'*' a=state[root_state]  trans_prob_rate [isM,isA]?
+	:	'*' a=state[root_state]  trans_prob_rate [isM,isA]
 	;
 
 trans_prob_rate [boolean isM,boolean isA]
@@ -16,20 +45,26 @@ trans_prob_rate [boolean isM,boolean isA]
 		float r;
 		if(b == null) { r = Float.parseFloat($a.text);} else { r = Float.parseFloat($b.text);}
 
-		if(r != 0 && r != 1) {
-			if (isA) 
-				{		
-					System.out.println("Warning (probabilistic transition): line -> " + $a.line  + " column -> " + $a.pos);
-				}
-			}
-		}	
+		if (isA && (r != 0 && r != 1))		
+			System.out.println("Warning (probabilistic transition): line -> " + $a.line  + " column -> " + $a.pos);
+		
+		if(isM && r == 0 && a == null) 
+			System.out.println("ERROR (0 rate markovian transition ): line -> " + $b.line  + " column -> " + $b.pos); 
+			
+		if(isM && r == 0 && b == null) 
+			System.out.println("ERROR (0 rate markovian transition ): line -> " + $a.line  + " column -> " + $a.pos); 				
+		
+		}																		
 	;
 
-state [String st] returns [String actual_st]
+state [String st] returns [String actual_st, int line, int pos]
 	:	st2=ID
 	{
 		$state.actual_st = $st2.text;
-		if(st.equals(actual_st)) {
+		$state.line = $st2.line;
+		$state.pos = $st2.pos;
+						
+		if(st.equals($state.actual_st)) {
 			System.out.println("Warning (markovian loop): line -> " + $st2.line  + " column -> " + $st2.pos);
 		}
 	}
@@ -38,8 +73,8 @@ state [String st] returns [String actual_st]
 markovian_trans returns [boolean isMarkovian]
 	:	'!' {$markovian_trans.isMarkovian = true;};
 	
-action returns [boolean isAction]
-	:	ID {$action.isAction = true;};
+action returns [boolean isAction, String action_value]
+	:	a=ID {$action.isAction = true; $action.action_value = $a.text;};
 
 INITIAL_STATE
 	:	'#INITIALS';

@@ -1,4 +1,4 @@
-// $ANTLR 3.x /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g 2012-12-19 12:26:28
+// $ANTLR 3.x /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g 2012-12-19 15:19:40
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -45,8 +45,8 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = T__18;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:2:7: ( '!' )
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:2:9: '!'
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:7:7: ( '!' )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:7:9: '!'
 			{
 			match('!'); 
 			}
@@ -65,8 +65,8 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = T__19;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:3:7: ( '*' )
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:3:9: '*'
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:8:7: ( '*' )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:8:9: '*'
 			{
 			match('*'); 
 			}
@@ -85,8 +85,8 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = INITIAL_STATE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:45:2: ( '#INITIALS' )
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:45:4: '#INITIALS'
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:80:2: ( '#INITIALS' )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:80:4: '#INITIALS'
 			{
 			match("#INITIALS"); 
 
@@ -106,8 +106,8 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = FINAL_STATE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:48:2: ( '#GOALS' )
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:48:4: '#GOALS'
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:83:2: ( '#GOALS' )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:83:4: '#GOALS'
 			{
 			match("#GOALS"); 
 
@@ -127,8 +127,8 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = TRANSITION_STATE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:51:2: ( '#TRANSITIONS' )
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:51:4: '#TRANSITIONS'
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:86:2: ( '#TRANSITIONS' )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:86:4: '#TRANSITIONS'
 			{
 			match("#TRANSITIONS"); 
 
@@ -148,8 +148,8 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = ID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:54:5: ( ( '#' | 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '(' | ')' )* )
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:54:7: ( '#' | 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '(' | ')' )*
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:89:5: ( ( '#' | 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '(' | ')' )* )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:89:7: ( '#' | 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '(' | ')' )*
 			{
 			if ( input.LA(1)=='#'||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -159,7 +159,7 @@ public class IMCLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:54:35: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '(' | ')' )*
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:89:35: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '(' | ')' )*
 			loop1:
 			do {
 				int alt1=2;
@@ -204,10 +204,10 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = INT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:57:5: ( ( '0' .. '9' )+ )
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:57:7: ( '0' .. '9' )+
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:92:5: ( ( '0' .. '9' )+ )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:92:7: ( '0' .. '9' )+
 			{
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:57:7: ( '0' .. '9' )+
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:92:7: ( '0' .. '9' )+
 			int cnt2=0;
 			loop2:
 			do {
@@ -257,14 +257,14 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = FLOAT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:61:5: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:96:5: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT )
 			int alt9=3;
 			alt9 = dfa9.predict(input);
 			switch (alt9) {
 				case 1 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:61:9: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )?
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:96:9: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )?
 					{
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:61:9: ( '0' .. '9' )+
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:96:9: ( '0' .. '9' )+
 					int cnt3=0;
 					loop3:
 					do {
@@ -299,7 +299,7 @@ public class IMCLexer extends Lexer {
 					} while (true);
 
 					match('.'); 
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:61:25: ( '0' .. '9' )*
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:96:25: ( '0' .. '9' )*
 					loop4:
 					do {
 						int alt4=2;
@@ -328,7 +328,7 @@ public class IMCLexer extends Lexer {
 						}
 					} while (true);
 
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:61:37: ( EXPONENT )?
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:96:37: ( EXPONENT )?
 					int alt5=2;
 					int LA5_0 = input.LA(1);
 					if ( (LA5_0=='E'||LA5_0=='e') ) {
@@ -336,7 +336,7 @@ public class IMCLexer extends Lexer {
 					}
 					switch (alt5) {
 						case 1 :
-							// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:61:37: EXPONENT
+							// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:96:37: EXPONENT
 							{
 							mEXPONENT(); 
 
@@ -348,10 +348,10 @@ public class IMCLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:62:9: '.' ( '0' .. '9' )+ ( EXPONENT )?
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:97:9: '.' ( '0' .. '9' )+ ( EXPONENT )?
 					{
 					match('.'); 
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:62:13: ( '0' .. '9' )+
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:97:13: ( '0' .. '9' )+
 					int cnt6=0;
 					loop6:
 					do {
@@ -385,7 +385,7 @@ public class IMCLexer extends Lexer {
 						cnt6++;
 					} while (true);
 
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:62:25: ( EXPONENT )?
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:97:25: ( EXPONENT )?
 					int alt7=2;
 					int LA7_0 = input.LA(1);
 					if ( (LA7_0=='E'||LA7_0=='e') ) {
@@ -393,7 +393,7 @@ public class IMCLexer extends Lexer {
 					}
 					switch (alt7) {
 						case 1 :
-							// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:62:25: EXPONENT
+							// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:97:25: EXPONENT
 							{
 							mEXPONENT(); 
 
@@ -405,9 +405,9 @@ public class IMCLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:63:9: ( '0' .. '9' )+ EXPONENT
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:98:9: ( '0' .. '9' )+ EXPONENT
 					{
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:63:9: ( '0' .. '9' )+
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:98:9: ( '0' .. '9' )+
 					int cnt8=0;
 					loop8:
 					do {
@@ -461,8 +461,8 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:66:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:66:9: ( ' ' | '\\t' | '\\r' | '\\n' )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:101:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:101:9: ( ' ' | '\\t' | '\\r' | '\\n' )
 			{
 			if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
 				input.consume();
@@ -489,11 +489,11 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = STRING;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:74:5: ( '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"' )
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:74:8: '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"'
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:109:5: ( '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"' )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:109:8: '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"'
 			{
 			match('\"'); 
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:74:12: ( ESC_SEQ |~ ( '\\\\' | '\"' ) )*
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:109:12: ( ESC_SEQ |~ ( '\\\\' | '\"' ) )*
 			loop10:
 			do {
 				int alt10=3;
@@ -507,14 +507,14 @@ public class IMCLexer extends Lexer {
 
 				switch (alt10) {
 				case 1 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:74:14: ESC_SEQ
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:109:14: ESC_SEQ
 					{
 					mESC_SEQ(); 
 
 					}
 					break;
 				case 2 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:74:24: ~ ( '\\\\' | '\"' )
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:109:24: ~ ( '\\\\' | '\"' )
 					{
 					if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '!')||(input.LA(1) >= '#' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
 						input.consume();
@@ -549,11 +549,11 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = CHAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:77:5: ( '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\'' )
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:77:8: '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\''
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:112:5: ( '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\'' )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:112:8: '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\''
 			{
 			match('\''); 
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:77:13: ( ESC_SEQ |~ ( '\\'' | '\\\\' ) )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:112:13: ( ESC_SEQ |~ ( '\\'' | '\\\\' ) )
 			int alt11=2;
 			int LA11_0 = input.LA(1);
 			if ( (LA11_0=='\\') ) {
@@ -569,14 +569,14 @@ public class IMCLexer extends Lexer {
 			}
 			switch (alt11) {
 				case 1 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:77:15: ESC_SEQ
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:112:15: ESC_SEQ
 					{
 					mESC_SEQ(); 
 
 					}
 					break;
 				case 2 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:77:25: ~ ( '\\'' | '\\\\' )
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:112:25: ~ ( '\\'' | '\\\\' )
 					{
 					if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '&')||(input.LA(1) >= '(' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
 						input.consume();
@@ -606,8 +606,8 @@ public class IMCLexer extends Lexer {
 	// $ANTLR start "EXPONENT"
 	public final void mEXPONENT() throws RecognitionException {
 		try {
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:82:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:82:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:117:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:117:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
 			{
 			if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
 				input.consume();
@@ -617,7 +617,7 @@ public class IMCLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:82:22: ( '+' | '-' )?
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:117:22: ( '+' | '-' )?
 			int alt12=2;
 			int LA12_0 = input.LA(1);
 			if ( (LA12_0=='+'||LA12_0=='-') ) {
@@ -640,7 +640,7 @@ public class IMCLexer extends Lexer {
 
 			}
 
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:82:33: ( '0' .. '9' )+
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:117:33: ( '0' .. '9' )+
 			int cnt13=0;
 			loop13:
 			do {
@@ -686,7 +686,7 @@ public class IMCLexer extends Lexer {
 	// $ANTLR start "HEX_DIGIT"
 	public final void mHEX_DIGIT() throws RecognitionException {
 		try {
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:85:11: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:120:11: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
 			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:
 			{
 			if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'F')||(input.LA(1) >= 'a' && input.LA(1) <= 'f') ) {
@@ -709,7 +709,7 @@ public class IMCLexer extends Lexer {
 	// $ANTLR start "ESC_SEQ"
 	public final void mESC_SEQ() throws RecognitionException {
 		try {
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:89:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UNICODE_ESC | OCTAL_ESC )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:124:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UNICODE_ESC | OCTAL_ESC )
 			int alt14=3;
 			int LA14_0 = input.LA(1);
 			if ( (LA14_0=='\\') ) {
@@ -762,7 +762,7 @@ public class IMCLexer extends Lexer {
 			}
 			switch (alt14) {
 				case 1 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:89:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:124:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
 					{
 					match('\\'); 
 					if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -776,14 +776,14 @@ public class IMCLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:90:9: UNICODE_ESC
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:125:9: UNICODE_ESC
 					{
 					mUNICODE_ESC(); 
 
 					}
 					break;
 				case 3 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:91:9: OCTAL_ESC
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:126:9: OCTAL_ESC
 					{
 					mOCTAL_ESC(); 
 
@@ -801,7 +801,7 @@ public class IMCLexer extends Lexer {
 	// $ANTLR start "OCTAL_ESC"
 	public final void mOCTAL_ESC() throws RecognitionException {
 		try {
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:96:5: ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:131:5: ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) )
 			int alt15=3;
 			int LA15_0 = input.LA(1);
 			if ( (LA15_0=='\\') ) {
@@ -849,7 +849,7 @@ public class IMCLexer extends Lexer {
 			}
 			switch (alt15) {
 				case 1 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:96:9: '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' )
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:131:9: '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' )
 					{
 					match('\\'); 
 					if ( (input.LA(1) >= '0' && input.LA(1) <= '3') ) {
@@ -879,7 +879,7 @@ public class IMCLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:97:9: '\\\\' ( '0' .. '7' ) ( '0' .. '7' )
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:132:9: '\\\\' ( '0' .. '7' ) ( '0' .. '7' )
 					{
 					match('\\'); 
 					if ( (input.LA(1) >= '0' && input.LA(1) <= '7') ) {
@@ -901,7 +901,7 @@ public class IMCLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:98:9: '\\\\' ( '0' .. '7' )
+					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:133:9: '\\\\' ( '0' .. '7' )
 					{
 					match('\\'); 
 					if ( (input.LA(1) >= '0' && input.LA(1) <= '7') ) {
@@ -926,8 +926,8 @@ public class IMCLexer extends Lexer {
 	// $ANTLR start "UNICODE_ESC"
 	public final void mUNICODE_ESC() throws RecognitionException {
 		try {
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:103:5: ( '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT )
-			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:103:9: '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:138:5: ( '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT )
+			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:138:9: '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
 			{
 			match('\\'); 
 			match('u'); 
@@ -1089,7 +1089,7 @@ public class IMCLexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "60:1: FLOAT : ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT );";
+			return "95:1: FLOAT : ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT );";
 		}
 	}
 
