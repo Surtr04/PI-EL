@@ -10,6 +10,7 @@ options{
 
 @members{
 	HashSet<String> states;
+	int  elems = 0;
 }
 
 imc	
