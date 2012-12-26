@@ -6,7 +6,7 @@ return array(
     'admin' => 1,
     'guest' => 2,
     'titulo' => 'WorkTogether',
-    'linhas_pagina' => 25,
+    'linhas_pagina' => 5,
     'noreply' => 'noreply@localhost',
     'adminemail' => 'admin@localhost',
 );

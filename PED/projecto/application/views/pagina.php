@@ -5,7 +5,7 @@
 	require_once('tpl_functions.php');
 	include_once('header.php');
 	
-	echo "<h1>".$youngtitle."</h1>";
+	echo "<h1>".__($youngtitle)."</h1>";
 	if (isset($beforehtml)) echo $beforehtml;
 	if (isset($toinclude)){
 		switch($toinclude){
@@ -30,6 +30,8 @@
 			case 'grupos': include('grupos.php'); break;
 			case 'gruposform': include('gruposform.php'); break;
 			case 'gperms': include('gperms.php'); break;
+            case 'logs' : include ('logs.php'); break;
+            case 'logsform' : include ('logsform.php'); break;
 			//Errors
 			case '404': include ('errors/404.php'); break;
 			default: break;

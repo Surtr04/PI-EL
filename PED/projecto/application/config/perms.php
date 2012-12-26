@@ -10,6 +10,7 @@ return array(
 	'admin' => 1,
 	'users' => 2,
 	'groups' => 3,
+    'logs' => 4,
 );
 
 ?>

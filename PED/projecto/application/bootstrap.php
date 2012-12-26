@@ -95,7 +95,7 @@ if (isset($_SERVER['KOHANA_ENV']))
 Kohana::init(array(
 	'base_url'   => '/PED/projecto',
 	'index_file' => false,
-	'errors' => !Controller_Mymain::isProduction(),
+	'errors'     => !Controller_Mymain::isProduction(),
 	'profile'    => !Controller_Mymain::isProduction(),
     'caching'    => Controller_Mymain::isProduction(),
 ));
@@ -133,35 +133,64 @@ Cookie::$salt = 'XjFbNc828ArDUYj';
  */
 
 
+Route::set('resget', 'get/<type>/<id>', 
+    array( 
+        'type' => '(img|doc)',
+    ))
+	->defaults(array(
+		'controller' => 'resources',
+		'action'     => 'get',
+	));
+
+
+Route::set('langs', 'langs/<lang>',
+    array(
+        'lang' => '(pt|en)'
+    ))
+	->defaults(array(
+		'controller' => 'langs',
+		'action'     => 'change',
+	));
+
+Route::set('users', 'users(/<action>)')
+	->defaults(array(
+		'controller' => 'users',
+		'action'     => 'index',
+	));
+
+Route::set('manut', 'manut(/<action>)')
+	->defaults(array(
+		'controller' => 'manut',
+		'action'     => 'index',
+	));
+
+Route::set('groups', 'groups(/<action>)')
+	->defaults(array(
+		'controller' => 'groups',
+		'action'     => 'index',
+	));
+
+Route::set('logs', 'logs(/<action>)')
+	->defaults(array(
+		'controller' => 'logs',
+		'action'     => 'index',
+	));
+
+Route::set('auth', 'auth(/<action>)')
+	->defaults(array(
+        'controller' => 'auth',
+        'action'     => 'index',
+	));
+
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'main',
 		'action'     => 'index',
 	));
 	
-Route::set('users', '(users(/<action>))')
-	->defaults(array(
-		'controller' => 'users',
-		'action'     => 'index',
-	));
 
-Route::set('manut', '(manut(/<action>))')
-	->defaults(array(
-		'controller' => 'manut',
-		'action'     => 'index',
-	));
 
-Route::set('groups', '(groups(/<action>))')
-	->defaults(array(
-		'controller' => 'groups',
-		'action'     => 'index',
-	));
 
-Route::set('auth', '(auth(/<action>))')
-	->defaults(array(
-        'controller' => 'auth',
-        'action'     => 'index',
-	));
 	
 
 

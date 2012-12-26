@@ -13,7 +13,7 @@ class Controller_Manut extends Controller_Mymain {
 	}
 	public function action_index(){
 		$this->view = View::Factory('manut');
-		$this->render(array('youngtitle' => "Manutenção", 'titulo'=> Kohana::$config->load('defs.titulo')));
+		$this->render(array('youngtitle' => "Maintenance", 'titulo'=> Kohana::$config->load('defs.titulo')));
 	}
 	
 	public function action_activate(){

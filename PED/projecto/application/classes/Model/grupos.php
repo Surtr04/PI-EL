@@ -10,38 +10,18 @@ class Model_Grupos extends Model_Mymodel {
 	const ACTUALIZAR 	= "S-U-";
 	const REMOVER 		= "SIUD";
 
-	private $grps;
-	
+
 	public function __construct(){
         parent::__construct("groups");
-        $this->grps = array();
-	}
-	
-	public function cacheAll(){
-		$aux = $this->_intervalo;
-		$this->_intervalo = -1;
-		$this->cache(0);
-		$this->_intervalo = $aux;
-	}
-	
-	public function cache($min = 0){
-		$min = (int) $min;
-		if ($min < 0 ) $min = 0;
-		$this->_min = $min;
         $query = DB::select()->from($this->_table)->order_by('nome', 'ASC');
-        if ($this->_intervalo > 0) $query->limit($min+$this->_intervalo)->offset($min);
-        $res = $query->execute();
-		$this->grps = array();
-        foreach($res as $linha)
-			$this->grps[$linha["id"]] = $this->formatGrp($linha["id"], $linha["nome"]);
-		$this->_cached = true;
+        $this->setCacheQuery($query);
 	}
 	
-	private function formatGrp($id, $nome){
-		return array("id" => (int)$id, "nome" => $nome);
+	protected function format($linha){
+		return array("key" => (int)$linha["id"],  "value" => array("id" => (int)$linha["id"], "nome" => $linha["nome"]));
 	}
 	
-	public function	getAllGrupos(){ return $this->grps; }
+	public function	getAllGrupos(){ return $this->getList(); }
 	
 	public function apagarGrupo($id){
 		$id = (int) $id;
@@ -57,37 +37,26 @@ class Model_Grupos extends Model_Mymodel {
         $querys = array();
         $querys[] = DB::update($this->_table)->set(array('nome' => $nome))->where('id', '=', $id);
         $querys[] = DB::delete('perms')->where('id_grupo', '=', $id);
-        foreach($perms as $chave => $valor){
-                $str = ($perms[$chave]->getPerm('S') ? "S" : "-").($perms[$chave]->getPerm('I') ? "I" : "-").($perms[$chave]->getPerm('U') ? "U" : "-").($perms[$chave]->getPerm('R') ? "R" : "-");
-                $querys[] = DB::insert('perms')->values(array($chave, $id, $str));
-        }
+        foreach($perms as $chave => $valor)
+                $querys[] = DB::insert('perms')->values(array($chave, $id, (string)$perms[$chave]));
         $this->executeInTransaction($querys);
 	}
 	
 	
 	public function getGrupoWithId($id){
-		foreach($this->grps as $chave => $valor)
-			if ($valor['id'] == $id) return $valor;
-		$linha = DB::select()->from($this->_table)->where('id', '=', $id)->execute()->next()->as_array();
-        $linha = $linha[0];
-        return $this->formatGrp($linha["id"], $linha["nome"]);
+        return $this->findBy('id', $id);
 	}
 	
 	public function insereGrupo($nome, $perms){
         $querys = array();
         $querys["id"] = DB::insert($this->_table)->values(array(null, $nome));
-		foreach($perms as $chave => $valor){
-			$str = ($perms[$chave]->getPerm('S') ? "S" : "-").($perms[$chave]->getPerm('I') ? "I" : "-").($perms[$chave]->getPerm('U') ? "U" : "-").($perms[$chave]->getPerm('R') ? "R" : "-");
-            $querys["ref".$chave] = DB::insert('perms')->values(array($chave, ":id", $str));
-		}
-        $id = $this->executeInTransaction($querys);
+		foreach($perms as $chave => $valor)
+            $querys["ref".$chave] = DB::insert('perms')->values(array($chave, ":id", (string)$perms[$chave]));
+		$id = $this->executeInTransaction($querys);
         return $id;
 	}
 	
-	public function getGrupoAtPos($i){
-		if ($i > count($this->grps)) return array();
-		return $this->grps[$i];
-	}
+	public function getGrupoAtPos($i){ return $this->getAtPos($i);}
 	
 	public function getAllPerms($id){
 		$id = (int) $id;
@@ -101,9 +70,9 @@ class Model_Grupos extends Model_Mymodel {
 		
 		$aux = array();
 		foreach($nomes as $chave => $valor){
-			if (!isset($perms[$chave])) $perms[$chave] = "----";
-			if (self::isAdminGroup($id)) $perms[$chave] = "SIUR";
-			$aux[$chave]= array('id' => $chave, 'nome' => $valor, 'S' => (bool)(substr($perms[$chave], 0, 1) == 'S'), 'I' => (bool)(substr($perms[$chave], 1, 1) == 'I'), 'U' => (bool)(substr($perms[$chave], 2, 1) == 'U'), 'R' => (bool)(substr($perms[$chave], 3, 1) == 'R'));
+			if (!isset($perms[$chave])) $perms[$chave] = self::NADA;
+			if (self::isAdminGroup($id)) $perms[$chave] = self::REMOVER;
+			$aux[$chave]= array('id' => $chave, 'nome' => $valor, 'S' => (bool)(substr($perms[$chave], 0, 1) == 'S'), 'I' => (bool)(substr($perms[$chave], 1, 1) == 'I'), 'U' => (bool)(substr($perms[$chave], 2, 1) == 'U'), 'D' => (bool)(substr($perms[$chave], 3, 1) == 'D'));
 		}
 		
 		return $aux;
@@ -140,12 +109,14 @@ class Model_Grupos extends Model_Mymodel {
         
 		$querys = array();
 		$prefix = Database::instance()->table_prefix();
-        $querys[] = DB::query(Database::DELETE, 'TRUNCATE TABLE '.$prefix."perms");
         $querys[] = DB::query(Database::DELETE, 'TRUNCATE TABLE '.$prefix."perms_tipo");
+        $querys[] = DB::query(Database::DELETE, 'TRUNCATE TABLE '.$prefix."perms");
         
-        $aux = $this->addTipo('users', 'Utilizadores');
+        $aux = $this->addTipo('users', 'Users');
         $querys = $this->copyArray($querys, $aux);
-		$aux = $this->addTipo('groups', 'Grupos');
+		$aux = $this->addTipo('groups', 'Groups');
+        $querys = $this->copyArray($querys, $aux);
+        $aux = $this->addTipo('logs', 'Logs');
         $querys = $this->copyArray($querys, $aux);
         
         $this->executeInTransaction($querys);

@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /*
-	Copyright (C) António Silva 2011
-	
+	(C) António Silva e Rui Brito - 2012/2013
 */
 ?>
 <html>

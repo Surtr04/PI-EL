@@ -9,6 +9,8 @@ class Model_User extends Model {
 	private $_name;
 	private $_email;
 	private $_grupo;
+    private $_morada;
+    private $_foto;
 
 	public function __construct(){
 		$this->_id = -1;
@@ -26,6 +28,8 @@ class Model_User extends Model {
 			$this->_name = $u['nome'];
 			$this->_email = $u['email'];
 			$this->_grupo = $u['grupo'];
+            $this->_morada = $u['morada'];
+            $this->_foto = $u['foto'];
             $this->setOnline(true);
 		}
 		return $this;
@@ -42,6 +46,8 @@ class Model_User extends Model {
       $this->_username = "";
       $this->_name = "";
       $this->_email = "";
+      $this->_morada = "";
+      $this->_foto = "";
     }
 	public function isGuest(){return ($this->_id <= 0 || $this->_grupo == Kohana::$config->load('defs.guest'));}
 	public function isAdmin(){return $this->_grupo == Kohana::$config->load('defs.admin');}

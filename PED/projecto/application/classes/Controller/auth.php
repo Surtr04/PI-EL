@@ -8,7 +8,7 @@ class Controller_Auth extends Controller_Mymain {
 
 	public function __construct(Request $request, Response $response){
 		parent::__construct($request,$response);
-		$this->view->set('youngtitle', "Autenticação");
+		$this->view->set('youngtitle', "Authentication");
 	}
 	public function action_login(){
 		if (!$this->user->isGuest()) $this->goHome(); //Há uma sessão activa
@@ -20,6 +20,7 @@ class Controller_Auth extends Controller_Mymain {
             Auth::instance()->login($username, $password);
             $this->user = Auth::instance()->get_user(new Model_User());
             if (!$this->user->isGuest()){
+                if ($this->user->isAdmin()) $this->log('Admin login');
                 $this->goHome();
 			} else{
 				$this->view->set('erro', "Utilizador inválido!");
@@ -30,6 +31,7 @@ class Controller_Auth extends Controller_Mymain {
 	}
 	
 	public function action_logout(){
+        if ($this->user->isAdmin()) $this->log('Admin logout');
         Auth::instance()->logout();
         $this->goHome();
 	}

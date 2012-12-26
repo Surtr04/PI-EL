@@ -7,12 +7,13 @@ class Controller_Groups extends Controller_Mymain {
 
 	public function __construct(Request $request, Response $response){
 		parent::__construct($request,$response);
-		$this->view->set('youngtitle', "Grupos");
+		$this->view->set('youngtitle', "Groups");
+        $this->nperm = 'groups';
 	}
 	
 	
 	public function action_index(){
-		$this->restrictAcess('groups', 'S');
+		$this->restrictAcess('S');
 		$min = (int) (Arr::get($_GET,'s',0));
 		$grupos = new Model_Grupos();
 		$grupos->cache($min);
@@ -26,7 +27,7 @@ class Controller_Groups extends Controller_Mymain {
 		//$this->action_index();
 	}
 	public function action_ver($id =-1){
-		$this->restrictAcess('groups', 'S');
+		$this->restrictAcess('S');
 		if ($id <= -1){
 			$id = (int) Arr::get($_GET,'id',-1);
 			if ($id <= -1) return $this->action_index();
@@ -40,7 +41,7 @@ class Controller_Groups extends Controller_Mymain {
 		echo $this->view->render();
 	}
 	public function action_apagar(){
-		$this->restrictAcess('groups', 'D');
+		$this->restrictAcess('D');
 		$id = (int) Arr::get($_GET,'id',-1);
 		if ($id <= -1) return $this->action_index();
 		$grupos = new Model_Grupos();
@@ -49,7 +50,7 @@ class Controller_Groups extends Controller_Mymain {
 	}
 	
 	public function action_editar($id = -1){
-		$this->restrictAcess('groups', 'U');
+		$this->restrictAcess('U');
 		if ($id <= -1){
 			$id = (int) Arr::get($_GET,'id',-1);
 			if ($id <= -1) return $this->action_index();
@@ -68,11 +69,11 @@ class Controller_Groups extends Controller_Mymain {
 		$grps = new Model_Grupos();
 		$mds = $grps->getAllTPerms();
 		foreach($mds as $chave => $valor)
-			$perms[$chave] = new Controller_Perms(isset($_POST['perms_s_'.$chave]), isset($_POST['perms_i_'.$chave]), isset($_POST['perms_u_'.$chave]), isset($_POST['perms_r_'.$chave]));
+			$perms[$chave] = new Controller_Perms(isset($_POST['perms_s_'.$chave]), isset($_POST['perms_i_'.$chave]), isset($_POST['perms_u_'.$chave]), isset($_POST['perms_d_'.$chave]));
 		return $perms;
 	}
 	public function action_update(){
-		$this->restrictAcess('groups', 'U');
+		$this->restrictAcess('U');
 		if (trim($_POST['nome']) == "") return $this->action_insere();
 		$perms = $this->tratarPerms();
 		
@@ -83,7 +84,7 @@ class Controller_Groups extends Controller_Mymain {
 	
 	
 	public function action_insere(){
-		$this->restrictAcess('groups', 'I');
+		$this->restrictAcess('I');
 		$grps = new Model_Grupos();
 		$this->view->set('toinclude', 'gruposform');
 		$this->view->set('form_id', NULL);
@@ -94,7 +95,7 @@ class Controller_Groups extends Controller_Mymain {
 	}
 	
 	public function action_insere2(){
-		$this->restrictAcess('groups', 'I');
+		$this->restrictAcess('I');
 		if (trim($_POST['nome']) == "" ) return $this->action_insere();
 		$grupos = new Model_Grupos();
 		$perms = $this->tratarPerms();
