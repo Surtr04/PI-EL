@@ -1,9 +1,8 @@
 
 package parser;
 
-import java.io.*;
+import imc.*;
 import org.antlr.runtime.*;
-import org.antlr.runtime.debug.DebugEventSocketProxy;
 
 
 public class __Test__ {
@@ -18,5 +17,17 @@ public class __Test__ {
         } catch (RecognitionException e) {
             e.printStackTrace();
         }
+        
+        IMC_Error e = g.info.getErrors();        
+        for(String s : e.getErrorList()) {
+        	System.out.println(s);
+        }
+                             
+        System.out.println("\n\n");
+        for(String s : e.getWarningList()) {
+        	System.out.println(s);
+        }
+        
+        
     }
 }

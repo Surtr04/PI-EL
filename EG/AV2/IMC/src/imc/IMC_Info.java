@@ -1,5 +1,7 @@
 package imc;
 
+import imc.IMC_Error.error_type;
+
 public class IMC_Info {
 
     private IMC_Error errors;
@@ -22,7 +24,11 @@ public class IMC_Info {
         this.non_det_states = non_det_states;
         this.unstable_states = unstable_states;
     }
-
+    
+    public void addError(error_type t,String message) {
+    	errors.insertError(t, message);
+    }
+    
     public void incInitStates() {
         this.init_states++;
     }

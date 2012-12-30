@@ -3,7 +3,8 @@
 package parser;
 
 	import java.util.HashSet;
-	import imc.IMC;
+import imc.*;
+import imc.IMC_Error.error_type;
 
 
 import org.antlr.runtime.*;
@@ -34,7 +35,9 @@ public class IMCParser extends Parser {
 	public static final int TRANSITION_STATE=15;
 	public static final int UNICODE_ESC=16;
 	public static final int WS=17;
-
+	
+	protected IMC_Info info;
+	
 	// delegates
 	public Parser[] getDelegates() {
 		return new Parser[] {};
@@ -45,6 +48,7 @@ public class IMCParser extends Parser {
 
 	public IMCParser(TokenStream input) {
 		this(input, new RecognizerSharedState());
+		info = new IMC_Info();
 	}
 	public IMCParser(TokenStream input, RecognizerSharedState state) {
 		super(input, state);
@@ -199,7 +203,8 @@ public class IMCParser extends Parser {
 
 				
 					if (!states.add((st!=null?((IMCParser.state_return)st).actual_st:null))) {
-						System.out.println("ERROR (multiple definitions of state " + (st!=null?((IMCParser.state_return)st).actual_st:null) + "): " + "line -> " + (st!=null?((IMCParser.state_return)st).line:0) + " column -> " + (st!=null?((IMCParser.state_return)st).pos:0));
+						//System.out.println("ERROR (multiple definitions of state " + (st!=null?((IMCParser.state_return)st).actual_st:null) + "): " + "line -> " + (st!=null?((IMCParser.state_return)st).line:0) + " column -> " + (st!=null?((IMCParser.state_return)st).pos:0));
+						info.addError(error_type.ERROR,"ERROR (multiple definitions of state " + (st!=null?((IMCParser.state_return)st).actual_st:null) + "): " + "line -> " + (st!=null?((IMCParser.state_return)st).line:0) + " column -> " + (st!=null?((IMCParser.state_return)st).pos:0));
 					}					
 				
 			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:31:4: (ac= action |mt= markovian_trans )
@@ -241,7 +246,8 @@ public class IMCParser extends Parser {
 
 				  	if(mt == false) {
 					  	if((ac!=null?((IMCParser.action_return)ac).action_value:null).equals("tau")) {
-							System.out.println("Warning (source is unstable state): " + "line -> " + (st!=null?((IMCParser.state_return)st).line:0) + " column -> " + (st!=null?((IMCParser.state_return)st).pos:0));
+							//System.out.println("Warning (source is unstable state): " + "line -> " + (st!=null?((IMCParser.state_return)st).line:0) + " column -> " + (st!=null?((IMCParser.state_return)st).pos:0));
+							info.addError(error_type.WARNING, "Warning (source is unstable state): " + "line -> " + (st!=null?((IMCParser.state_return)st).line:0) + " column -> " + (st!=null?((IMCParser.state_return)st).pos:0));
 						}
 					}
 				  
@@ -369,15 +375,19 @@ public class IMCParser extends Parser {
 					float r;
 					if(b == null) { r = Float.parseFloat((a!=null?a.getText():null));} else { r = Float.parseFloat((b!=null?b.getText():null));}
 
-					if (isA && (r != 0 && r != 1))		
-						System.out.println("Warning (probabilistic transition): line -> " + (a!=null?a.getLine():0)  + " column -> " + (a!=null?a.getCharPositionInLine():0));
-					
-					if(isM && r == 0 && a == null) 
-						System.out.println("ERROR (0 rate markovian transition ): line -> " + (b!=null?b.getLine():0)  + " column -> " + (b!=null?b.getCharPositionInLine():0)); 
+					if (isA && (r != 0 && r != 1)) {		
+						//System.out.println("Warning (probabilistic transition): line -> " + (a!=null?a.getLine():0)  + " column -> " + (a!=null?a.getCharPositionInLine():0));
+						info.addError(error_type.WARNING, "Warning (probabilistic transition): line -> " + (a!=null?a.getLine():0)  + " column -> " + (a!=null?a.getCharPositionInLine():0));
+					}					
+					if(isM && r == 0 && a == null) { 
+						//System.out.println("ERROR (0 rate markovian transition ): line -> " + (b!=null?b.getLine():0)  + " column -> " + (b!=null?b.getCharPositionInLine():0));
+						info.addError(error_type.ERROR,"ERROR (0 rate markovian transition ): line -> " + (b!=null?b.getLine():0)  + " column -> " + (b!=null?b.getCharPositionInLine():0));
+					}					
 						
-					if(isM && r == 0 && b == null) 
-						System.out.println("ERROR (0 rate markovian transition ): line -> " + (a!=null?a.getLine():0)  + " column -> " + (a!=null?a.getCharPositionInLine():0)); 				
-					
+					if(isM && r == 0 && b == null) { 
+						//System.out.println("ERROR (0 rate markovian transition ): line -> " + (a!=null?a.getLine():0)  + " column -> " + (a!=null?a.getCharPositionInLine():0)); 				
+						info.addError(error_type.ERROR,"ERROR (0 rate markovian transition ): line -> " + (b!=null?b.getLine():0)  + " column -> " + (b!=null?b.getCharPositionInLine():0));
+					}
 					
 			}
 
@@ -420,7 +430,8 @@ public class IMCParser extends Parser {
 					retval.pos = (st2!=null?st2.getCharPositionInLine():0);
 									
 					if(st.equals(retval.actual_st)) {
-						System.out.println("Warning (markovian loop): line -> " + (st2!=null?st2.getLine():0)  + " column -> " + (st2!=null?st2.getCharPositionInLine():0));
+						//System.out.println("Warning (markovian loop): line -> " + (st2!=null?st2.getLine():0)  + " column -> " + (st2!=null?st2.getCharPositionInLine():0));
+						info.addError(error_type.WARNING, "Warning (markovian loop): line -> " + (st2!=null?st2.getLine():0)  + " column -> " + (st2!=null?st2.getCharPositionInLine():0));
 					}
 				
 			}
