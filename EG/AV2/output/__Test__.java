@@ -9,7 +9,7 @@ public class __Test__ {
         IMCLexer lex = new IMCLexer(new ANTLRFileStream("/Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/output/__Test___input.txt", "UTF8"));
         CommonTokenStream tokens = new CommonTokenStream(lex);
 
-        IMCParser g = new IMCParser(tokens, 49101, null);
+        IMCParser g = new IMCParser(tokens);
         try {
             g.imc();
         } catch (RecognitionException e) {

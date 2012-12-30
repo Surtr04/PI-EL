@@ -6,6 +6,7 @@ options{
 
 @header{
 	import java.util.HashSet;
+	import imc.IMC;
 }
 
 @members{

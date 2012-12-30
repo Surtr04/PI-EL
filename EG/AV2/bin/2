@@ -1,0 +1,481 @@
+IMCLexer.java:3: error: package org.antlr.runtime does not exist
+import org.antlr.runtime.*;
+^
+IMCLexer.java:9: error: cannot find symbol
+public class IMCLexer extends Lexer {
+                              ^
+  symbol: class Lexer
+IMCLexer.java:30: error: cannot find symbol
+	public Lexer[] getDelegates() {
+	       ^
+  symbol:   class Lexer
+  location: class IMCLexer
+IMCLexer.java:35: error: cannot find symbol
+	public IMCLexer(CharStream input) {
+	                ^
+  symbol:   class CharStream
+  location: class IMCLexer
+IMCLexer.java:38: error: cannot find symbol
+	public IMCLexer(CharStream input, RecognizerSharedState state) {
+	                ^
+  symbol:   class CharStream
+  location: class IMCLexer
+IMCLexer.java:38: error: cannot find symbol
+	public IMCLexer(CharStream input, RecognizerSharedState state) {
+	                                  ^
+  symbol:   class RecognizerSharedState
+  location: class IMCLexer
+IMCLexer.java:44: error: cannot find symbol
+	public final void mT__18() throws RecognitionException {
+	                                  ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:64: error: cannot find symbol
+	public final void mT__19() throws RecognitionException {
+	                                  ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:84: error: cannot find symbol
+	public final void mINITIAL_STATE() throws RecognitionException {
+	                                          ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:105: error: cannot find symbol
+	public final void mFINAL_STATE() throws RecognitionException {
+	                                        ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:126: error: cannot find symbol
+	public final void mTRANSITION_STATE() throws RecognitionException {
+	                                             ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:147: error: cannot find symbol
+	public final void mID() throws RecognitionException {
+	                               ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:203: error: cannot find symbol
+	public final void mINT() throws RecognitionException {
+	                                ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:256: error: cannot find symbol
+	public final void mFLOAT() throws RecognitionException {
+	                                  ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:460: error: cannot find symbol
+	public final void mWS() throws RecognitionException {
+	                               ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:488: error: cannot find symbol
+	public final void mSTRING() throws RecognitionException {
+	                                   ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:548: error: cannot find symbol
+	public final void mCHAR() throws RecognitionException {
+	                                 ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:607: error: cannot find symbol
+	public final void mEXPONENT() throws RecognitionException {
+	                                     ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:687: error: cannot find symbol
+	public final void mHEX_DIGIT() throws RecognitionException {
+	                                      ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:710: error: cannot find symbol
+	public final void mESC_SEQ() throws RecognitionException {
+	                                    ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:802: error: cannot find symbol
+	public final void mOCTAL_ESC() throws RecognitionException {
+	                                      ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:927: error: cannot find symbol
+	public final void mUNICODE_ESC() throws RecognitionException {
+	                                        ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:952: error: cannot find symbol
+	public void mTokens() throws RecognitionException {
+	                             ^
+  symbol:   class RecognitionException
+  location: class IMCLexer
+IMCLexer.java:1077: error: cannot find symbol
+	class DFA9 extends DFA {
+	                   ^
+  symbol:   class DFA
+  location: class IMCLexer
+IMCLexer.java:1172: error: cannot find symbol
+	class DFA16 extends DFA {
+	                    ^
+  symbol:   class DFA
+  location: class IMCLexer
+IMCLexer.java:1079: error: cannot find symbol
+		public DFA9(BaseRecognizer recognizer) {
+		            ^
+  symbol:   class BaseRecognizer
+  location: class IMCLexer.DFA9
+IMCLexer.java:1174: error: cannot find symbol
+		public DFA16(BaseRecognizer recognizer) {
+		             ^
+  symbol:   class BaseRecognizer
+  location: class IMCLexer.DFA16
+IMCParser.java:4: error: package imc does not exist
+	import imc.IMC;
+	          ^
+IMCParser.java:7: error: package org.antlr.runtime does not exist
+import org.antlr.runtime.*;
+^
+IMCParser.java:12: error: package org.antlr.runtime.debug does not exist
+import org.antlr.runtime.debug.*;
+^
+IMCParser.java:15: error: cannot find symbol
+public class IMCParser extends DebugParser {
+                               ^
+  symbol: class DebugParser
+IMCParser.java:39: error: cannot find symbol
+	public Parser[] getDelegates() {
+	       ^
+  symbol:   class Parser
+  location: class IMCParser
+IMCParser.java:61: error: cannot find symbol
+	public IMCParser(TokenStream input) {
+	                 ^
+  symbol:   class TokenStream
+  location: class IMCParser
+IMCParser.java:64: error: cannot find symbol
+	public IMCParser(TokenStream input, int port, RecognizerSharedState state) {
+	                 ^
+  symbol:   class TokenStream
+  location: class IMCParser
+IMCParser.java:64: error: cannot find symbol
+	public IMCParser(TokenStream input, int port, RecognizerSharedState state) {
+	                                              ^
+  symbol:   class RecognizerSharedState
+  location: class IMCParser
+IMCParser.java:78: error: cannot find symbol
+public IMCParser(TokenStream input, DebugEventListener dbg) {
+                 ^
+  symbol:   class TokenStream
+  location: class IMCParser
+IMCParser.java:78: error: cannot find symbol
+public IMCParser(TokenStream input, DebugEventListener dbg) {
+                                    ^
+  symbol:   class DebugEventListener
+  location: class IMCParser
+IMCParser.java:98: error: cannot find symbol
+	public final void imc() throws RecognitionException {
+	                               ^
+  symbol:   class RecognitionException
+  location: class IMCParser
+IMCParser.java:273: error: cannot find symbol
+	public final void transitions() throws RecognitionException {
+	                                       ^
+  symbol:   class RecognitionException
+  location: class IMCParser
+IMCParser.java:425: error: cannot find symbol
+	public final void transition_def(boolean isM, boolean isA, String root_state) throws RecognitionException {
+	                                                                                     ^
+  symbol:   class RecognitionException
+  location: class IMCParser
+IMCParser.java:476: error: cannot find symbol
+	public final void trans_prob_rate(boolean isM, boolean isA) throws RecognitionException {
+	                                                                   ^
+  symbol:   class RecognitionException
+  location: class IMCParser
+IMCParser.java:573: error: cannot find symbol
+	public static class state_return extends ParserRuleReturnScope {
+	                                         ^
+  symbol:   class ParserRuleReturnScope
+  location: class IMCParser
+IMCParser.java:582: error: cannot find symbol
+	public final IMCParser.state_return state(String st) throws RecognitionException {
+	                                                            ^
+  symbol:   class RecognitionException
+  location: class IMCParser
+IMCParser.java:639: error: cannot find symbol
+	public final boolean markovian_trans() throws RecognitionException {
+	                                              ^
+  symbol:   class RecognitionException
+  location: class IMCParser
+IMCParser.java:681: error: cannot find symbol
+	public static class action_return extends ParserRuleReturnScope {
+	                                          ^
+  symbol:   class ParserRuleReturnScope
+  location: class IMCParser
+IMCParser.java:689: error: cannot find symbol
+	public final IMCParser.action_return action() throws RecognitionException {
+	                                                     ^
+  symbol:   class RecognitionException
+  location: class IMCParser
+IMCParser.java:738: error: cannot find symbol
+	public static final BitSet FOLLOW_INITIAL_STATE_in_imc40 = new BitSet(new long[]{0x0000000000000400L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:739: error: cannot find symbol
+	public static final BitSet FOLLOW_state_in_imc44 = new BitSet(new long[]{0x0000000000000480L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:740: error: cannot find symbol
+	public static final BitSet FOLLOW_FINAL_STATE_in_imc48 = new BitSet(new long[]{0x0000000000000400L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:741: error: cannot find symbol
+	public static final BitSet FOLLOW_state_in_imc52 = new BitSet(new long[]{0x0000000000008400L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:742: error: cannot find symbol
+	public static final BitSet FOLLOW_TRANSITION_STATE_in_imc56 = new BitSet(new long[]{0x0000000000000400L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:743: error: cannot find symbol
+	public static final BitSet FOLLOW_transitions_in_imc58 = new BitSet(new long[]{0x0000000000000402L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:744: error: cannot find symbol
+	public static final BitSet FOLLOW_state_in_transitions70 = new BitSet(new long[]{0x0000000000040400L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:745: error: cannot find symbol
+	public static final BitSet FOLLOW_action_in_transitions81 = new BitSet(new long[]{0x0000000000080000L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:746: error: cannot find symbol
+	public static final BitSet FOLLOW_markovian_trans_in_transitions85 = new BitSet(new long[]{0x0000000000080000L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:747: error: cannot find symbol
+	public static final BitSet FOLLOW_transition_def_in_transitions94 = new BitSet(new long[]{0x0000000000080002L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:748: error: cannot find symbol
+	public static final BitSet FOLLOW_19_in_transition_def107 = new BitSet(new long[]{0x0000000000000400L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:749: error: cannot find symbol
+	public static final BitSet FOLLOW_state_in_transition_def111 = new BitSet(new long[]{0x0000000000001100L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:750: error: cannot find symbol
+	public static final BitSet FOLLOW_trans_prob_rate_in_transition_def115 = new BitSet(new long[]{0x0000000000000002L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:751: error: cannot find symbol
+	public static final BitSet FOLLOW_FLOAT_in_trans_prob_rate133 = new BitSet(new long[]{0x0000000000000002L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:752: error: cannot find symbol
+	public static final BitSet FOLLOW_INT_in_trans_prob_rate137 = new BitSet(new long[]{0x0000000000000002L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:753: error: cannot find symbol
+	public static final BitSet FOLLOW_ID_in_state178 = new BitSet(new long[]{0x0000000000000002L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:754: error: cannot find symbol
+	public static final BitSet FOLLOW_18_in_markovian_trans197 = new BitSet(new long[]{0x0000000000000002L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+IMCParser.java:755: error: cannot find symbol
+	public static final BitSet FOLLOW_ID_in_action215 = new BitSet(new long[]{0x0000000000000002L});
+	                    ^
+  symbol:   class BitSet
+  location: class IMCParser
+__Test__.java:2: error: package org.antlr.runtime does not exist
+import org.antlr.runtime.*;
+^
+__Test__.java:3: error: package org.antlr.runtime.debug does not exist
+import org.antlr.runtime.debug.DebugEventSocketProxy;
+                              ^
+error: Class names, 'IMC.tokens', are only accepted if annotation processing is explicitly requested
+IMCLexer.java:31: error: cannot find symbol
+		return new Lexer[] {};
+		           ^
+  symbol:   class Lexer
+  location: class IMCLexer
+IMCLexer.java:36: error: cannot find symbol
+		this(input, new RecognizerSharedState());
+		                ^
+  symbol:   class RecognizerSharedState
+  location: class IMCLexer
+IMCLexer.java:41: error: method does not override or implement a method from a supertype
+	@Override public String getGrammarFileName() { return "/Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g"; }
+	^
+IMCLexer.java:47: error: cannot find symbol
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			               ^
+  symbol:   variable DEFAULT_TOKEN_CHANNEL
+  location: class IMCLexer
+IMCLexer.java:51: error: cannot find symbol
+			match('!'); 
+			^
+  symbol:   method match(char)
+  location: class IMCLexer
+IMCLexer.java:54: error: cannot find symbol
+			state.type = _type;
+			^
+  symbol:   variable state
+  location: class IMCLexer
+IMCLexer.java:55: error: cannot find symbol
+			state.channel = _channel;
+			^
+  symbol:   variable state
+  location: class IMCLexer
+IMCLexer.java:67: error: cannot find symbol
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			               ^
+  symbol:   variable DEFAULT_TOKEN_CHANNEL
+  location: class IMCLexer
+IMCLexer.java:71: error: cannot find symbol
+			match('*'); 
+			^
+  symbol:   method match(char)
+  location: class IMCLexer
+IMCLexer.java:74: error: cannot find symbol
+			state.type = _type;
+			^
+  symbol:   variable state
+  location: class IMCLexer
+IMCLexer.java:75: error: cannot find symbol
+			state.channel = _channel;
+			^
+  symbol:   variable state
+  location: class IMCLexer
+IMCLexer.java:87: error: cannot find symbol
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			               ^
+  symbol:   variable DEFAULT_TOKEN_CHANNEL
+  location: class IMCLexer
+IMCLexer.java:91: error: cannot find symbol
+			match("#INITIALS"); 
+			^
+  symbol:   method match(String)
+  location: class IMCLexer
+IMCLexer.java:95: error: cannot find symbol
+			state.type = _type;
+			^
+  symbol:   variable state
+  location: class IMCLexer
+IMCLexer.java:96: error: cannot find symbol
+			state.channel = _channel;
+			^
+  symbol:   variable state
+  location: class IMCLexer
+IMCLexer.java:108: error: cannot find symbol
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			               ^
+  symbol:   variable DEFAULT_TOKEN_CHANNEL
+  location: class IMCLexer
+IMCLexer.java:112: error: cannot find symbol
+			match("#GOALS"); 
+			^
+  symbol:   method match(String)
+  location: class IMCLexer
+IMCLexer.java:116: error: cannot find symbol
+			state.type = _type;
+			^
+  symbol:   variable state
+  location: class IMCLexer
+IMCLexer.java:117: error: cannot find symbol
+			state.channel = _channel;
+			^
+  symbol:   variable state
+  location: class IMCLexer
+IMCLexer.java:129: error: cannot find symbol
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			               ^
+  symbol:   variable DEFAULT_TOKEN_CHANNEL
+  location: class IMCLexer
+IMCLexer.java:133: error: cannot find symbol
+			match("#TRANSITIONS"); 
+			^
+  symbol:   method match(String)
+  location: class IMCLexer
+IMCLexer.java:137: error: cannot find symbol
+			state.type = _type;
+			^
+  symbol:   variable state
+  location: class IMCLexer
+IMCLexer.java:138: error: cannot find symbol
+			state.channel = _channel;
+			^
+  symbol:   variable state
+  location: class IMCLexer
+IMCLexer.java:150: error: cannot find symbol
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			               ^
+  symbol:   variable DEFAULT_TOKEN_CHANNEL
+  location: class IMCLexer
+IMCLexer.java:154: error: cannot find symbol
+			if ( input.LA(1)=='#'||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
+			     ^
+  symbol:   variable input
+  location: class IMCLexer
+IMCLexer.java:154: error: cannot find symbol
+			if ( input.LA(1)=='#'||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
+			                        ^
+  symbol:   variable input
+  location: class IMCLexer
+IMCLexer.java:154: error: cannot find symbol
+			if ( input.LA(1)=='#'||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
+			                                              ^
+  symbol:   variable input
+  location: class IMCLexer
+IMCLexer.java:154: error: cannot find symbol
+			if ( input.LA(1)=='#'||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
+			                                                                   ^
+  symbol:   variable input
+  location: class IMCLexer
+IMCLexer.java:154: error: cannot find symbol
+			if ( input.LA(1)=='#'||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
+			                                                                                      ^
+  symbol:   variable input
+  location: class IMCLexer
+IMCLexer.java:154: error: cannot find symbol
+			if ( input.LA(1)=='#'||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
+			                                                                                                            ^
+  symbol:   variable input
+  location: class IMCLexer
+IMCLexer.java:155: error: cannot find symbol
+				input.consume();
+				^
+  symbol:   variable input
+  location: class IMCLexer
+IMCLexer.java:158: error: cannot find symbol
+				MismatchedSetException mse = new MismatchedSetException(null,input);
+				^
+  symbol:   class MismatchedSetException
+  location: class IMCLexer
+IMCLexer.java:158: error: cannot find symbol
+				MismatchedSetException mse = new MismatchedSetException(null,input);
+				                                 ^
+  symbol:   class MismatchedSetException
+  location: class IMCLexer
+100 errors
