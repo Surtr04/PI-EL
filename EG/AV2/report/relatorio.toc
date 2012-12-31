@@ -1,0 +1,8 @@
+\select@language {portuges}
+\contentsline {section}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{3}{section.1}
+\contentsline {section}{\numberline {2}Resolu\IeC {\c c}\IeC {\~a}o}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Gram\IeC {\'a}tica}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Detec\IeC {\c c}\IeC {\~a}o de Erros e Warnings}{3}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Contador de estados}{3}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Objecto IMC}{4}{subsection.2.4}
+\contentsline {section}{\numberline {3}Conclus\IeC {\~a}o}{5}{section.3}

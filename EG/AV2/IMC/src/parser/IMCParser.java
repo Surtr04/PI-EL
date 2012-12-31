@@ -107,6 +107,7 @@ public class IMCParser extends Parser {
 					a=state("");
 					
 					imc.addInitialState(a.start.getText());
+					info.incInitStates();
 					
 					state._fsp--;
 
@@ -407,7 +408,7 @@ public class IMCParser extends Parser {
 					b=(Token)match(input,INT,FOLLOW_INT_in_trans_prob_rate137);
 					//System.out.println(b.getText());
 					if(isA) 
-						imc.addTransition(new InteractiveTransition(startS,goalS,action));					
+						imc.addTransition(new InteractiveTransition(startS,goalS,action));				
 					if(isM)
 						imc.addTransition(new MarkovianTransition(startS, goalS, Double.parseDouble(b.getText())));
 					
