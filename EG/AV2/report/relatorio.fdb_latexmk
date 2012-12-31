@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1356972852 "relatorio.tex" "relatorio.pdf" "relatorio" 1356972853
+["pdflatex"] 1356974822 "relatorio.tex" "relatorio.pdf" "relatorio" 1356974824
   "/usr/local/texlive/2012/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2012/texmf-dist/fonts/tfm/jknappen/ec/ecrm1095.tfm" 1136768653 3584 929cdff2b7a8c11bd4d49fd68cb0ae70 ""
   "/usr/local/texlive/2012/texmf-dist/fonts/tfm/public/ae/aebx10.tfm" 1136768653 6120 a142592c2114b48b2aa4610db47a327d ""
@@ -106,10 +106,10 @@
   "/usr/local/texlive/2012/texmf/web2c/texmf.cnf" 1336865692 31299 729e216d9b945005c0d4b079c0500bc9 ""
   "UM.jpg" 1356968303 23905 f912f714779d42ab959f6d721669e4db ""
   "dotIMC.png" 1356972631 17191 af39c61192af305fa18b2b74cbc3e16d ""
-  "relatorio.aux" 1356972852 1891 bc18a7e81878ac65e0e96e6305c2f008 ""
-  "relatorio.out" 1356972852 420 368039f1d735ae9c8189e00dded97c51 ""
-  "relatorio.tex" 1356972851 7775 d63bee8d1755ad135794033373e35a73 ""
-  "relatorio.toc" 1356972852 623 0dd1309c4ce91c1a2b37e75fbd323f45 ""
+  "relatorio.aux" 1356974824 1891 bc18a7e81878ac65e0e96e6305c2f008 ""
+  "relatorio.out" 1356974824 420 368039f1d735ae9c8189e00dded97c51 ""
+  "relatorio.tex" 1356974820 7775 78b9046df4799a58fd6209c243bb61a9 ""
+  "relatorio.toc" 1356974824 623 0dd1309c4ce91c1a2b37e75fbd323f45 ""
   (generated)
   "relatorio.aux"
   "relatorio.log"
