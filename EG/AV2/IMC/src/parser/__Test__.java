@@ -27,6 +27,16 @@ public class __Test__ {
         for(String s : e.getWarningList()) {
         	System.out.println(s);
         }
+        System.out.println("Initial states: " + g.info.getInit_states());
+        System.out.println("Final states: " + g.info.getFinal_states());
+        System.out.println("Transition states: " + g.info.getTrans_states());
+        System.out.println("Unstable states: " + g.info.getUnstable_states());
+        
+        System.out.println(g.imc.getInitial_states());
+        System.out.println(g.imc.getGoal_states());
+        System.out.println(g.imc.getStates());
+        
+        System.out.println(g.imc.toDotFormat());
         
         
     }

@@ -26,6 +26,10 @@ public class IMCLexer extends Lexer {
 	public static final int TRANSITION_STATE=15;
 	public static final int UNICODE_ESC=16;
 	public static final int WS=17;
+	
+	protected static boolean isInitial;
+	protected static boolean isFinal;
+	protected static boolean isTransition;
 
 	// delegates
 	// delegators
@@ -87,6 +91,9 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = INITIAL_STATE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
+			isInitial = true;
+			isFinal = false;
+			isTransition = false;
 			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:82:2: ( '#INITIALS' )
 			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:82:4: '#INITIALS'
 			{
@@ -108,6 +115,9 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = FINAL_STATE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
+			isInitial = false;
+			isFinal = true;
+			isTransition = false;
 			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:85:2: ( '#GOALS' )
 			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:85:4: '#GOALS'
 			{
@@ -129,6 +139,9 @@ public class IMCLexer extends Lexer {
 		try {
 			int _type = TRANSITION_STATE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
+			isInitial = false;
+			isFinal = false;
+			isTransition = true;			
 			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:88:2: ( '#TRANSITIONS' )
 			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:88:4: '#TRANSITIONS'
 			{

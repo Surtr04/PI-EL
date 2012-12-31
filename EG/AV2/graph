@@ -1,0 +1,15 @@
+digraph "imc" { 
+graph [fontname = "Helvetica-Oblique", fontsize = 10]; 
+edge [fontname = "Helvetica-Oblique", fontsize = 10]; 
+node [shape=circle, fontname = "Helvetica-Oblique", fontsize = 10] ; 
+"s0" [shape=circle, style=filled, fillcolor=green] ; 
+"s2" [shape=circle, style=filled, fillcolor=red] ; 
+"s0" -> "s3" [label = "b" style=dashed] ; 
+"s3" -> "s3" [label = "tau" style=dashed] ; 
+"s2" -> "s1" [label = "3.0"] ; 
+"s1" -> "s2" [label = "2.0"] ; 
+"s3" -> "s2" [label = "tau" style=dashed] ; 
+"s0" -> "s0" [label = "a" style=dashed] ; 
+"s2" -> "s2" [label = "1.0"] ; 
+"s0" -> "s1" [label = "a" style=dashed] ; 
+}

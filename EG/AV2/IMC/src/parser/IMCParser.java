@@ -2,7 +2,7 @@
 
 package parser;
 
-	import java.util.HashSet;
+import java.util.HashSet;
 import imc.*;
 import imc.IMC_Error.error_type;
 
@@ -11,6 +11,8 @@ import org.antlr.runtime.*;
 import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
+
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 @SuppressWarnings("all")
 public class IMCParser extends Parser {
@@ -37,6 +39,15 @@ public class IMCParser extends Parser {
 	public static final int WS=17;
 	
 	protected IMC_Info info;
+	protected IMC imc;
+			
+	private boolean isM = false;
+	private boolean isA = false;
+	
+	private String startS;
+	private String goalS;
+	private String action;
+	private double rate;
 	
 	// delegates
 	public Parser[] getDelegates() {
@@ -49,6 +60,7 @@ public class IMCParser extends Parser {
 	public IMCParser(TokenStream input) {
 		this(input, new RecognizerSharedState());
 		info = new IMC_Info();
+		imc = new IMC();
 	}
 	public IMCParser(TokenStream input, RecognizerSharedState state) {
 		super(input, state);
@@ -93,6 +105,9 @@ public class IMCParser extends Parser {
 					{
 					pushFollow(FOLLOW_state_in_imc44);
 					a=state("");
+					
+					imc.addInitialState(a.start.getText());
+					
 					state._fsp--;
 
 					}
@@ -117,13 +132,17 @@ public class IMCParser extends Parser {
 				if ( (LA2_0==ID) ) {
 					alt2=1;
 				}
-
+				
 				switch (alt2) {
+				
 				case 1 :
 					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:22:42: b= state[\"\"]
 					{
 					pushFollow(FOLLOW_state_in_imc52);
 					b=state("");
+					
+					imc.addGoalState(b.start.getText());
+					
 					state._fsp--;
 
 					}
@@ -147,8 +166,7 @@ public class IMCParser extends Parser {
 				int LA3_0 = input.LA(1);
 				if ( (LA3_0==ID) ) {
 					alt3=1;
-				}
-
+				}				
 				switch (alt3) {
 				case 1 :
 					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:22:71: transitions
@@ -198,6 +216,10 @@ public class IMCParser extends Parser {
 			{
 			pushFollow(FOLLOW_state_in_transitions70);
 			st=state("");
+			
+			imc.addState(st.start.getText());
+			startS = st.start.getText();
+			
 			state._fsp--;
 
 
@@ -227,6 +249,10 @@ public class IMCParser extends Parser {
 					{
 					pushFollow(FOLLOW_action_in_transitions81);
 					ac=action();
+					
+					action = ac.start.getText();
+					
+					
 					state._fsp--;
 
 					}
@@ -236,6 +262,9 @@ public class IMCParser extends Parser {
 					{
 					pushFollow(FOLLOW_markovian_trans_in_transitions85);
 					mt=markovian_trans();
+					
+					
+					
 					state._fsp--;
 
 					}
@@ -246,6 +275,7 @@ public class IMCParser extends Parser {
 
 				  	if(mt == false) {
 					  	if((ac!=null?((IMCParser.action_return)ac).action_value:null).equals("tau")) {
+					  		info.incUnstableStates();
 							//System.out.println("Warning (source is unstable state): " + "line -> " + (st!=null?((IMCParser.state_return)st).line:0) + " column -> " + (st!=null?((IMCParser.state_return)st).pos:0));
 							info.addError(error_type.WARNING, "Warning (source is unstable state): " + "line -> " + (st!=null?((IMCParser.state_return)st).line:0) + " column -> " + (st!=null?((IMCParser.state_return)st).pos:0));
 						}
@@ -309,6 +339,9 @@ public class IMCParser extends Parser {
 			match(input,19,FOLLOW_19_in_transition_def107); 
 			pushFollow(FOLLOW_state_in_transition_def111);
 			a=state(root_state);
+			
+			goalS = a.start.getText();
+			
 			state._fsp--;
 
 			pushFollow(FOLLOW_trans_prob_rate_in_transition_def115);
@@ -360,12 +393,24 @@ public class IMCParser extends Parser {
 					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:45:5: a= FLOAT
 					{
 					a=(Token)match(input,FLOAT,FOLLOW_FLOAT_in_trans_prob_rate133); 
+					
+					if(isA) 
+						imc.addTransition(new InteractiveTransition(startS,goalS,action));					
+					if(isM)
+						imc.addTransition(new MarkovianTransition(startS, goalS, Double.parseDouble(a.getText())));
+					
 					}
 					break;
 				case 2 :
 					// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:45:13: b= INT
-					{
-					b=(Token)match(input,INT,FOLLOW_INT_in_trans_prob_rate137); 
+					{						
+					b=(Token)match(input,INT,FOLLOW_INT_in_trans_prob_rate137);
+					//System.out.println(b.getText());
+					if(isA) 
+						imc.addTransition(new InteractiveTransition(startS,goalS,action));					
+					if(isM)
+						imc.addTransition(new MarkovianTransition(startS, goalS, Double.parseDouble(b.getText())));
+					
 					}
 					break;
 
@@ -417,18 +462,28 @@ public class IMCParser extends Parser {
 		IMCParser.state_return retval = new IMCParser.state_return();
 		retval.start = input.LT(1);
 
-		Token st2=null;
+		Token st2=null;		
 
 		try {
 			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:63:2: (st2= ID )
 			// /Users/rmb/Documents/MEI/EL/PI-EL/EG/AV2/IMC.g:63:4: st2= ID
+			st2=(Token)match(input,ID,FOLLOW_ID_in_state178);
 			{
-			st2=(Token)match(input,ID,FOLLOW_ID_in_state178); 
-
+			if(IMCLexer.isInitial) {
+				info.incInitStates();				
+			}
+			if(IMCLexer.isFinal) {		
+				info.incFinalStates();				
+			}
+			if(IMCLexer.isTransition) {				
+				info.incTransStates();				
+			}				 										
+			
+			
 					retval.actual_st = (st2!=null?st2.getText():null);
 					retval.line = (st2!=null?st2.getLine():0);
 					retval.pos = (st2!=null?st2.getCharPositionInLine():0);
-									
+					
 					if(st.equals(retval.actual_st)) {
 						//System.out.println("Warning (markovian loop): line -> " + (st2!=null?st2.getLine():0)  + " column -> " + (st2!=null?st2.getCharPositionInLine():0));
 						info.addError(error_type.WARNING, "Warning (markovian loop): line -> " + (st2!=null?st2.getLine():0)  + " column -> " + (st2!=null?st2.getCharPositionInLine():0));
