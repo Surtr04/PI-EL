@@ -133,6 +133,8 @@ Cookie::$salt = 'XjFbNc828ArDUYj';
  */
 
 
+
+
 Route::set('resget', 'get/<type>/<id>', 
     array( 
         'type' => '(img|doc)',
@@ -140,6 +142,15 @@ Route::set('resget', 'get/<type>/<id>',
 	->defaults(array(
 		'controller' => 'resources',
 		'action'     => 'get',
+	));
+
+Route::set('themeset', 'theme/<theme>',
+    array(
+        'theme' => '(blank|ugly)'
+    ))
+	->defaults(array(
+		'controller' => 'themes',
+		'action'     => 'change',
 	));
 
 
@@ -151,6 +162,46 @@ Route::set('langs', 'langs/<lang>',
 		'controller' => 'langs',
 		'action'     => 'change',
 	));
+
+Route::set('bycat', 'sips/bycat/<id>')
+	->defaults(array(
+		'controller' => 'sips',
+		'action'     => 'bycat',
+	));
+
+Route::set('supervisores', 'supervisores(/<action>)')
+	->defaults(array(
+		'controller' => 'pessoas',
+		'action'     => 'index',
+        'tt'         => 'Supervisors',
+        'perms'      => 'supervisors',
+        'table'      => 'supervisores',
+	));
+
+Route::set('autores', 'autores(/<action>)')
+	->defaults(array(
+		'controller' => 'pessoas',
+		'action'     => 'index',
+        'tt'         => 'Authors',
+        'perms'      => 'authors',
+        'table'      => 'autores',
+	));
+
+
+Route::set('sips', 'sips(/<action>(/<catid>))')
+	->defaults(array(
+		'controller' => 'sips',
+		'action'     => 'index',
+        'catid'      => -1,
+	));
+
+Route::set('categories', 'categories(/<action>)')
+	->defaults(array(
+		'controller' => 'categories',
+		'action'     => 'index',
+	));
+
+
 
 Route::set('users', 'users(/<action>)')
 	->defaults(array(

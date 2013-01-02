@@ -2,9 +2,9 @@
 /*
 	(C) António Silva e Rui Brito - 2012/2013
 */
-class Controller_Langs extends Controller_Mymain {
+class Controller_Themes extends Controller_Mymain {
 
-    const LANG_SESSION = 'lang';
+    const THEME_SESSION = 'theme';
     
 	public function __construct(Request $request, Response $response){
 		parent::__construct($request, $response);
@@ -15,12 +15,12 @@ class Controller_Langs extends Controller_Mymain {
 	}
 	
 	public function action_change(){
-		$lang = $this->request->param('lang');
-        switch($lang){
-            case 'pt' : $lang = 'pt-pt'; break;
-            case 'en' : default: $lang = 'en'; break;
+		$theme = $this->request->param('theme');
+        switch($theme){
+            case 'ugly' : $lang = 'ugly'; break;
+            case 'blank' : default: $lang = self::THEME_DEFAULT; break;
         }
-        $this->session->set(self::LANG_SESSION, $lang);
+        $this->session->set(self::THEME_SESSION, $theme);
         return $this->goBack();
 	}
 	

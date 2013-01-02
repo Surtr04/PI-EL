@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.'); //Não quero que fiques em ASCII
+<?php defined('SYSPATH') or die('No direct script access.'); 
 /*
 	(C) António Silva e Rui Brito - 2012/2013
 */
@@ -111,13 +111,13 @@ class Model_Grupos extends Model_Mymodel {
 		$prefix = Database::instance()->table_prefix();
         $querys[] = DB::query(Database::DELETE, 'TRUNCATE TABLE '.$prefix."perms_tipo");
         $querys[] = DB::query(Database::DELETE, 'TRUNCATE TABLE '.$prefix."perms");
+        $querys = $this->noConstraints($querys);
+        $arr = array('users' => 'Users', 'groups' => 'Groups', 'logs' => 'Logs', 'categories' => 'Categories', 'authors' => 'Authors', 'supervisors' => 'Supervisors', 'ownsips' => 'Own Sips', 'allsips' => 'All Sips');
+        foreach($arr as $chave => $valor){
+            $aux = $this->addTipo($chave, $valor);
+            $querys = $this->copyArray($querys, $aux);
+        }
         
-        $aux = $this->addTipo('users', 'Users');
-        $querys = $this->copyArray($querys, $aux);
-		$aux = $this->addTipo('groups', 'Groups');
-        $querys = $this->copyArray($querys, $aux);
-        $aux = $this->addTipo('logs', 'Logs');
-        $querys = $this->copyArray($querys, $aux);
         
         $this->executeInTransaction($querys);
 	}

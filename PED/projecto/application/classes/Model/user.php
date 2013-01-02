@@ -51,8 +51,7 @@ class Model_User extends Model {
     }
 	public function isGuest(){return ($this->_id <= 0 || $this->_grupo == Kohana::$config->load('defs.guest'));}
 	public function isAdmin(){return $this->_grupo == Kohana::$config->load('defs.admin');}
-	/*public function isProducer(){return $this->_grupo == self::PROD;}
-	public function isConsumer(){return $this->_grupo == self::CONS;}*/
+	
 	
 	public function getId(){return $this->_id;}
 	public function getUsername(){ return $this->_username;}
@@ -67,6 +66,7 @@ class Model_User extends Model {
 		else {
 			$query = DB::select("perm")->from('perms')->where('id_grupo', '=', $this->_grupo)->and_where('id_perm','=',$tarefa);
 			$linha = $query->execute()->next()->as_array();
+            $linha = $linha[0];
 		}
 		if (!$linha) 
 			return false;

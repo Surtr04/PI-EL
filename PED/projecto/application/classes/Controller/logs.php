@@ -37,7 +37,7 @@ class Controller_Logs extends Controller_Mymain {
 		$log = new Model_Logs();
 		$info = $log->getLogWithId($id);
         if ($info["auto"] == Model_Logs::AUTO) return $this->action_index();
-		$log->cache(0);
+		//$log->cache(0);
 		$this->callForm($id, $info['username'], $info['data'], $info['operacao'], $info['descricao']);
 	}
 	

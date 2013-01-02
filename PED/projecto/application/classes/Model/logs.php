@@ -23,6 +23,7 @@ class Model_Logs extends Model_Mymodel {
 	
 	public function	getAllLogs(){ return $this->getList();}
 	
+    
 	public function apagarLog($id, $auto = self::NOAUTO){
 		$id = (int) $id;
         $auto = (int) $auto;
@@ -48,16 +49,11 @@ class Model_Logs extends Model_Mymodel {
 		
         $query = DB::select($this->_table.'.*', 'users.username')->from($this->_table)->join('users')->on($this->_table.'.utilizador', '=', 'users.id')->where($this->_table.'.id', '=', $id);
         $linha = $query->execute()->next()->as_array();
-        $linha = $linha[0];
-        return $this->format($linha);
+        $linha = $this->format($linha[0]);
+        return $linha['value'];
 	}
 	
-    public function translateDate($data){
-        if (!is_numeric($data)) $data = strtotime($data);
-        $data = getdate($data);
-        return $data["year"]."-".$data["mon"]."-".$data["mday"]." ".$data["hours"].":".$data["minutes"].":".$data["seconds"];
-    }
-    
+ 
 	public function insereLog($utilizador, $data, $operacao, $descricao, $auto){
         $auto = (int) $auto;
         if (is_numeric($utilizador)) 
@@ -65,8 +61,8 @@ class Model_Logs extends Model_Mymodel {
         else
             $utilizador = DB::select('id')->from('users')->where('username', '=', $utilizador);
         
-        if ($auto != self::AUTO || $auto != self::NOAUTO) $auto = self::NOAUTO;
-		echo DB::insert($this->_table)->values(array(null, $utilizador, $this->translateDate($data), $operacao, $descricao, $auto))->execute();
+        if ($auto != self::AUTO && $auto != self::NOAUTO) $auto = self::NOAUTO;
+		DB::insert($this->_table)->values(array(null, $utilizador, $this->translateDate($data), $operacao, $descricao, $auto))->execute();
 		if ($this->_cached) $this->cache($this->_min);
 	}
 	

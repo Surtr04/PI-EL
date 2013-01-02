@@ -11,6 +11,11 @@ return array(
 	'users' => 2,
 	'groups' => 3,
     'logs' => 4,
+    'categories' => 5,
+    'ownsips' => 6,
+    'allsips' => 7,
+    'authors' => 8,
+    'supervisors' => 9,
 );
 
 ?>

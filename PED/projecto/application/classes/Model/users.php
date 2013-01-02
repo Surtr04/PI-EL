@@ -7,13 +7,15 @@ class Model_Users extends Model_Mymodel {
     
 	public function __construct(){
         parent::__construct('users');
-        $query = DB::select()->from($this->_table)->order_by('username', 'ASC')->limit($max)->offset($min);
+        $query = DB::select($this->_table.'.*', array('groups.nome', 'ngrupo'))->from($this->_table)
+                ->join("groups")->on('grupo', '=', 'groups.id')
+                ->order_by('username', 'ASC');//->limit($max)->offset($min);
         $this->setCacheQuery($query);
 	}
 	
 	
 	protected function format($linha){
-		return array("key" => null, "value" => array("id" => (int)$linha["id"], "username" => $linha["username"], "senha" => $linha["senha"], "nome" => $linha["nome"], "email" => $linha["email"], "morada" => $linha["morada"], "foto" => $linha["foto"], "grupo" => $linha["grupo"], "is_online" => $linha["is_online"]));
+		return array("key" => null, "value" => array("id" => (int)$linha["id"], "username" => $linha["username"], "senha" => $linha["senha"], "nome" => $linha["nome"], "email" => $linha["email"], "morada" => $linha["morada"], "foto" => $linha["foto"], "grupo" => $linha["grupo"], "is_online" => $linha["is_online"], "ngrupo"=>$linha["ngrupo"]));
 	}
 	
 

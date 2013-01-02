@@ -13,6 +13,6 @@
 <body>
 	<center><h1><?php echo __('MaintenanceMsg1') ?></h1><br /><h1><?php echo __('MaintenanceMsg2') ?></h1>
 	<img src="<?php echo TPL::base();?>images/working.png" alt="<?php echo __('Working'); ?>"></img></center>
-	<?php include_once(APPPATH."views/loginform.php"); ?>
+	<?php include_once(APPPATH."views/".$dtheme."/loginform.php"); ?>
 </body>
 </html>

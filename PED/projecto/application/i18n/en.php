@@ -1,6 +1,7 @@
 <?php
 /*
 	(C) António Silva e Rui Brito - 2012/2013
+    **************(desactualizada)***********
 */
 return array(
     /*Generic*/

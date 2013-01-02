@@ -23,6 +23,7 @@ class Model_Mymodel extends Model {
 	}
 	
     protected function setCacheQuery($q) {$this->_cacheQuery = $q;}
+    protected function getCacheQuery(){return $this->_cacheQuery;}
     public function cacheAll(){
 		$aux = $this->_intervalo;
 		$this->_intervalo = -1;
@@ -37,12 +38,22 @@ class Model_Mymodel extends Model {
         if ($this->_intervalo > 0) $this->_cacheQuery->limit($min+$this->_intervalo)->offset($min);
         if ($this->_debug) echo $this->_cacheQuery;
         $res = $this->_cacheQuery->execute();
-		$this->_list = array();
+		/*$this->_list = array();
         foreach($res as $linha){
 			$aux = $this->format($linha);
             if ($aux["key"] === null) $this->_list[] = $aux["value"]; else $this->_list[$aux["key"]] = $aux["value"];
-        }
+        }*/
+        $this->_list = $this->transformResult($res);
 		$this->_cached = true;
+    }
+    
+    protected function transformResult($res){
+        $lista = array();
+        foreach($res as $linha){
+			$aux = $this->format($linha);
+            if ($aux["key"] === null) $lista[] = $aux["value"]; else $lista[$aux["key"]] = $aux["value"];
+        }
+        return $lista;
     }
     
     public function getAtPos($i){
@@ -50,11 +61,15 @@ class Model_Mymodel extends Model {
 		return $this->_list[$i];
 	}
     
+    protected function getBy($campo, $val){
+        return DB::select()->from($this->_table)->where($campo, '=', $val)->execute()->next()->as_array();
+    }
+    
     protected function findBy($campo, $val){
         foreach($this->_list as $chave => $valor)
 			if ($valor[$campo] == $val) return $valor;
 		
-        $linha = DB::select()->from($this->_table)->where($campo, '=', $val)->execute()->next()->as_array();
+        $linha = $this->getBy($campo, $val);
 		$linha = $this->format($linha[0]);
         return $linha["value"];
     }
@@ -69,14 +84,36 @@ class Model_Mymodel extends Model {
 	
 	public function getMin(){ return $this->_min;}
 	
+    public function translateDate($data){
+        if ($data instanceof DateTime){
+            $aux = $data;
+        } else{
+            $aux = new DateTime();
+            if (is_numeric($data)) $aux->setTimestamp($data); else $aux = new DateTime($data);
+        }
+            
+        return $aux->format('Y-m-d H:i:s');
+    }
+    
+    protected function parseNull($v){if ($v == null) return ""; else return $v;}
+    
+    protected function noConstraints($querys){
+        $aux = array();
+        $aux["__noConst"] = DB::query(Database::DELETE, 'SET FOREIGN_KEY_CHECKS=0;');
+        foreach($querys as $chave => $valor)
+            $aux[$chave] = $valor;
+        $aux["__yesConst"] = DB::query(Database::DELETE, 'SET FOREIGN_KEY_CHECKS=1;');
+        return $aux;
+    }
+    
 	public function executeInTransaction($querys){
         $last_id = -1;
         $db = Database::instance();
         $db->begin();
         try{
             foreach($querys as $chave => $query){
-                if ($this->_debug) echo $query."<br/>\n";
                 if (substr($chave,0,3) == "ref") $query->param("':id'", $last_id);
+                if ($this->_debug) echo $query."<br/>\n";
                 $v = $query->execute();
                 if (substr($chave,0,2) == "id") $last_id = $v[0];
             }

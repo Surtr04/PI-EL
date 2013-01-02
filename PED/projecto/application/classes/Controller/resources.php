@@ -7,7 +7,8 @@ class Controller_Resources extends Controller_Mymain {
     const PATH = "docs/";
 	const PICTURES = "pictures/";
     const RESULTS = "results/";
-
+    const OTHERS = "others/";
+    
 	public function __construct(Request $request, Response $response){
 		parent::__construct($request, $response);
 	}
@@ -24,14 +25,16 @@ class Controller_Resources extends Controller_Mymain {
                 $u = new Model_Users();
                 $info = $u->getUserWithId($id);
                 if (strpos($info["foto"], "/") === false)
-                    $this->sendFile($this->getPictures().$info["foto"], $info['username']);
+                    //$this->sendFile(self::getPictures().$info["foto"], $info['username']);
+                    $this->response->send_file(self::getPictures().$info["foto"], $info['username'], array('inline' => true));
                 else
                     $this->redirect($info["foto"]);
                 break;
             case 'doc' : 
-                $url = new Model_Results();
-                $info = $u->getResultWithId($id);
-                $this->sendFile($this->getResults().$info["url"]);
+                $u = new Model_Results();
+                $info = $u->getById($id);
+                $this->response->send_file(self::getResults().$info["url"], $info['realname'], array('inline' => true));
+                //$this->sendFile(self::getResults().$info["url"], $info['realname']);
                 break;
             default:
                 $this->notFound();
@@ -57,9 +60,19 @@ class Controller_Resources extends Controller_Mymain {
         }
     }
     
-    public function getPath(){return APPPATH.self::PATH;}
-    public function getPictures() {return $this->getPath().self::PICTURES;}
-    public function getResults() {return $this->getPath().self::RESULTS;}
+    public static function randomize($path, $file){
+        $ext = pathinfo($file, PATHINFO_EXTENSION);
+        do{
+            $fiche = tempnam($path, "");
+            $aux = str_replace(".tmp", ".".$ext, $fiche);
+        } while (file_exists($aux));
+        rename($fiche, $aux);
+        return pathinfo($aux, PATHINFO_BASENAME);
+    }
     
+    public static function getPath(){return APPPATH.self::PATH;}
+    public static function getPictures() {return self::getPath().self::PICTURES;}
+    public static function getResults() {return self::getPath().self::RESULTS;}
+    public static function getOthers(){ return APPPATH.self::OTHERS;}
 } 
 ?>

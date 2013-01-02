@@ -1,0 +1,82 @@
+<style type="text/css">
+    #rptitle{
+        color:white;
+        width:95%;
+        height:50px;
+        text-align:center;
+        border-radius: 5px;
+        background-image: linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%);
+        background-image: -o-linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%);
+        background-image: -moz-linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%);
+        background-image: -webkit-linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%);
+        background-image: -ms-linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%);
+
+        background-image: -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            color-stop(0, rgb(54,111,180)),
+            color-stop(1, rgb(0,42,89))
+        );
+        margin: auto;
+    }
+    .block{
+        border-color: rgb(54,111,180);
+        border-style: ridge;
+        border-width: 3px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 2px 2px rgb(0,42,89);
+        padding: 5px;
+        vertical-align: top;
+    }	
+    #rptitle.h1{
+        padding: 5px;
+    }
+    table{
+        width:95%;
+        border-spacing: 8px;
+        margin:auto;
+    }
+</style><div id="rptitle">
+<h1>[TituloX]</h1>
+</div>
+<table>
+<tr>
+<td style="width:70%; text-align: justify;" class="block" rowspan="4">
+<h2>SubtituloX</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet elit eget est semper blandit. Donec tempor turpis fermentum mauris ultrices iaculis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris consectetur neque a justo varius luctus. Nam eu sem vitae libero tincidunt aliquet. Nunc ut mi vitae eros interdum mollis. Morbi eu quam neque, ac gravida tellus. Proin eleifend, risus vel lobortis rhoncus, mauris libero bibendum tortor, quis pretium lectus dolor in purus. Suspendisse posuere tristique lobortis. Etiam tempus posuere arcu.</p>
+<p>Integer aliquet nunc in nisi pellentesque eget dictum urna sollicitudin. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse potenti. Vivamus et erat vel nunc viverra semper ac eget purus. Donec nec egestas dui. Nulla vel dolor eget nulla varius lobortis vitae sed nisl. Quisque commodo, odio in dapibus aliquam, arcu sem pulvinar orci, a molestie lectus metus vitae mauris.</p>
+<p>Suspendisse congue ornare sapien a tristique. Nunc quis faucibus diam. Etiam eget leo risus. Aenean ac dolor in sapien mollis viverra sed eget lectus. Cras at arcu arcu, a sodales tortor. Nullam tempor, tortor sed fermentum mollis, nibh eros malesuada dui, non mattis nulla nibh et mi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras id elit id nunc accumsan posuere. In augue dolor, tristique et consequat quis, feugiat quis massa. Suspendisse potenti. Duis a venenatis odio. Maecenas ornare feugiat purus, hendrerit pharetra leo scelerisque nec.</p>
+<p>Proin consequat dui vel tellus sollicitudin lacinia. Aliquam et augue nunc, vel dapibus sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In pretium, lorem ac commodo mollis, nulla enim tempus lorem, in lacinia leo sem id ligula. Praesent vel ipsum lectus. Praesent varius tempor nibh non ultricies. Donec id diam elit, ac auctor eros. Vivamus dapibus mattis quam, vitae malesuada enim aliquam ac. Nullam accumsan, tortor nec rhoncus facilisis, augue leo convallis erat, sed accumsan ante lorem vel lorem. Morbi aliquet interdum purus, eu condimentum dui fermentum sit amet. Nam faucibus lectus et diam rutrum non posuere dui tincidunt. In euismod bibendum quam sed hendrerit. Curabitur bibendum purus scelerisque justo cursus vestibulum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+<p>Duis vel massa libero, in tristique libero. Phasellus bibendum sodales iaculis. Nullam placerat diam at leo fringilla imperdiet. Cras consequat dapibus elit, et convallis est dapibus non. Suspendisse fermentum vulputate mauris ac tincidunt. Fusce ut tortor turpis, dapibus sodales sapien. Fusce in dui massa, non lacinia nulla. Duis ut dui vel libero vestibulum laoreet. Quisque laoreet dignissim diam, quis adipiscing turpis posuere eu. Morbi odio risus, molestie id aliquet sed, dapibus tempus mauris. Pellentesque faucibus, neque eu adipiscing imperdiet, justo turpis varius neque, a tincidunt tellus tortor ut orci. Sed malesuada neque quis dolor hendrerit gravida. Cras in odio purus. Donec commodo dapibus tortor ac commodo. Vivamus ante est, accumsan ac rutrum in, venenatis sed turpis.</p>
+</td>
+<td style="width:30%;" class="block">
+<b>Data de início: </b>2012-03-25<br><b>Data de fim: </b>2012-03-28</td>
+</tr>
+<tr><td style="width:30%;" class="block">
+<h2>Autores:</h2>
+<ul><li>
+<b>António Silva</b><br><ul><li>
+<b>Identificador: </b>pg22820</li></ul>
+</li></ul>
+</td></tr>
+<tr><td style="width:30%;" class="block">
+<h2>Supervisores:</h2>
+<ul><li>
+<b>José Carlos</b><br><ul>
+<li>
+<b>Identificador: </b>jcr</li>
+<li>
+<b>E-mail: </b><a href="malito:xpto@xpto.pt">xpto@xpto.pt</a>
+</li>
+<li>
+<b>Web: </b><a href="xpto">xpto</a>
+</li>
+</ul>
+</li></ul>
+</td></tr>
+<tr><td style="width:30%;" class="block">
+<h2>Resultados:</h2>
+<ol><li><a href="PI_Fase1.pdf">PI Fase 1</a></li></ol>
+</td></tr>
+</table>

@@ -24,7 +24,7 @@ class Controller_Groups extends Controller_Mymain {
 			return $this->goHome();
 		$grps = new Model_Grupos();
 		$grps->rePerms();
-		//$this->action_index();
+		$this->goIndex();
 	}
 	public function action_ver($id =-1){
 		$this->restrictAcess('S');
@@ -104,13 +104,14 @@ class Controller_Groups extends Controller_Mymain {
 	}
 	
 	private function initTable($grupos){
-		$perms = $this->user->canDo(Kohana::$config->load('perms.grupos'));
-		$this->view->set('grupos', $grupos->getAllGrupos());
+		$this->_initTable($grupos, 'grupos');
+        /*$perms = $this->user->canDo(Kohana::$config->load('perms.grupos'));
+		$this->view->set('lista', $grupos->getAllGrupos());
 		$this->view->set('toinclude', 'grupos'); 
 		$this->view->set('perms', $perms);
 		$this->view->set('min', $grupos->getMin());
 		$this->view->set('int', $grupos->getIntervalo());
-		echo $this->view->render();
+		echo $this->view->render();*/
 	}
 } 
 ?>

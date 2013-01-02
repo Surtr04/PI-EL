@@ -39,7 +39,11 @@ class Controller_Users extends Controller_Mymain {
 		$info = $users->getUserWithId($id);
 		$users->cache(0);
 		$this->view->set('grupochange', $change);
-        if (($aux = $this->uploadfFoto($id)) !== '') $info['foto'] = $aux;
+        if (($aux = $this->uploadfFoto($id)) !== '') {
+            $info['foto'] = $aux; 
+        } else {
+            //Tratar a imagem externa para ter a certeza que é algo válido
+        }
 		$this->callForm($id, $info['username'], $info['senha'], $info['nome'], $info['email'], $info['morada'], $info['foto'], $info['grupo']);
 	}
     
@@ -108,16 +112,17 @@ class Controller_Users extends Controller_Mymain {
 	}
 	
 	private function initTable($users){
-		$grps = new Model_Grupos();
-		$grps->cacheAll();
-		$perms = $this->user->canDo(Kohana::$config->load('perms.users'));
+		$this->_initTable($users, "utilizadores");
+        /*$grps = new Model_Grupos();
+		$grps->cacheAll();*/
+		/*$perms = $this->user->canDo(Kohana::$config->load('perms.users'));
 		$this->view->set('users', $users->getAllUsers());
 		$this->view->set('toinclude', 'utilizadores'); 
-		$this->view->set('grupos', $grps->getAllGrupos());
+		//$this->view->set('grupos', $grps->getAllGrupos());
 		$this->view->set('perms', $perms);
 		$this->view->set('min', $users->getMin());
 		$this->view->set('int', $users->getIntervalo());
-		echo $this->view->render();
+		echo $this->view->render();*/
 	}
 } 
 ?>

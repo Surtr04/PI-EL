@@ -9,8 +9,8 @@ return array
 		'type'       => 'PDO',
 		'connection' => array(
 			'dsn'        => 'mysql:host=localhost;dbname=ped',
-			'username'   => 'root',
-			'password'   => '03010301',
+			'username'   => 'pedman',
+			'password'   => 'D}60za7vEi_-OfF',
 			'persistent' => FALSE,
 		),
 		'table_prefix' => 'sip_',

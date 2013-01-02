@@ -13,7 +13,7 @@ class Controller_Manut extends Controller_Mymain {
 	}
 	public function action_index(){
 		$this->view = View::Factory('manut');
-		$this->render(array('youngtitle' => "Maintenance", 'titulo'=> Kohana::$config->load('defs.titulo')));
+		$this->render(array('youngtitle' => "Maintenance", 'titulo'=> Kohana::$config->load('defs.titulo'), 'dtheme' => self::THEME_DEFAULT));
 	}
 	
 	public function action_activate(){
@@ -22,14 +22,14 @@ class Controller_Manut extends Controller_Mymain {
 		fwrite($fp, "Manut");
 		fclose($fp);
 		$this->view->set('isManut', true);
-		$this->goHome();
+		$this->goBack();
 	}
 	
 	public function action_deactivate(){
 		if (!$this->user->isAdmin()) if (MANUT) return $this->action_index;else return $this->goHome();
 		unlink($this->MFILE);
 		$this->view->set('isManut', false);
-		$this->goHome();
+		$this->goBack();
 	}
 } 
 ?>
