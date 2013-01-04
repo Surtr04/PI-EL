@@ -73,10 +73,16 @@ return array(
     'Start Date' => 'Data de Início',
     'End Date' => 'Data de Fim',
     'Opened' => 'Aberta',
+    /*Erros*/
+    'ERR_SIP_MANIFESTO' => 'O manifesto está em falta.',
+    'ERR_SIP_FILE' => 'Um do resultados apresentados no manifesto não está presente',
+    'ERR_SIP_SCHEMA' => 'O manifesto não é válido, de acordo com o Schema correspondente.',
+    'ERR_SIP_DATA' => 'A data de fim é superior à data de ínicio.',
     /*Sips*/
     'Sip' => 'Sip',
     'Sips' => 'Sips',
     'Insert new sip'=> 'Inserir um novo sip',
+    'Download category sips' => 'Descarregar os sips da categoria',
     'Identifier' => 'Identificador',
     'Title' => 'Titulo',
     'Subtitle' => 'Subtitulo',

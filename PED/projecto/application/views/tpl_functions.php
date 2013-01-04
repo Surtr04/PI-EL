@@ -64,6 +64,10 @@ class TPL {
 	public static function LinkDesaprovar($action, $texto = null){
         return TPL::$_instance->LinkDesaprovar($action, $texto);
 	}
+    
+    public static function LinkDownZip($action, $texto = null){
+        return TPL::$_instance->LinkDownZip($action, $texto);
+	}
 	
     public static function showInfos($captions, $values, $lista, $perms, $route, $action = array('edit'=>true, 'delete'=>true)){
         return TPL::$_instance->showInfos($captions, $values, $lista, $perms, $route, $action);
@@ -114,6 +118,10 @@ class baseTpl {
 	public function LinkDesaprovar($action, $texto = null){
 		return $this->linkadd($action, $texto, 'class_cancel');
 	}
+    
+    public function LinkDownZip($action, $texto = null){
+		return $this->linkadd($action, $texto, 'class_downzip');
+	}
 	
     public function showInfos($captions, $values, $lista, $perms, $route, $action = array('edit'=>true, 'delete'=>true)){//$see = false, $edit = true, $delete = true){
         //$act = ($see || ($edit && $perms['U']) || ($delete && $perms['D']));
@@ -135,6 +143,7 @@ class baseTpl {
             if ((is_callable($action['see']) && $action['see']($valor['id'], $perms['S'], $valor)) || ($action['see'] === true && $perms['S'])) $aux .= $this->LinkVer($route.'/ver/?id='.$valor['id'], '').' ';
             if ((is_callable($action['edit']) && $action['edit']($valor['id'], $perms['U'], $valor)) || ($action['edit'] === true && $perms['U'])) $aux .= $this->LinkEditar($route.'/editar/?id='.$valor['id'], '').' ';
             if ((is_callable($action['delete']) && $action['delete']($valor['id'], $perms['D'], $valor)) || ($action['delete'] === true && $perms['D'])) $aux .= $this->LinkApagar($route.'/apagar/?id='.$valor['id'], '').' ';
+            if ((is_callable($action['downzip']) && $action['downzip']($valor['id'], $perms['S'], $valor)) || ($action['downzip'] === true && $perms['S'])) $aux .= $this->LinkDownZip($route.'/downzip/?id='.$valor['id'], '').' ';
             /*if ($edit && $perms['U']) $aux .= $this->LinkEditar($route.'/editar/?id='.$valor['id'],'').' ';
             if ($delete && $perms['D']) $aux .= $this->LinkApagar($route.'/apagar/?id='.$valor['id'],'').' ';*/
             if ($act) $aux .= "</td>";
@@ -153,7 +162,7 @@ class baseTpl {
 	public function NavLista($min, $int, $total, $action){
 		$aux = "";
 		if ($min > 0) $aux .= '<a href="'.TPL::base().$action.'/?s='.($min-$int).'">&lt;&lt;'.__('Previous').'</a> ';
-		if ($min + $int <= $total) $aux .= '<a href="'.TPL::base().$action.'/?s='.($min+$int).'">'.__('Next').'&gt;&gt;</a>';
+		if ($min + $int < $total) $aux .= '<a href="'.TPL::base().$action.'/?s='.($min+$int).'">'.__('Next').'&gt;&gt;</a>';
 		return $aux;
 	}
     

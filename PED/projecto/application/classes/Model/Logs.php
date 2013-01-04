@@ -13,7 +13,6 @@ class Model_Logs extends Model_Mymodel {
         parent::__construct('logs');
         $query = DB::select($this->_table.'.*', 'users.username')->from($this->_table)->join('users')->on($this->_table.'.utilizador', '=', 'users.id')->order_by('data', 'DESC');
         $this->setCacheQuery($query);
-        
 	}
 	
     

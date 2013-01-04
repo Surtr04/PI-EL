@@ -22,8 +22,8 @@ class Model_Mymodel extends Model {
         $this->_list = array();
 	}
 	
-    protected function setCacheQuery($q) {$this->_cacheQuery = $q;}
-    protected function getCacheQuery(){return $this->_cacheQuery;}
+    protected function setCacheQuery($q) {$this->_cacheQuery = clone $q;}
+    protected function getCacheQuery(){return clone $this->_cacheQuery;}
     public function cacheAll(){
 		$aux = $this->_intervalo;
 		$this->_intervalo = -1;
@@ -35,14 +35,10 @@ class Model_Mymodel extends Model {
         $min = (int) $min;
 		if ($min < 0 ) $min = 0;
 		$this->_min = $min;
-        if ($this->_intervalo > 0) $this->_cacheQuery->limit($min+$this->_intervalo)->offset($min);
-        if ($this->_debug) echo $this->_cacheQuery;
-        $res = $this->_cacheQuery->execute();
-		/*$this->_list = array();
-        foreach($res as $linha){
-			$aux = $this->format($linha);
-            if ($aux["key"] === null) $this->_list[] = $aux["value"]; else $this->_list[$aux["key"]] = $aux["value"];
-        }*/
+        $query = clone $this->_cacheQuery;
+        if ($this->_intervalo > 0) $query->limit($this->_intervalo)->offset($min);
+        if ($this->_debug) echo $query;
+        $res = $query->execute();
         $this->_list = $this->transformResult($res);
 		$this->_cached = true;
     }
@@ -83,6 +79,13 @@ class Model_Mymodel extends Model {
 	public function getIntervalo(){return $this->_intervalo;}
 	
 	public function getMin(){ return $this->_min;}
+    
+    public function getTotal() {
+        $query = clone $this->getCacheQuery();
+        $query = $query->select(array(DB::expr('count(*)'), 'conta'));
+        $linha = $query->execute()->as_array();
+        return $linha[0]['conta'];
+    }
 	
     public function translateDate($data){
         if ($data instanceof DateTime){
@@ -127,4 +130,5 @@ class Model_Mymodel extends Model {
         }
     }
 } 
+
 ?>

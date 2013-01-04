@@ -18,7 +18,7 @@
 		echo "</tr>";
 	}
 	echo '</table>';*/
-	echo TPL::NavLista($min, $int, count($lista), $route);
+	echo TPL::NavLista($min, $int, $total, $route);
 	echo '</div>';
 	function isApagavel($id, $perm, $valor){ return $perm && $id != Kohana::$config->load('defs.admin') && $id != Kohana::$config->load('defs.guest'); }
 ?>

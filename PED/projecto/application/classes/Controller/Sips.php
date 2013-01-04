@@ -4,8 +4,10 @@
 */
 class Controller_Sips extends Controller_Mymain {
 
-    const ERR_MANIFESTO = 1;
-    const ERR_FILE = 2;
+    const ERR_MANIFESTO = "ERR_SIP_MANIFESTO";
+    const ERR_FILE = "ERR_SIP_FILE";
+    const ERR_SCHEMA = "ERR_SIP_SCHEMA";
+    const ERR_DATA = "ERR_SIP_DATA";
     const MANIFESTO = "manifesto.xml";
     
     private $own = "ownsips";
@@ -17,6 +19,7 @@ class Controller_Sips extends Controller_Mymain {
 	}
 	
 	protected function restrictAcess($perm, $name = ''){
+        if ($name == '') $name = $this->nperm;
         $sips = new Model_Sips();
         if (!$this->verifyAcess($perm, $name)){
             if ($this->verifyAcess($perm, $this->own)) $sips->setOnlyBy($this->user->getId()); else return $this->goHome();
@@ -34,11 +37,75 @@ class Controller_Sips extends Controller_Mymain {
 		$this->initTable($sips);
 	}
 	
+    public function action_zipcat(){
+        parent::restrictAcess('S', 'categories');
+        $id = (int) (Arr::get($_GET,'id',0));
+        if ($id <= -1) return $this->goBack();
+        $sips = $this->restrictAcess('S');
+        $sips->cacheAllByCat($id);
+        
+        $file = tempnam("tmp","bycat"); 
+        $bycat = new ZipArchive();
+        if ($bycat->open($file, ZipArchive::OVERWRITE) != 1) return false;
+        $catname = $id;
+        $unlink = array();
+        foreach($sips->getList() as $valor){
+            $catname = $valor['categoria'];
+            $infos = $this->buildZipFromDB($valor['id'], $sips);
+            $bycat->addFile($infos['zip'], $valor['id'].'_'.$infos['ident'].'.zip');
+            $unlink[] = $infos['zip'];
+        }
+        $bycat->close();
+        foreach($unlink as $valor)
+            unlink($valor);
+        $this->response->send_file($file, $catname.'.zip', array( 'delete'=>true));
+    }
+    
+    private function buildZipFromDB($id, $sips = null){
+        if ($sips == null) $sips = Model::factory('Sips');
+        $info = $sips->getAllInfoSip($id);
+        $info["id"] = $info["ident"];
+        $info = array_merge($info, $this->arr2multi($info["supervisores"], 's'));
+        $info = array_merge($info, $this->arr2multi($info["autores"], 'a'));
+        $files = array();
+        $i = 1;
+        foreach($info['resultados'] as $chave => $valor){
+            $files["rurl".$i] = array("error" => UPLOAD_ERR_OK, "name" => $valor["realname"], "tmp_name" => Controller_Resources::getResults().$valor['url']);
+            $info["rdesc".$i] = $valor["desc"];
+            $i++;
+        }
+        $info['cr'] = $i;
+        $zip = $this->build($info, $files);
+        return array('zip'=>$zip, 'ident'=>$info['ident']);
+    }
+    public function action_downzip(){
+        $sips = $this->restrictAcess('S');
+        $id = (int) (Arr::get($_GET,'id',0));
+        if ($id <= -1) return $this->goBack();
+        $infos = $this->buildZipFromDB($id, $sips);
+        $this->response->send_file($infos['zip'], $infos['ident'].'.zip', array( 'delete'=>true));
+    }
+    
+    private function arr2multi($arr, $pre){
+        $i = 1;
+        $res = array();
+        foreach($arr as $valor){
+            $res[$pre."nome".$i] = $valor["nome"];
+            $res[$pre."id".$i] = $valor["identificador"];
+            $res[$pre."email".$i] = $valor["email"];
+            $res[$pre."web".$i] = $valor["web"];
+            $i++;
+        }
+        $res['c'.$pre] = $i;
+        return $res;
+    }
+    
 	public function action_apagar(){
 		$sips = $this->restrictAcess('D');
 		$id = (int) Arr::get($_GET,'id',-1);
 		if ($id <= -1) return $this->action_index();
 		//$sips = new Model_Sips();
+        if (!$this->verifyAcess('D', 'categories')) $sips->restrictByCat();
 		$sips->apaga($id);
 		$this->action_index();
 	}
@@ -74,20 +141,20 @@ class Controller_Sips extends Controller_Mymain {
     }
     
     
-	private function build(){
+	private function build($arr, $files){
         $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><sip></sip>');
     
-        $nvs = $this->trata($_POST);
+        $nvs = $this->trata($arr);
 
-        $xml->addAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-        $xml->addAttribute("xsi:noNamespaceSchemaLocation","sip.xsd");
+        /*$xml->addAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        $xml->addAttribute("xsi:noNamespaceSchemaLocation","sip.xsd");*/
         $xml->addAttribute("iden", $nvs['id']);
         $meta = $xml->addChild("meta");
 
         $this->mostra($meta, true, $nvs, 'titulo');
         $this->mostra($meta, false, $nvs, 'subtitulo');
-        $this->mostra($meta, false, $nvs, 'data-inic');
-        $this->mostra($meta, true, $nvs, 'data-fim');
+        $this->mostra($meta, false, $nvs, 'data-inic', 'data_inic');
+        $this->mostra($meta, true, $nvs, 'data-fim', 'data_fim');
         $sps = $meta->addChild("supervisores");
         for ($i=1;$i<$nvs['cs'];$i++){
             $aux = $sps->addChild("supervisor");
@@ -106,9 +173,9 @@ class Controller_Sips extends Controller_Mymain {
         }
 
         $resumo = $xml->addChild("resumo");
-        $aux = array_map("rtrim", explode("\n", $nvs['resumo']));//explode(PHP_EOL, $nvs['resumo']);
+        if (is_array($nvs['resumo'])) $aux = $nvs['resumo']; else $aux = array_map("rtrim", explode("\n", $nvs['resumo']));//explode(PHP_EOL, $nvs['resumo']);
         foreach($aux as $chave => $valor)
-            $resumo->addChild("para", $valor);
+            if (is_array($valor)) $resumo->addChild("para", $valor["para"]); else $resumo->addChild("para", $valor);
 
         $res = $xml->addChild("resultados");
 
@@ -117,10 +184,10 @@ class Controller_Sips extends Controller_Mymain {
         if ($zip->open($file, ZipArchive::OVERWRITE) != 1) return false;
 
         $i = 0;
-        foreach ($_FILES as $chave => $valor) {
+        foreach ($files as $chave => $valor) {
             if ($valor['error'] != UPLOAD_ERR_OK) continue;
             if (++$i > $nvs['cr']) break;
-            $aux = $res->addChild("resultado", $_POST['rdesc'.((int)str_replace('rurl','',$chave))]);
+            $aux = $res->addChild("resultado", $nvs['rdesc'.((int)str_replace('rurl','',$chave))]);
             $aux->addAttribute('url', $valor['name']);
             $zip->addFile($valor['tmp_name'], $valor['name']);
         }
@@ -148,11 +215,12 @@ class Controller_Sips extends Controller_Mymain {
         $nv = array();
         $nv = $arr;
 		//Trata as datas
-		$nv['data-inic'] = strtotime($nv['data-inic']);
-		$nv['data-fim'] = strtotime($nv['data-fim']);
-		if ($nv['data-inic'] > $nv['data-fim']) die('Data-inic greater than Data-fim');
-		$nv['data-inic'] = date("Y-m-d",$nv['data-inic']);
-		$nv['data-fim'] = date("Y-m-d",$nv['data-fim']);
+        if ($nv['data_inic'] != ''){
+            $nv['data_inic'] = new DateTime($nv['data_inic']);
+            $nv['data_inic'] = $nv['data_inic']->format('Y-m-d');
+        }
+        $nv['data_fim'] = new DateTime($nv['data_fim']);
+        $nv['data_fim'] = $nv['data_fim']->format('Y-m-d');
 		//Contabiliza os ficheiros, autores e supervisores
         foreach (array("a" => "nome", "s" => "nome", "r" => "desc") as $chave => $valor){
             $c = 1;            
@@ -228,10 +296,13 @@ class Controller_Sips extends Controller_Mymain {
 	public function action_insere2(){
 		$sips = $this->restrictAcess('I');
         $aux = ((isset($_POST['isForm']) && $_POST['isForm']) ? 1 : 0);
-        if ($aux == 1) $zip = $this->build(); else $zip = $_FILES['sip']['tmp_name'];
+        if ($aux == 1) $zip = $this->build($_POST, $_FILES); else $zip = $_FILES['sip']['tmp_name'];
                 
         $res = $this->processaZip($zip);
-        if (!is_array($res)) die('Error! ' .$res );
+        if (!is_array($res)){
+            $this->setError($res);
+            $this->goBack();
+        }
         //$sips = new Model_Sips();
         $sips->insere($_POST['categoria'], $this->user->getId(), $res);
         $this->view->set('afterhtml',$this->buildHtml($zip));
@@ -245,7 +316,7 @@ class Controller_Sips extends Controller_Mymain {
         if ($tmpxml === false) return self::ERR_MANIFESTO;
         $xml = new DOMDocument();
         $xml->loadXML($tmpxml);
-        /*if (!$xml->schemaValidate(Controller_Resources::getOthers().'sip.xsd')) return false;*/
+        if (!$xml->schemaValidate(Controller_Resources::getOthers().'sip.xsd')) return self::ERR_SCHEMA;
         $info = array();
         
         $xpath = new DOMXPath($xml);
@@ -255,6 +326,8 @@ class Controller_Sips extends Controller_Mymain {
         $aux = array("titulo", "subtitulo", "data-inic", "data-fim");
         foreach($aux as $valor)
             $info[$valor] = $xpath->query($with.$valor)->item(0)->textContent;
+        
+        if (isset($info['data-inic']) && $info['data-inic'] > $info['data-fim']) return self::ERR_DATA;
         
         $info["supervisores"] = $this->processaPessoas($xpath, $with."supervisores/supervisor");
         $info["autores"] = $this->processaPessoas($xpath, $with."autores/autor");
@@ -298,12 +371,14 @@ class Controller_Sips extends Controller_Mymain {
     }
     
 	private function initTable($lista){
-		$this->_initTable($lista, 'sips');
+		$this->_initTable($lista, 'sips', false);
         $perms = $this->user->canDo(Kohana::$config->load('perms.'.$this->nperm));
         $aux = $this->user->canDo(Kohana::$config->load('perms.'.$this->own));
         foreach(array('S', 'I', 'U', 'D') as $valor)
             $perms[$valor] = ($perms[$valor] || $aux[$valor]);
         $this->view->set('perms', $perms);
+        $this->view->set('catperms', $this->user->canDo(Kohana::$config->load('perms.categories')));
+        echo $this->view->render();
 		/*$this->view->set('lista', $lista->getList());
 		$this->view->set('toinclude', 'sips'); 
         $this->view->set('perms', $perms);

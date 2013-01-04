@@ -4,10 +4,8 @@
 */
 /*<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />*/
 /*<link rel="shortcut icon" href="<?php echo TPL::base()?>favicon.ico" type="image/x-icon" />*/
-define('MSGS', 0);
+define('MSGS', 1);
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	
 	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
@@ -24,8 +22,16 @@ define('MSGS', 0);
 </head>
 
 <body <?php if ($onload != '') echo 'onload="'.$onload.'()" '?>>
-<?php if (isset($erro) && MSGS) echo '<p style="color:red; float:left;">'.$erro."</p>";?>
-<?php if (isset($msg) && MSGS) echo '<p style="color:green; float:left;">'.$msg."</p>";?>
+<?php
+    if (MSGS){
+        foreach(array('errors' => 'red', 'msgs' => 'green', 'warnings' => 'yellow') as $chave => $valor){
+            if (isset($$chave)) {
+                foreach($$chave as $erro)
+                   echo '<p style="color:'.$valor.'; float:left;">'.__($erro)."</p>";
+             }
+        }
+    }
+?>
 	<div id="pack">
 		<div id="head">
 			<!--<div id="text">

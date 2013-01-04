@@ -33,7 +33,7 @@
         padding: 5px;
         vertical-align: top;
     }	
-    #rptitle.h1{
+    #rptitle h1{
         padding: 5px;
     }
     table{
@@ -46,14 +46,15 @@
     echo '<div id="rptitle"><h1>['.$lista['titulo'].']</h1></div>';
 	echo '<table>
         <tr>
-            <td style="width:70%; text-align: justify;" class="block" rowspan="4">
-            <h2>'.$lista['subtitulo'].'</h2>';
+            <td style="width:70%; text-align: justify;" class="block" rowspan="4">';
+    if ($lista['subtitulo'] == '') $lista['subtitulo'] = __('Abstract');
+    echo '     <h2>'.$lista['subtitulo'].'</h2>';
     foreach($lista["resumo"] as $valor)
         echo '<p>'.$valor['para'].'</p>';
 	echo '  </td>
             <td style="width:30%;" class="block">';    
-    echo '<b>'.__('Start Date').': </b>'.$lista['data_inic'].'<br><b>'.__('End Date').': </b>'.$lista['data_fim'].'</td>
-        </tr>';
+    if ($lista['data_inic'] !== null) echo '<b>'.__('Start Date').': </b>'.$lista['data_inic'].'<br>';
+    echo '<b>'.__('End Date').': </b>'.$lista['data_fim'].'</td></tr>';
     
     
     echo '<tr><td style="width:30%;" class="block"><h2>'.__('Authors').':</h2><ul>';

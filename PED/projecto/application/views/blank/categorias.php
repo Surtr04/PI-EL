@@ -8,7 +8,7 @@
 
     $c = array('Category', 'Start Date', 'End Date', 'Opened');
     $v = array('nome' => 'makeLinkCat', 'inicio' => 0, 'fim' => 0, 'aberta' => 'YesNo');
-    echo TPL::showInfos($c, $v, $lista, $perms, $route);
+    echo TPL::showInfos($c, $v, $lista, $perms, $route, array('edit'=>true, 'delete'=>true, 'downzip'=>true));
     
 	/*echo '<table style="margin:10px;"><tr><th class="th_normal">'.__('Category').'</th><th class="th_normal">'.__('Start Date').'</th><th class="th_normal">'.__('End Date').'</th><th class="th_normal">'.__('Opened').'</th>'.(($perms['U'] || $perms['D']) ? '<th class="th_normal">'.__('Actions').'</th>' : '').'</tr>';
 	foreach($lista as $chave => $valor){
@@ -17,7 +17,7 @@
 		echo "</tr>";
 	}
 	echo '</table>';*/
-	echo TPL::NavLista($min, $int, count($lista), $route);
+	echo TPL::NavLista($min, $int, $total, $route);
 	echo '</div>';
     
     function YesNo($v, $valor){return ( $v ? __('Yes') : __('No'));}

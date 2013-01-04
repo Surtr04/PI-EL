@@ -1,3 +1,5 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <?php defined('SYSPATH') or die('No direct script access.');
 /*
 	(C) António Silva e Rui Brito - 2012/2013
@@ -51,3 +53,4 @@
 	if (isset($afterhtml)) echo $afterhtml;
 	if ($t->can_include('footer.php')) include_once($t->my_include('footer.php'));
 ?>
+</html>

@@ -8,7 +8,7 @@
 
     $c = array('Time', 'Operation', 'User', 'Message');
     $v = array('data' => 0, 'operacao' => 0, 'username' => 0, 'descricao' => 'makeDescription');
-    echo TPL::showInfos($c, $v, $logs, $perms, $route, array('edit'=>'verificaP', 'delete'=>'verificaP'));
+    echo TPL::showInfos($c, $v, $lista, $perms, $route, array('edit'=>'verificaP', 'delete'=>'verificaP'));
     
 	/*echo '<table style="margin:10px;"><tr><th class="th_normal">'.__('Time').'</th><th class="th_normal">'.__('Operation').'</th><th class="th_normal">'.__('User').'</th><th class="th_normal">'.__('Message').'</th>'.(($perms['U'] || $perms['D']) ? '<th class="th_normal">'.__('Actions').'</th>' : '').'</tr>';
 	foreach($logs as $chave => $valor){
@@ -17,7 +17,8 @@
 		echo "</tr>";
 	}
 	echo '</table>';*/
-	echo TPL::NavLista($min, $int, count($logs), $route);
+
+	echo TPL::NavLista($min, $int, $total, $route);
 	echo '</div>';
 
     

@@ -11,6 +11,6 @@
     echo TPL::showInfos($c, $v, $lista, $perms, $route);
     
 	
-	echo TPL::NavLista($min, $int, count($lista), $route);
+	echo TPL::NavLista($min, $int, $total, $route);
 	echo '</div>';
 ?>

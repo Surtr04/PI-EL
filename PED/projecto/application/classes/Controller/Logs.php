@@ -76,13 +76,14 @@ class Controller_Logs extends Controller_Mymain {
 	}
 	
 	private function initTable($log){
-		$perms = $this->user->canDo(Kohana::$config->load('perms.'.$this->nperm));
+        $this->_initTable($log, 'logs');
+		/*$perms = $this->user->canDo(Kohana::$config->load('perms.'.$this->nperm));
 		$this->view->set('logs', $log->getAllLogs());
 		$this->view->set('toinclude', 'logs'); 
 		$this->view->set('perms', $perms);
 		$this->view->set('min', $log->getMin());
 		$this->view->set('int', $log->getIntervalo());
-		echo $this->view->render();
+		echo $this->view->render();*/
 	}
 } 
 ?>

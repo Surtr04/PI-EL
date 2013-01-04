@@ -20,6 +20,7 @@ class Controller_Categories extends Controller_Mymain {
 		$this->initTable($cats);
 	}
 	
+    
 	public function action_apagar(){
 		$this->restrictAcess('D');
 		$id = (int) Arr::get($_GET,'id',-1);

@@ -31,4 +31,3 @@ function myspReplace($txt){
 <!--</div>-->
 
 </body>
-</html>

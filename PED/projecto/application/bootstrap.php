@@ -163,6 +163,12 @@ Route::set('langs', 'langs/<lang>',
 		'action'     => 'change',
 	));
 
+Route::set('zipcat', 'categories/downzip')
+	->defaults(array(
+		'controller' => 'sips',
+		'action'     => 'zipcat',
+	));
+
 Route::set('bycat', 'sips/bycat/<id>')
 	->defaults(array(
 		'controller' => 'sips',

@@ -46,8 +46,8 @@ echo '<form method="POST" onSubmit="return checkForm()" action="'.TPL::base().$r
             <tr><td>'.__('Identifier').':</td><td> <input type="text" name="id"/><br/></td></tr>
             <tr><td>'.__('Title').':</td><td> <input type="text" name="titulo"/><br/></td></tr>
             <tr><td>'.__('Subtitle').': </td><td><input type="text" name="subtitulo"/><br/></td></tr>
-            <tr><td>'.__('Start Date').': </td><td><input type="text" name="data-inic"/><br/></td></tr>
-            <tr><td>'.__('End Date').':</td><td> <input type="text" name="data-fim"/><br/></td></tr>
+            <tr><td>'.__('Start Date').': </td><td><input type="text" name="data_inic"/><br/></td></tr>
+            <tr><td>'.__('End Date').':</td><td> <input type="text" name="data_fim"/><br/></td></tr>
             <tr><td><button type="button" onclick="javascript:adicionaSuper(\'Super\')">'.__('Add Supervisors').'</button><br/> </td>
             <td>
                 <div id="Super">
