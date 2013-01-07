@@ -83,14 +83,14 @@ class Controller_Mymain extends Controller {
 		$this->view->set('menus', array());
 		$this->addMenu("home", true, $this->createUrl('default'), "Home");
 		if (!$this->user->isGuest()){
-			$this->addMenu("auth", false,  url::base()."auth/logout", "Logout");
+			$this->addMenu("auth", false,  $this->createUrl("auth", array("action" => "logout")), "Logout");
             $this->createMenuLink('users', $this->createUrl("users"), "Users", 
                                            $this->createUrl("users", array("action" => "editar"), array("id"=>$this->user->getId())), "Change Profile"
                                  );
             $this->addMenu("sips", false, $this->createUrl("sips"), "Sips");
 		}
 		else
-			$this->addMenu("auth", false,  url::base()."auth/login", "Enter");
+			$this->addMenu("auth", false,  $this->createUrl("auth", array("action" => "login")), "Enter");
         $this->createMenuLink('groups', $this->createUrl("groups"), "Groups");
         $this->createMenuLink('logs', $this->createUrl("logs"), "Logs");
         $this->createMenuLink('supervisors', $this->createUrl("supervisores"), "Supervisors");
