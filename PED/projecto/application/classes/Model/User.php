@@ -23,7 +23,7 @@ class Model_User extends Model {
 		$query = DB::select()->from('users')->where('username', '=', $username)->and_where('senha' ,  '=', $password)->limit(1);
 		$res = $query->execute();
 		foreach($res as $u){
-			$this->_id = $u['id'];
+			$this->_id = (int)$u['id'];
 			$this->_username = $u['username'];
 			$this->_name = $u['nome'];
 			$this->_email = $u['email'];

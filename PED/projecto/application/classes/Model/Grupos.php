@@ -112,7 +112,9 @@ class Model_Grupos extends Model_Mymodel {
         $querys[] = DB::query(Database::DELETE, 'TRUNCATE TABLE '.$prefix."perms_tipo");
         $querys[] = DB::query(Database::DELETE, 'TRUNCATE TABLE '.$prefix."perms");
         $querys = $this->noConstraints($querys);
-        $arr = array('users' => 'Users', 'groups' => 'Groups', 'logs' => 'Logs', 'categories' => 'Categories', 'authors' => 'Authors', 'supervisors' => 'Supervisors', 'ownsips' => 'Own Sips', 'allsips' => 'All Sips');
+        $arr = array('users' => 'Users', 'groups' => 'Groups', 'logs' => 'Logs', 'categories' => 'Categories', 
+                     'authors' => 'Authors', 'supervisors' => 'Supervisors', 'ownsips' => 'Own Sips', 
+                     'allsips' => 'All Sips', 'privatesips' => 'Private Sips');
         foreach($arr as $chave => $valor){
             $aux = $this->addTipo($chave, $valor);
             $querys = $this->copyArray($querys, $aux);

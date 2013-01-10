@@ -16,6 +16,7 @@ return array(
     'allsips' => 7,
     'authors' => 8,
     'supervisors' => 9,
+    'privatesips' => 10,
 );
 
 ?>

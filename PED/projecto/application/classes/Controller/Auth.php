@@ -23,7 +23,7 @@ class Controller_Auth extends Controller_Mymain {
                 if ($this->user->isAdmin()) $this->log('Admin login');
                 $this->goHome();
 			} else{
-				$this->view->set('erro', "Utilizador inválido!");
+				$this->setError("Invalid User!");
 				$this->goLogin();
 			}
 		} else

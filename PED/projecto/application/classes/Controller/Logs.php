@@ -19,7 +19,45 @@ class Controller_Logs extends Controller_Mymain {
 		$this->initTable($log);
 	}
 	
-	
+	public function action_export(){
+        $this->restrictAcess('S');
+        $log = new Model_Logs();
+        
+        $min = (int) (Arr::get($_GET,'s',0));
+        $num = (int) (Arr::get($_GET,'n',-1));
+        
+        $b = Arr::get($_REQUEST,'before',null);
+        if ($b !== null) $log->setBefore($b);
+        $a = Arr::get($_REQUEST,'after',null);
+        if ($a !== null) $log->setAfter($a); 
+        
+        if ($a !== null && $b !== null) $num = 0;
+
+        $log->cache($min, $num);
+        $file = $this->writeLog($log->getList());
+        $this->response->send_File($file, 'logs.xml' ,array('delete' => true));
+    }
+    
+    public function writeLog($lista){
+        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><logs></logs>');
+        $campos = array('username' => 'utilizador', 'data' => 'data', 'operacao' => 'operacao', 'descricao' => 'descricao', 'auto' => 'auto');
+        foreach($lista as $valor){
+            $log = $xml->addChild("log");
+            foreach($campos as $c => $v)
+                $log->addChild($v, $valor[$c]);
+            $params = $log->addChild('params');
+            foreach($valor['params'] as $c => $v){
+                $p = $params->addChild('param', $v);
+                $p->addAttribute('key', $c);
+            }
+        }
+        
+        $tmpxml = tempnam("tmp","man");
+        $xml->asXml($tmpxml);
+        
+        return $tmpxml;
+    }
+    
 	public function action_apagar(){
 		$this->restrictAcess('D');
 		$id = (int) Arr::get($_GET,'id',-1);
@@ -77,13 +115,6 @@ class Controller_Logs extends Controller_Mymain {
 	
 	private function initTable($log){
         $this->_initTable($log, 'logs');
-		/*$perms = $this->user->canDo(Kohana::$config->load('perms.'.$this->nperm));
-		$this->view->set('logs', $log->getAllLogs());
-		$this->view->set('toinclude', 'logs'); 
-		$this->view->set('perms', $perms);
-		$this->view->set('min', $log->getMin());
-		$this->view->set('int', $log->getIntervalo());
-		echo $this->view->render();*/
 	}
 } 
 ?>

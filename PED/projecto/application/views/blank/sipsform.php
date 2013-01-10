@@ -36,18 +36,23 @@
      }
 </script>
 <?php 
-echo '<form method="POST" onSubmit="return checkForm()" action="'.TPL::base().$route.($form_id != NULL ? '/update' : '/insere2').'" style="padding:10px;" enctype="multipart/form-data">
+
+$sip['autores'] = Arr::get($sip, 'autores', array());
+$sip['supervisores'] = Arr::get($sip, 'supervisores', array());
+$sip['resultados'] = Arr::get($sip, 'resultados', array());
+echo '<form method="POST" onSubmit="return checkForm()" action="'.TPL::base().$route.($form_id != null ? '/update' : '/insere2').'" style="padding:10px;" enctype="multipart/form-data">
     <fieldset>
         <legend>SIP:</legend>
         <input type="hidden" id="form_id" name="form_id" value="'.$form_id.'"/>
-        <input type="hidden" id="isForm" name="isForm" value="1"/>
+        <input type="hidden" id="isForm" name="isForm" value="1"/>    
         <table>
             <tr><td>'.__('Category').': </td><td>'.TPL::createSelect('categoria', $categorias, $categoria).'</td></tr>
-            <tr><td>'.__('Identifier').':</td><td> <input type="text" name="id"/><br/></td></tr>
-            <tr><td>'.__('Title').':</td><td> <input type="text" name="titulo"/><br/></td></tr>
-            <tr><td>'.__('Subtitle').': </td><td><input type="text" name="subtitulo"/><br/></td></tr>
-            <tr><td>'.__('Start Date').': </td><td><input type="text" name="data_inic"/><br/></td></tr>
-            <tr><td>'.__('End Date').':</td><td> <input type="text" name="data_fim"/><br/></td></tr>
+            '.($canBePrivate ? '<tr><td>'.__('Private').': </td><td><input type="checkbox" name="privado" value="1" '.(Arr::get($sip, 'privado', 0) ? 'checked="true" ': '').'/></td></tr>' : '').'
+            <tr><td>'.__('Identifier').':</td><td> <input type="text" name="id" value="'.Arr::get($sip, 'ident', '').'"/><br/></td></tr>
+            <tr><td>'.__('Title').':</td><td> <input type="text" name="titulo" value="'.Arr::get($sip, 'titulo', '').'"/><br/></td></tr>
+            <tr><td>'.__('Subtitle').': </td><td><input type="text" name="subtitulo" value="'.Arr::get($sip, 'subtitulo', '').'"/><br/></td></tr>
+            <tr><td>'.__('Start Date').': </td><td><input type="text" name="data_inic" value="'.Arr::get($sip, 'data_inic', '').'"/><br/></td></tr>
+            <tr><td>'.__('End Date').':</td><td> <input type="text" name="data_fim" value="'.Arr::get($sip, 'data_fim', '').'"/><br/></td></tr>
             <tr><td><button type="button" onclick="javascript:adicionaSuper(\'Super\')">'.__('Add Supervisors').'</button><br/> </td>
             <td>
                 <div id="Super">
@@ -62,7 +67,12 @@ echo '<form method="POST" onSubmit="return checkForm()" action="'.TPL::base().$r
                 </div>
             </td></tr>
 
-            <tr><td>'.__('Abstract').':</td><td> <textarea rows="10" cols="50" name="resumo"></textarea><br/></td></tr>
+            <tr><td>'.__('Abstract').':</td><td> <textarea rows="10" cols="50" name="resumo">';
+            
+            $aux = "";
+            foreach(Arr::get($sip, 'resumo', array()) as $valor)
+                $aux .= $valor['para']."\n";
+            echo substr($aux,0,-1).'</textarea><br/></td></tr>
 
             <tr><td><button type="button" onclick="javascript:adicionaRes(\'Resultados\')">'.__('Add Results').'</button><br/> </td>
             <td>
@@ -75,5 +85,52 @@ echo '<form method="POST" onSubmit="return checkForm()" action="'.TPL::base().$r
     </fieldset>
     '.TPL::BtnsForm($route).'
 </form>';
+
+
+$c1 = array("id" => "identificador", "nome" => "nome", "mail"=>"email", "web"=>"web");
+$c2 = array("url" => "", "desc" => "desc");
+echo '<script type="text/javascript">
+    '.createEnable($c1, $c2).'
+    var el = null;';
+
+echo javascriptAutoAdd('adicionaAutor',$sip['autores'], 'Autor', 'a', $c1);
+echo javascriptAutoAdd('adicionaSuper',$sip['supervisores'], 'Super', 's', $c1);
+
+echo javascriptAutoAdd('adicionaRes', $sip['resultados'], 'Resultados', 'r', $c2);
+
+          
+echo '</script>';
+
+function createEnable($c1, $c2){
+    return 'function checkForm(){
+        var i;
+        '.colocafor($c1, 'a').colocafor($c1, 's').colocafor($c2, 'r').'
+        return true;
+    }';
+}
+
+function colocafor($cm, $p){
+    $aux = 'for(i=1;i<c'.$p.';i++){
+            ';
+    foreach ($cm as $c => $v)
+        if ($v != "") $aux.= 'document.forms[0]["'.$p.$c.'"+i].disabled=false;'."\n";
+    $aux .= "}\n";
+    return $aux;
+}
+
+function javascriptAutoAdd($fn, $arr, $place, $pre, $campos){
+    $i = 1;
+    $aux = "";
+    foreach($arr as $valor){
+        $aux .= $fn.'("'.$place.'");'."\n";
+        foreach($campos as $c => $v){
+            $aux .= 'el = document.forms[0]["'.$pre.$c.$i.'"];';
+            if ($v != "") $aux .= 'el.value="'.$valor[$v].'";'."\n";
+            $aux .= 'el.disabled=true;';
+        }
+        $i++;
+    }
+    return $aux;
+}
 
 ?>

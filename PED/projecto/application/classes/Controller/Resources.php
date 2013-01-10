@@ -41,7 +41,7 @@ class Controller_Resources extends Controller_Mymain {
         }
 
     }
-    public function sendFile($file, $name = '', $dsp = 'inline'){
+    /*public function sendFile($file, $name = '', $dsp = 'inline'){
 		if (file_exists($file)) {
 			header('Content-Description: File Transfer');
 			header('Content-Type: '.mime_content_type($file)); //octet-stream');
@@ -57,6 +57,12 @@ class Controller_Resources extends Controller_Mymain {
 			readfile($file);
 		} else {
             $this->notFound();
+        }
+    }*/
+    
+    public static function deleteFiles($path, $arr){
+        foreach($arr as $valor){
+            if (file_exists($path.$valor)) unlink($path.$valor);
         }
     }
     

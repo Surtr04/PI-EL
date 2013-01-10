@@ -5,8 +5,8 @@
 return array(
     'admin' => 1,
     'guest' => 2,
-    'titulo' => 'WorkTogether',
-    'linhas_pagina' => 5,
+    'titulo' => 'AAA - Arquivo Aberto de trabalhos de Alunos',
+    'linhas_pagina' => 10,
     'noreply' => 'noreply@localhost',
     'adminemail' => 'admin@localhost',
 );

@@ -9,7 +9,9 @@ class Model_Mymodel extends Model {
 	protected $_cached;
     protected $_table;
 	protected $_debug;
+    protected $_alwaysRollback;
     protected $_list;
+    protected $_success;
     private $_cacheQuery;
 	
 	public function __construct($table){
@@ -20,23 +22,28 @@ class Model_Mymodel extends Model {
         $this->_debug = false;
         $this->_cacheQuery = '';
         $this->_list = array();
+        $this->_alwaysRollback = false;
+        $this->_success = false;
 	}
 	
+    public function LastSuccessful(){return $this->_success;}
+    
     protected function setCacheQuery($q) {$this->_cacheQuery = clone $q;}
     protected function getCacheQuery(){return clone $this->_cacheQuery;}
     public function cacheAll(){
-		$aux = $this->_intervalo;
-		$this->_intervalo = -1;
-		$this->cache(0);
-		$this->_intervalo = $aux;
+		/*$aux = $this->_intervalo;
+		$this->_intervalo = -1;*/
+		$this->cache(0,-1);
+		//$this->_intervalo = $aux;
 	}
     
-    public function cache($min = 0){
+    public function cache($min = 0, $num = -1){
         $min = (int) $min;
 		if ($min < 0 ) $min = 0;
 		$this->_min = $min;
         $query = clone $this->_cacheQuery;
-        if ($this->_intervalo > 0) $query->limit($this->_intervalo)->offset($min);
+        if ($num < 0) $num = $this->_intervalo;
+        if ($num > 0) $query->limit($num)->offset($min);
         if ($this->_debug) echo $query;
         $res = $query->execute();
         $this->_list = $this->transformResult($res);
@@ -120,11 +127,14 @@ class Model_Mymodel extends Model {
                 $v = $query->execute();
                 if (substr($chave,0,2) == "id") $last_id = $v[0];
             }
-            $db->commit();
+            if ($this->_alwaysRollback) $db->rollback(); else $db->commit();
+            //$db->commit();
             if ($this->_cached) $this->cache($this->_min);
+            $this->_success = true;
             return $last_id;
         }
         catch(Database_Exception $e){
+            $this->_success = false;
             $db->rollback();
             die ("DB Error: ".$e->getMessage());
         }

@@ -72,10 +72,10 @@ class Controller_Mymain extends Controller {
 		}
 		return $x;
 	}
-	protected function log($desc = '', $action = null){
+	protected function log($desc = '', $params = array(), $action = null){
         $l = new Model_Logs();
         if ($action == null) $action = $this->request->controller() . "/". $this->request->action();
-        $l->insereLog($this->user->getId(), time(), $action, $desc, Model_Logs::AUTO);
+        $l->insereLog($this->user->getId(), time(), $action, $desc, Model_Logs::AUTO, $params);
     }
     
 	private function fillMenus(){
@@ -90,7 +90,7 @@ class Controller_Mymain extends Controller {
             $this->addMenu("sips", false, $this->createUrl("sips"), "Sips");
 		}
 		else
-			$this->addMenu("auth", false,  $this->createUrl("auth", array("action" => "login")), "Enter");
+			$this->addMenu("auth", false,   $this->createUrl("auth", array("action" => "login")), "Enter");
         $this->createMenuLink('groups', $this->createUrl("groups"), "Groups");
         $this->createMenuLink('logs', $this->createUrl("logs"), "Logs");
         $this->createMenuLink('supervisors', $this->createUrl("supervisores"), "Supervisors");
@@ -182,6 +182,7 @@ class Controller_Mymain extends Controller {
     protected function _initTable($m, $include = '', $render = true){
         $perms = $this->user->canDo(Kohana::$config->load('perms.').$this->nperm);
 		$this->view->set('lista', $m->getList());
+        $this->view->set('userid', $this->user->getId());
 		$this->view->set('toinclude', $include); 
 		$this->view->set('perms', $perms);
         $this->view->set('total', $m->getTotal());

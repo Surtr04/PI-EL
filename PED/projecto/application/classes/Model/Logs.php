@@ -11,13 +11,21 @@ class Model_Logs extends Model_Mymodel {
     
 	public function __construct(){
         parent::__construct('logs');
-        $query = DB::select($this->_table.'.*', 'users.username')->from($this->_table)->join('users')->on($this->_table.'.utilizador', '=', 'users.id')->order_by('data', 'DESC');
+        $query = DB::select($this->_table.'.*', 'users.username')->from($this->_table)
+                ->join('users')->on($this->_table.'.utilizador', '=', 'users.id')
+                ->order_by('data', 'DESC');
         $this->setCacheQuery($query);
+        //$this->_debug = true;
 	}
 	
     
 	protected function format($linha){
-		return array("key"=> null, "value"=>array("id" => (int)$linha["id"], "utilizador" => $linha["utilizador"], "username" => $linha["username"], "data" => $linha["data"], "operacao" => $linha["operacao"], "descricao" => $linha["descricao"], "auto" => $linha["auto"]));
+        $res = DB::select()->from('logs_params')->where('id_log', '=', (int)$linha["id"])->execute();
+        $params = array();
+        foreach($res as $row)
+            $params[$row['key']] = $row['value'];
+        
+		return array("key"=> null, "value"=>array("id" => (int)$linha["id"], "utilizador" => $linha["utilizador"], "username" => $linha["username"], "data" => $linha["data"], "operacao" => $linha["operacao"], "descricao" => $linha["descricao"], "auto" => $linha["auto"], "params" => $params));
 	}
 	
 	public function	getAllLogs(){ return $this->getList();}
@@ -32,6 +40,9 @@ class Model_Logs extends Model_Mymodel {
 		if ($this->_cached) $this->cache($this->_min);
 	}
 	
+    public function setBefore($data){$this->setCacheQuery($this->getCacheQuery()->where('data' , '<=', $this->translateDate($data)));}
+    public function setAfter($data){$this->setCacheQuery($this->getCacheQuery()->where('data' , '>=', $this->translateDate($data)));}
+    
 	public function editarLog($id, $data, $operacao, $descricao, $auto){
 		$id = (int) $id;
 		
@@ -53,7 +64,7 @@ class Model_Logs extends Model_Mymodel {
 	}
 	
  
-	public function insereLog($utilizador, $data, $operacao, $descricao, $auto){
+	public function insereLog($utilizador, $data, $operacao, $descricao, $auto, $params = array()){
         $auto = (int) $auto;
         if (is_numeric($utilizador)) 
             $utilizador = (int)$utilizador;
@@ -61,7 +72,13 @@ class Model_Logs extends Model_Mymodel {
             $utilizador = DB::select('id')->from('users')->where('username', '=', $utilizador);
         
         if ($auto != self::AUTO && $auto != self::NOAUTO) $auto = self::NOAUTO;
-		DB::insert($this->_table)->values(array(null, $utilizador, $this->translateDate($data), $operacao, $descricao, $auto))->execute();
+		$querys = array();
+        $querys["id"] = DB::insert($this->_table)->values(array(null, $utilizador, $this->translateDate($data), $operacao, $descricao, $auto));
+        
+        foreach($params as $chave => $valor)
+            $querys["ref_".$chave] = DB::insert('logs_params')->values(array(':id', $chave, $valor));
+        
+        $this->executeInTransaction($querys);
 		if ($this->_cached) $this->cache($this->_min);
 	}
 	

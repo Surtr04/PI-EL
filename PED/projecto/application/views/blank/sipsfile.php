@@ -8,6 +8,7 @@ echo '<form method="post" onSubmit="return checkForm()" action="'.TPL::base().$r
                 <input type="hidden" id="isForm" name="isForm" value="0"/>
                 <table>
                     <tr><td>'.__('Category').': </td><td>'.TPL::createSelect('categoria', $categorias, $categoria).'</td></tr>
+                    '.($canBePrivate ? '<tr><td>'.__('Private').': </td><td><input type="checkbox" name="privado" value="1"/></td></tr>' : '').'
 					<tr><td>'.__('File').'</td><td><input type="file" name="sip"/></td><td></td></tr>
 				</table>
 			</fieldset>

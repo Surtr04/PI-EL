@@ -26,7 +26,7 @@
         return !$valor['auto'] && $perm;
     }
     function makeDescription($desc, $valor){
-        return __($desc, array(':user' => $valor['utilizador'], ':username' => $valor['username'], ':time' => $valor['data']));
+        return __($desc, array_merge(array(':user' => $valor['utilizador'], ':username' => $valor['username'], ':time' => $valor['data']), $valor['params'] ));
     }
     
 ?>

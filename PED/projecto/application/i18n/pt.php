@@ -64,8 +64,10 @@ return array(
     'Time' => 'Data/Hora',
     'Operation' => 'Operação',
     'Message' => 'Mensagem',
+    /*Mensagens dos Logs*/
     'Admin login' => 'O administrador :username (id: :user) fez login',
     'Admin logout' => 'O administrador :username (id: :user) fez logout',
+    'Sip change' => 'O utilizador :username (id: :user) alterou um sip (id: :sip)',
     /*Categorias*/
     'Category' => 'Categoria',
     'Categories' => 'Categorias',
@@ -78,6 +80,7 @@ return array(
     'ERR_SIP_FILE' => 'Um do resultados apresentados no manifesto não está presente',
     'ERR_SIP_SCHEMA' => 'O manifesto não é válido, de acordo com o Schema correspondente.',
     'ERR_SIP_DATA' => 'A data de fim é superior à data de ínicio.',
+    'Invalid User!' => 'Utilizador inválido',
     /*Sips*/
     'Sip' => 'Sip',
     'Sips' => 'Sips',
@@ -102,6 +105,8 @@ return array(
     'File' => 'Ficheiro',
     'Results' => 'Resultados',
     'Own Sips' => 'Sips próprios',
-    'All Sips' => 'Todo os Sips',
+    'All Sips' => 'Todos os Sips',
+    'Private' => 'Privado',
+    'Private Sips' => 'Sips privados',
 );
 ?>
