@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<activities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/Users/rmb/Documents/MEI/EL/PI-EL/PI/modelling/cv_activities.xsd">
+    <activity role="teaching">
+        <username>username0</username>
+        <username>username1</username>
+        <begin_date>2006-05-04</begin_date>
+        <description>description0</description>
+    </activity>
+    <activity role="teaching">
+        <username>username2</username>
+        <username>username3</username>
+        <begin_date>2006-05-04</begin_date>
+        <description>description1</description>
+    </activity>
+</activities>
