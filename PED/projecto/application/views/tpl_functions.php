@@ -82,7 +82,11 @@ class TPL {
 	}
     
     public static function createSelect($nome, $lista, $sel = -1){
-        return TPL::$_instance->createSelect($nome, $lista, $sel);
+        return TPL::$_instance->createSelect($nome, $lista, 1, array($sel));
+    }
+    
+    public static function createMultiSelect($nome, $lista, $sel = array(), $size = 10){
+        return TPL::$_instance->createSelect($nome, $lista, $size, $sel);
     }
     
 }
@@ -166,10 +170,15 @@ class baseTpl {
 		return $aux;
 	}
     
-    public function createSelect($name, $lista, $sel = -1){
-        $aux = '<select type="text" id="'.$name.'" name="'.$name.'" style="margin-top:10px;"/>';
+    public function createSelect($name, $lista, $multi = 1, $sel = array()){
+        $s = array();
+        foreach($sel as $valor)
+            $s[$valor] = 1;
+        if ($multi > 1) $name .= "[]";
+        
+        $aux = '<select type="text" id="'.$name.'" name="'.$name.'" '.($multi > 1 ? 'size="'.$multi.'" multiple="true"' : '').' style="margin-top:10px;"/>';
         foreach($lista as $chave => $valor){
-            $aux .= '<option '.($sel == (int)$valor['id'] ? 'selected="true "' : '' ).'value="'.$valor['id'].'">'.$valor['nome'].'</option>';
+            $aux .= '<option '.($s[(int)$valor['id']] ? 'selected="true "' : '' ).'value="'.$valor['id'].'">'.$valor['nome'].'</option>';
         }
         $aux .= '</select><br />';
         return $aux;

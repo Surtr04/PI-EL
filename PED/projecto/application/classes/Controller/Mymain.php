@@ -96,6 +96,7 @@ class Controller_Mymain extends Controller {
         $this->createMenuLink('supervisors', $this->createUrl("supervisores"), "Supervisors");
         $this->createMenuLink('authors', $this->createUrl("autores"), "Authors");
         $this->createMenuLink('categories', $this->createUrl("categories"), "Categories");
+        $this->createMenuLink('stats', $this->createUrl("stats"), "Stats");
         
 		$this->updateHome(strtolower(str_replace("Controller_", "", get_class($this))));
 	}

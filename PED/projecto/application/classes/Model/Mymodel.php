@@ -94,7 +94,7 @@ class Model_Mymodel extends Model {
         return $linha[0]['conta'];
     }
 	
-    public function translateDate($data){
+    public function translateDate($data, $onlyday = false){
         if ($data instanceof DateTime){
             $aux = $data;
         } else{
@@ -102,7 +102,7 @@ class Model_Mymodel extends Model {
             if (is_numeric($data)) $aux->setTimestamp($data); else $aux = new DateTime($data);
         }
             
-        return $aux->format('Y-m-d H:i:s');
+        if ($onlyday) return $aux->format('Y-m-d'); else return $aux->format('Y-m-d H:i:s');
     }
     
     protected function parseNull($v){if ($v == null) return ""; else return $v;}

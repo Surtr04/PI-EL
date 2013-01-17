@@ -16,6 +16,7 @@ class Controller_Categories extends Controller_Mymain {
 		$this->restrictAcess('S');
 		$min = (int) (Arr::get($_GET,'s',0));
 		$cats = new Model_Categorias();
+        if (!$this->verifyAcess('D')) $cats->setOnlyVisible($this->user->getGrupo());
 		$cats->cache($min);
 		$this->initTable($cats);
 	}
@@ -36,23 +37,32 @@ class Controller_Categories extends Controller_Mymain {
 			$id = (int) Arr::get($_GET,'id',-1);
 			if ($id <= -1) return $this->action_index();
 		}
+        
 		$cats = new Model_Categorias();
+        if (!$this->verifyAcess('D')) $cats->setOnlyVisible($this->user->getGrupo());
 		$info = $cats->getCategoriaWithId($id);
 		$this->view->set('toinclude', 'categoriasform');
 		$this->view->set('form_id', $id);
 		$this->view->set('nome', $info['nome']);
         $this->view->set('inicio', $info['inicio']);
         $this->view->set('fim', $info['fim']);
-
+        $this->view->set('selectedGroups', $info['grupos']);
+        $this->putAllGroups();
 		echo $this->view->render();
 	}
 	
+    private function putAllGroups(){
+        $grps = new Model_Grupos();
+		$grps->cacheAll();
+        $this->view->set('allGroups', $grps->getList());
+    }
+    
 	public function action_update(){
 		$this->restrictAcess('U');
 		if (trim($_POST['nome']) == "" || trim($_POST['inicio']) == "" || trim($_POST['fim']) == "") return $this->action_editar($_POST['form_id']);
 	
 		$cats = new Model_Categorias();
-		$cats->editarCategoria($_POST['form_id'], $_POST['nome'], $_POST['inicio'], $_POST['fim']);
+		$cats->editarCategoria($_POST['form_id'], $_POST['nome'], $_POST['inicio'], $_POST['fim'], $_POST['selectedGroups']);
 		$this->goIndex();
 	}
 	
@@ -64,6 +74,8 @@ class Controller_Categories extends Controller_Mymain {
 		$this->view->set('nome', '');
         $this->view->set('inicio', '');
         $this->view->set('fim', '');
+        $this->view->set('selectedGroups', array());
+        $this->putAllGroups();
 		echo $this->view->render();
 	}
 	
@@ -71,19 +83,12 @@ class Controller_Categories extends Controller_Mymain {
 		$this->restrictAcess('I');
 		if (trim($_POST['nome']) == "" || trim($_POST['inicio']) == "" || trim($_POST['fim']) == "") return $this->action_insere();
 		$cats = new Model_Categorias();
-		$id = $cats->insereCategoria($_POST['nome'],$_POST['inicio'], $_POST['fim']);
+		$id = $cats->insereCategoria($_POST['nome'],$_POST['inicio'], $_POST['fim'], $_POST['selectedGroups']);
 		$this->goIndex();
 	}
 	
 	private function initTable($lista){
         $this->_initTable($lista, 'categorias');
-		/*$perms = $this->user->canDo(Kohana::$config->load('perms.'.$this->nperm));
-		$this->view->set('lista', $lista->getList());
-		$this->view->set('toinclude', 'categorias'); 
-        $this->view->set('perms', $perms);
-		$this->view->set('min', $lista->getMin());
-		$this->view->set('int', $lista->getIntervalo());
-		echo $this->view->render();*/
 	}
 } 
 ?>

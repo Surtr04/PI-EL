@@ -201,6 +201,47 @@ Route::set('sips', 'sips(/<action>(/<catid>))')
         'catid'      => -1,
 	));
 
+Route::set('stats', 'stats(/<action>)')
+	->defaults(array(
+		'controller' => 'stats',
+		'action'     => 'index',
+	));
+
+Route::set('stats_day', 'stats(/<action>)(/day/<year>.<month>.<day>)',
+    array(
+        'year' => '\d+',
+        'month' => '\d+',
+        'day' => '\d+'
+    ))
+	->defaults(array(
+		'controller' => 'stats',
+		'action'     => 'index',
+        'type'       => 'day',
+	));
+
+Route::set('stats_month', 'stats(/<action>)(/month/<year>.<month>)',
+    array(
+        'year' => '\d+',
+        'month' => '\d+',
+    ))
+	->defaults(array(
+		'controller' => 'stats',
+		'action'     => 'index',
+        'type'       => 'month',
+	));
+
+Route::set('stats_year', 'stats(/<action>)(/year/<year>)',
+    array(
+        'year' => '\d+',
+    ))
+	->defaults(array(
+		'controller' => 'stats',
+		'action'     => 'index',
+        'type'       => 'year',
+	));
+
+
+
 Route::set('categories', 'categories(/<action>)')
 	->defaults(array(
 		'controller' => 'categories',

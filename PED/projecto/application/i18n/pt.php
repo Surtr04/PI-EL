@@ -71,6 +71,7 @@ return array(
     /*Categorias*/
     'Category' => 'Categoria',
     'Categories' => 'Categorias',
+    'All Groups' => 'Todos os grupos',
     'Insert new category'=> 'Inserir nova categoria',
     'Start Date' => 'Data de Início',
     'End Date' => 'Data de Fim',
@@ -81,6 +82,12 @@ return array(
     'ERR_SIP_SCHEMA' => 'O manifesto não é válido, de acordo com o Schema correspondente.',
     'ERR_SIP_DATA' => 'A data de fim é superior à data de ínicio.',
     'Invalid User!' => 'Utilizador inválido',
+    /*Stats*/
+    'Stats' => 'Estatísticas',
+    'Stats of categories' => 'Estatísticas das categorias',
+    'Views' => 'Visualizações',
+    'Downloads' => 'Downloads',
+    'Data from' => 'Dados de',
     /*Sips*/
     'Sip' => 'Sip',
     'Sips' => 'Sips',

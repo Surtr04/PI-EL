@@ -8,7 +8,7 @@ class Controller_Sips extends Controller_Mymain {
     const ERR_FILE = "ERR_SIP_FILE";
     const ERR_SCHEMA = "ERR_SIP_SCHEMA";
     const ERR_DATA = "ERR_SIP_DATA";
-    const MANIFESTO = "manifesto.xml";
+    const MANIFESTO = "pr.xml";
     
     private $own = "ownsips";
     private $prv = "privatesips";
@@ -66,6 +66,8 @@ class Controller_Sips extends Controller_Mymain {
     private function buildZipFromDB($id, $sips = null){
         if ($sips == null) $sips = Model::factory('Sips');
         $info = $sips->getAllInfoSip($id);
+        if ($info['ident'] == null) return $this->goBack();
+        Model::factory('Stats')->logDownload($id, new DateTime());
         $info["id"] = $info["ident"];
         $info = array_merge($info, $this->arr2multi($info["supervisores"], 's'));
         $info = array_merge($info, $this->arr2multi($info["autores"], 'a'));
@@ -77,7 +79,7 @@ class Controller_Sips extends Controller_Mymain {
             $i++;
         }
         $info['cr'] = $i;
-        $zip = $this->build($info, $files);
+        $zip = $this->build($info, $files, 'dip', new DipBuild($info, $files));
         return array('zip'=>$zip, 'ident'=>$info['ident']);
     }
     public function action_downzip(){
@@ -137,6 +139,8 @@ class Controller_Sips extends Controller_Mymain {
         if ($id <= -1) return $this->goBack();
         //$sips = new Model_Sips();
         $info = $sips->getAllInfoSip($id);
+        if ($info['ident'] == null) return $this->goBack();
+        Model::factory('Stats')->logView($id, new DateTime());
         $cat = Model::factory('Categorias')->getCategoriaWithId($info['id_categoria']);
         $this->view->set('youngtitle', "");
         $this->view->set('categoria', $cat['nome']);
@@ -152,8 +156,8 @@ class Controller_Sips extends Controller_Mymain {
         return $arr;
     }
     
-	private function build($arr, $files){
-        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><sip></sip>');
+	private function build($arr, $files, $root = "sip", $builder = null){
+        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><'.$root.'></'.$root.'>');
     
         $nvs = $this->trata($arr);
 
@@ -202,7 +206,8 @@ class Controller_Sips extends Controller_Mymain {
             $aux->addAttribute('url', $valor['name']);
             $zip->addFile($valor['tmp_name'], $valor['name']);
         }
-
+        
+        if ($builder !== null) $builder->processa($xml, $zip);
         $tmpxml = tempnam("tmp","man");
         $xml->asXml($tmpxml);
 
@@ -297,7 +302,7 @@ class Controller_Sips extends Controller_Mymain {
 		$sips->edita($id, $res, ($this->verifyAcess('I', $this->prv) ? $_POST['privado'] : false));
         if ($sips->LastSuccessful()) {
             Controller_Resources::deleteFiles(Controller_Resources::getResults(), $arr);
-            $this->log('Sip change', array(':sip' => $id));
+            $this->log('Sip change', array('sip' => $id));
         }
         $_GET['id'] = $id;
 		$this->action_ver();
@@ -307,9 +312,12 @@ class Controller_Sips extends Controller_Mymain {
     
     public function action_insereFile(){
         $this->restrictAcess('I');
+        $this->view->set('canBePrivate', $this->verifyAcess('I', $this->prv));
         $this->view->set('toinclude', 'sipsfile');
         $this->view->set('categoria', $this->request->param('catid', -1));
-        $this->view->set('categorias', Model::factory('Categorias')->getAllOpened());
+                $cats = new Model_Categorias();
+        if (!$this->verifyAcess('D')) $cats->setOnlyVisible($this->user->getGrupo());
+        $this->view->set('categorias', $cats->getAllOpened());
         echo $this->view->render();
     }
     
@@ -326,7 +334,9 @@ class Controller_Sips extends Controller_Mymain {
         $this->view->set('canBePrivate', $this->verifyAcess('I', $this->prv));
         $this->view->set('form_id', $id);
         $this->view->set('sip', $sip);
-        $this->view->set('categorias', Model::factory('Categorias')->getAllOpened());
+        $cats = new Model_Categorias();
+        if (!$this->verifyAcess('D')) $cats->setOnlyVisible($this->user->getGrupo());
+        $this->view->set('categorias',$cats->getAllOpened());
     }
 	
 	public function action_insere2(){
@@ -418,4 +428,24 @@ class Controller_Sips extends Controller_Mymain {
         echo $this->view->render();
 	}
 } 
+
+/*Classes auxiliares*/
+interface RBuild{
+    public function processa($xml, $zip);
+} 
+
+class DipBuild implements RBuild{
+    private $_arr;
+    private $_files;
+    public function __construct($arr, $files){
+        $this->_arr = $arr;
+        $this->_files = $files;
+    }
+    public function processa($xml, $zip) {
+        $xml->addChild("data-submissao", $this->_arr['data_submissao']);
+        $xml->addChild("submetido", $this->_arr['username']);
+        $xml->addChild("categoria", $this->_arr['categoria']);
+        $xml->addAttribute("privado", ($this->_arr['privado'] ? "true" : "false"));
+    }
+}
 ?>

@@ -15,7 +15,6 @@ class Model_Logs extends Model_Mymodel {
                 ->join('users')->on($this->_table.'.utilizador', '=', 'users.id')
                 ->order_by('data', 'DESC');
         $this->setCacheQuery($query);
-        //$this->_debug = true;
 	}
 	
     
@@ -23,7 +22,7 @@ class Model_Logs extends Model_Mymodel {
         $res = DB::select()->from('logs_params')->where('id_log', '=', (int)$linha["id"])->execute();
         $params = array();
         foreach($res as $row)
-            $params[$row['key']] = $row['value'];
+            $params[':'.$row['key']] = $row['value'];
         
 		return array("key"=> null, "value"=>array("id" => (int)$linha["id"], "utilizador" => $linha["utilizador"], "username" => $linha["username"], "data" => $linha["data"], "operacao" => $linha["operacao"], "descricao" => $linha["descricao"], "auto" => $linha["auto"], "params" => $params));
 	}
@@ -82,5 +81,9 @@ class Model_Logs extends Model_Mymodel {
 		if ($this->_cached) $this->cache($this->_min);
 	}
 	
+    public function setToSipsStats(){
+        $this->setCacheQuery($this->getCacheQuery()->where('operacao' , '=', 'AIP/Ver')->or_where('operacao', '=', 'DIP/down'));
+    }
+    
 } 
 ?>

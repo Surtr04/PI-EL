@@ -4,16 +4,22 @@
 */
 class Model_Categorias extends Model_Mymodel {
 
-
+    private $_restrict;
 
 	public function __construct(){
         parent::__construct("categorias");
-        $query = DB::select('*',$this->abertaExpr())->from($this->_table)->order_by('fim', 'ASC');
+        $query = DB::select($this->_table.'.*',$this->abertaExpr())->from($this->_table)
+                ->order_by('fim', 'ASC');
         $this->setCacheQuery($query);
+        $this->_restrict = false;
 	}
 	
 	protected function format($linha){
-		return array("key" => (int)$linha["id"],  "value" => array("id" => (int)$linha["id"], "nome" => $linha["nome"], "inicio" => $linha["inicio"], "fim" => $linha["fim"], "aberta" => (int)$linha["aberta"]));
+        $res = DB::select()->from('categorias_grupos')->where('id_categoria', '=', (int)$linha["id"])->execute();
+        $grps = array();
+        foreach($res as $row)
+            $grps[] = $row['id_grupo'];        
+		return array("key" => (int)$linha["id"],  "value" => array("id" => (int)$linha["id"], "nome" => $linha["nome"], "inicio" => $linha["inicio"], "fim" => $linha["fim"], "aberta" => (int)$linha["aberta"], "grupos" => $grps));
 	}
 	
 	public function	getAllCategorias(){ return $this->getList(); }
@@ -21,6 +27,7 @@ class Model_Categorias extends Model_Mymodel {
     public function getAllOpened(){
         
         $query = $this->addDateQuery(DB::select()->from($this->_table))->order_by('nome', 'ASC');
+        if ($this->_restrict !== false) $query = $this->addVisibility($query, $this->_restrict);
         $res = $query->execute();
         $lista = array();
         foreach($res as $linha){
@@ -36,12 +43,18 @@ class Model_Categorias extends Model_Mymodel {
 		if ($this->_cached) $this->cache($this->_min);
 	}
 	
-	public function editarCategoria($id, $nome, $inicio, $fim){
+	public function editarCategoria($id, $nome, $inicio, $fim, $grupos){
 		$id = (int) $id;
         $inicio = $this->translateDate($inicio);
         $fim = $this->translateDate($fim);
         
-        DB::update($this->_table)->set(array('nome' => $nome, 'inicio' => $inicio, 'fim' => $fim))->where('id', '=', $id)->execute();
+        $querys = array();
+        $querys[] = DB::update($this->_table)->set(array('nome' => $nome, 'inicio' => $inicio, 'fim' => $fim))->where('id', '=', $id);
+        $querys[] = DB::delete('categorias_grupos')->where('id_categoria', '=', $id);
+        foreach($grupos as $valor)
+            $querys[] = DB::insert('categorias_grupos')->values(array($id, (int)$valor));
+        
+        $this->executeInTransaction($querys);
 	}
 	
 	
@@ -53,9 +66,13 @@ class Model_Categorias extends Model_Mymodel {
         return $this->findBy('id', $id);
 	}
 	
-	public function insereCategoria($nome, $inicio, $fim){
-        $id = DB::insert($this->_table)->values(array(null, $nome, $this->translateDate($inicio), $this->translateDate($fim)))->execute();
-        return $id[0];
+	public function insereCategoria($nome, $inicio, $fim, $grupos){
+        $querys = array();
+        $querys["id"] = DB::insert($this->_table)->values(array(null, $nome, $this->translateDate($inicio), $this->translateDate($fim)));
+        foreach($grupos as $valor)
+            $querys["ref_".$valor] = DB::insert('categorias_grupos')->values(array(':id', (int)$valor));
+        $id = $this->executeInTransaction($querys);
+        return $id;
 	}
 
     private function getTimeInterval(){
@@ -80,6 +97,14 @@ class Model_Categorias extends Model_Mymodel {
         return ($linha[0]['aberta'] > 0);
     }
     
+    private function addVisibility($query, $id){
+        $query->join('categorias_grupos')->on('id_categoria', '=', 'id')
+                ->and_where_open()->where('id_grupo', '=', (int)$id)->or_where('id_grupo', '=', Kohana::$config->load('defs.guest'))->and_where_close();
+        $this->_restrict = $id;
+        return $query;
+    }
+    
+    public function setOnlyVisible($id) {$this->setCacheQuery($this->addVisibility($this->getCacheQuery(), $id));}
 	public function getCategoriaAtPos($i){ return $this->getAtPos($i);}
 	
 	

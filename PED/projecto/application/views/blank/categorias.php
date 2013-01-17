@@ -10,13 +10,6 @@
     $v = array('nome' => 'makeLinkCat', 'inicio' => 0, 'fim' => 0, 'aberta' => 'YesNo');
     echo TPL::showInfos($c, $v, $lista, $perms, $route, array('edit'=>true, 'delete'=>true, 'downzip'=>true));
     
-	/*echo '<table style="margin:10px;"><tr><th class="th_normal">'.__('Category').'</th><th class="th_normal">'.__('Start Date').'</th><th class="th_normal">'.__('End Date').'</th><th class="th_normal">'.__('Opened').'</th>'.(($perms['U'] || $perms['D']) ? '<th class="th_normal">'.__('Actions').'</th>' : '').'</tr>';
-	foreach($lista as $chave => $valor){
-		echo "<tr><td class='td_normal'><a href='".Route::url('bycat', array('id' => $valor['id']))."'>".$valor['nome']."</a></td><td class='td_normal'>".$valor['inicio']."</td><td class='td_normal'>".$valor['fim']."</td><td class='td_normal'>".($valor['aberta'] ? __('Yes') : __('No'))."</td>";
-		if ($perms['U'] || $perms['D']) echo "<td class='td_normal'>".TPL::LinkVer('sips/bycat/'.$valor['id'], ''). " ".($perms['U'] ? TPL::LinkEditar($route.'/editar/?id='.$valor['id'], '') :'').( $perms['D'] ? (' '.TPL::LinkApagar($route.'/apagar/?id='.$valor['id'], '')) :'')."</td>";
-		echo "</tr>";
-	}
-	echo '</table>';*/
 	echo TPL::NavLista($min, $int, $total, $route);
 	echo '</div>';
     

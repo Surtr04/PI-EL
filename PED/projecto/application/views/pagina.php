@@ -45,6 +45,7 @@
             case 'sipsform': include($t->my_include('sipsform.php')); break;
             case 'sipsfile': include($t->my_include('sipsfile.php')); break;
             case 'sipshtml' : include($t->my_include('sipshtml.php')); break;
+            case 'stats' : include($t->my_include('stats.php')); break;
 			//Errors
 			case '404': include('errors/404.php'); break;
 			default: break;

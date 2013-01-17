@@ -57,6 +57,7 @@ class Model_User extends Model {
 	public function getUsername(){ return $this->_username;}
 	public function getName(){ return $this->_name;}
 	public function getEmail(){ return $this->_email;}
+    public function getGrupo(){ return $this->_grupo;}
 	
 	
 	public function canDo($tarefa, $tipo = ""){
