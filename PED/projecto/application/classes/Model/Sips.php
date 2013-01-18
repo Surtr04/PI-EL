@@ -7,6 +7,7 @@ class Model_Sips extends Model_Mymodel {
     private $_onlyby;
     private $_onlyPublic;
     private $_restricted;
+    private $_in;
     
 	public function __construct(){
         parent::__construct('sips');
@@ -19,8 +20,14 @@ class Model_Sips extends Model_Mymodel {
         $this->_onlyPublic = -1;
         $this->_restricted = false;
         $this->_fileList = array();
+        $this->_in = null;
 	}
 	
+    public function setonlyVisibleByGroup($grupo){
+        $this->_in = Model::factory('Categorias')->getCategoriasVisiveis($grupo);
+        $this->setCacheQuery($this->getCacheQuery()->where('id_categoria', 'IN', $this->_in));
+    }
+    
     private function _cacheCat($id, $min){
         $query = $this->getCacheQuery();
         $this->setCacheQuery($this->getCacheQuery()->where($this->_table.'.id_categoria', '=', $id));
@@ -99,6 +106,7 @@ class Model_Sips extends Model_Mymodel {
 			if ($valor['id'] == $id) return $valor;
 		
         $query = $this->getCacheQuery()->where($this->_table.'.id', '=', $id);
+        if ($this->_in != null) $query->and_where('id_categoria', 'IN', $this->_in);
         $linha = $query->execute()->next()->as_array();
         $linha = $this->format($linha[0]);
         return $linha['value'];

@@ -78,9 +78,12 @@ class Model_Grupos extends Model_Mymodel {
 		return $aux;
 	}
 	
-	public static function isAdminGroup($id){return ($id == Kohana::$config->load('defs.admin'));}
-	public static function isVisitanteGroup($id){return ($id == Kohana::$config->load('defs.guest'));}
-	
+	public static function isAdminGroup($id){return ($id == self::getAdminGroup());}
+	public static function isVisitanteGroup($id){return ($id == self::getVisitanteGroup());}
+	public static function getAdminGroup(){return Kohana::$config->load('defs.admin');}
+    public static function getVisitanteGroup(){ return Kohana::$config->load('defs.guest');}
+    
+    
 	private function addTipo($nome, $texto, $vperms = self::NADA){
 		$id_perm = Kohana::$config->load('perms.'.$nome);
 		$admin_grupo = Kohana::$config->load('defs.admin');

@@ -24,6 +24,16 @@ class Model_Categorias extends Model_Mymodel {
 	
 	public function	getAllCategorias(){ return $this->getList(); }
     
+    public function getCategoriasVisiveis($grupo){
+        $res = DB::select('id')->from($this->_table)
+                ->join('categorias_grupos')->on('id_categoria', '=', 'id')
+                ->where('id_grupo', '=', $grupo)->or_where('id_grupo', '=', Model_Grupos::getVisitanteGroup())->execute();
+        $cats = array();
+        foreach($res as $linha)
+            $cats[$linha['id']] = $linha['id'];
+        return $cats;
+    }
+    
     public function getAllOpened(){
         
         $query = $this->addDateQuery(DB::select()->from($this->_table))->order_by('nome', 'ASC');

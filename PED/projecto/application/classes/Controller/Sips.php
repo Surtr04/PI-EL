@@ -26,6 +26,7 @@ class Controller_Sips extends Controller_Mymain {
             if ($this->verifyAcess($perm, $this->own)) $sips->setOnlyBy($this->user->getId()); else return $this->goHome();
         }
         if (!$this->verifyAcess($perm, $this->prv)) $sips->setOnlyPublic($this->user->getId());
+        if (!$this->verifyAcess('D', 'categories')) $sips->setonlyVisibleByGroup($this->user->getGrupo());
         return $sips;
     }
     
