@@ -53,7 +53,7 @@ CREATE  TABLE IF NOT EXISTS `ped`.`sip_users` (
   `nome` VARCHAR(75) NOT NULL ,
   `email` VARCHAR(75) NOT NULL ,
   `morada` TEXT NOT NULL ,
-  `foto` VARCHAR(250) NOT NULL ,
+  `foto` VARCHAR(250) ,
   `grupo` INT NOT NULL ,
   `is_online` TINYINT(1) NOT NULL ,
   PRIMARY KEY (`id`) ,
