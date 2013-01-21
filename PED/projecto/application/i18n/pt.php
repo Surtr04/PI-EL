@@ -16,6 +16,9 @@ return array(
     'Next' => 'Seguinte',
     'Previous' => 'Anterior',
     'Insert new' => 'Inserir novo',
+    /*Mensagens*/
+    'Warning' => 'Alerta',
+    'Error' => 'Erro',
     /*Permissões*/
     'Permitted' => 'Permitido',
     'Denied' => 'Negado',

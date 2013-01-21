@@ -8,8 +8,11 @@ class Controller_Auth extends Controller_Mymain {
 
 	public function __construct(Request $request, Response $response){
 		parent::__construct($request,$response);
-		$this->view->set('youngtitle', "Authentication");
+		//$this->view->set('youngtitle', "Authentication");
 	}
+    
+    public function action_index(){ $this->action_login();}
+    
 	public function action_login(){
 		if (!$this->user->isGuest()) $this->goHome(); //Há uma sessão activa
         
@@ -24,7 +27,8 @@ class Controller_Auth extends Controller_Mymain {
                 $this->goHome();
 			} else{
 				$this->setError("Invalid User!");
-				$this->goLogin();
+				//$this->goLogin();
+                $this->goIndex();
 			}
 		} else
 			$this->goLogin();

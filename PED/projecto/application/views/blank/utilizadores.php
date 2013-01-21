@@ -2,7 +2,7 @@
 /*
 	(C) António Silva e Rui Brito - 2012/2013
 */
-	echo '<div style="margin: 0px auto 0px auto; padding: 15px; width: auto; text-align:left;">';
+	echo '<div style="margin: auto; padding: 15px; width: auto; text-align:left;">';
 	if ($perms['I']) echo '<p>'.TPL::LinkAdicionar($route.'/insere', __('Insert new user')).'</p><br/><br/>';
 	
 

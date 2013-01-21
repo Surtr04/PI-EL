@@ -3,7 +3,7 @@
 	(C) António Silva e Rui Brito - 2012/2013
 */
     if ($bycat) echo TPL::LinkDownZip('categories/downzip/?id='.$categoria['id'], __('Download category sips'));
-	echo '<div style="margin: 0px auto 0px auto; padding: 15px; width: auto; text-align:left;">';
+	echo '<div style="margin: auto; padding: 15px; width: auto; text-align:left;">';
     
     
     $show = (!$bycat || $categoria["aberta"]);

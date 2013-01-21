@@ -31,11 +31,11 @@ class Model_Users extends Model_Mymodel {
 		$id = (int) $id;
 		$grupo = (int) $grupo;
 		
-		
         $updates = array('username' => $username, 'nome' => $nome, 'email' => $email, 'morada' => $morada, 'foto' => $foto);
         if ($grupo != -1) $updates['grupo'] = $grupo;
 		if ($senha != '') $updates['senha'] = $this->hashSenha($senha);
-        DB::update($this->_table)->set($updates)->where('id', '=', $id)->execute();
+        $query = DB::update($this->_table)->set($updates)->where('id', '=', $id);
+        $query->execute();
 		if ($this->_cached) $this->cache($this->_min);
 	}
 	

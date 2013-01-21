@@ -37,6 +37,14 @@ class TPL {
         return TPL::$_instance;
     }
     
+    public static function makeTitle($title){
+        return TPL::$_instance->makeTitle($title);
+    }
+    
+    public static function makeForm($lista, $action, $btns){
+        return TPL::$_instance->makeForm($lista, $action, $btns);
+    }
+    
 	public static function vazio(){return self::base().'images/s.gif';}
 
     public static function base(){return Route::url('default', null, true);}
@@ -89,9 +97,14 @@ class TPL {
         return TPL::$_instance->createSelect($nome, $lista, $size, $sel);
     }
     
+    
 }
 
 class baseTpl {
+    
+    public function makeTitle($title){ return "<h1>".$title."</h1>";}
+    
+    public function makeForm($lista, $action, $btns){return $btns;}
     
     private function linkadd($action, $texto, $tipo){
         if ($texto === null) $texto = __($tipo);
@@ -127,8 +140,7 @@ class baseTpl {
 		return $this->linkadd($action, $texto, 'class_downzip');
 	}
 	
-    public function showInfos($captions, $values, $lista, $perms, $route, $action = array('edit'=>true, 'delete'=>true)){//$see = false, $edit = true, $delete = true){
-        //$act = ($see || ($edit && $perms['U']) || ($delete && $perms['D']));
+    public function showInfos($captions, $values, $lista, $perms, $route, $action = array('edit'=>true, 'delete'=>true)){
         $act = (count($action) > 0);
         $aux = '<table style="margin:10px;"><tr>';
         foreach($captions as $valor)
@@ -143,13 +155,10 @@ class baseTpl {
                     $aux .= "<td class='td_normal'>".$valor[$c]."</td>";
             }
             if ($act) $aux.= "<td class='td_normal'>";
-            //foreach(array('see'=>'ver', 'edit'=>'editar', 'delete'=>'apagar') as $c => $v)
             if ((is_callable($action['see']) && $action['see']($valor['id'], $perms['S'], $valor)) || ($action['see'] === true && $perms['S'])) $aux .= $this->LinkVer($route.'/ver/?id='.$valor['id'], '').' ';
             if ((is_callable($action['edit']) && $action['edit']($valor['id'], $perms['U'], $valor)) || ($action['edit'] === true && $perms['U'])) $aux .= $this->LinkEditar($route.'/editar/?id='.$valor['id'], '').' ';
             if ((is_callable($action['delete']) && $action['delete']($valor['id'], $perms['D'], $valor)) || ($action['delete'] === true && $perms['D'])) $aux .= $this->LinkApagar($route.'/apagar/?id='.$valor['id'], '').' ';
             if ((is_callable($action['downzip']) && $action['downzip']($valor['id'], $perms['S'], $valor)) || ($action['downzip'] === true && $perms['S'])) $aux .= $this->LinkDownZip($route.'/downzip/?id='.$valor['id'], '').' ';
-            /*if ($edit && $perms['U']) $aux .= $this->LinkEditar($route.'/editar/?id='.$valor['id'],'').' ';
-            if ($delete && $perms['D']) $aux .= $this->LinkApagar($route.'/apagar/?id='.$valor['id'],'').' ';*/
             if ($act) $aux .= "</td>";
             $aux .= "</tr>";
         }
@@ -176,7 +185,7 @@ class baseTpl {
             $s[$valor] = 1;
         if ($multi > 1) $name .= "[]";
         
-        $aux = '<select type="text" id="'.$name.'" name="'.$name.'" '.($multi > 1 ? 'size="'.$multi.'" multiple="true"' : '').' style="margin-top:10px;"/>';
+        $aux = '<select type="text" id="'.$name.'" name="'.$name.'" '.($multi > 1 ? 'size="'.$multi.'" multiple="true"' : '').' style="margin-top:10px;">';
         foreach($lista as $chave => $valor){
             $aux .= '<option '.($s[(int)$valor['id']] ? 'selected="true "' : '' ).'value="'.$valor['id'].'">'.$valor['nome'].'</option>';
         }

@@ -4,16 +4,16 @@
 */
     echo '<style type="text/css">
     #rptitle{
-        color:white;
-        width:95%;
-        height:50px;
-        text-align:center;
-        border-radius: 5px;
-        background-image: linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%);
-        background-image: -o-linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%);
-        background-image: -moz-linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%);
-        background-image: -webkit-linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%);
-        background-image: -ms-linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%);
+        color:white !important;
+        width:95% !important;
+        height:50px !important;
+        text-align:center !important;
+        border-radius: 5px !important;
+        background-image: linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%) !important;
+        background-image: -o-linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%) !important;
+        background-image: -moz-linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%) !important;
+        background-image: -webkit-linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%) !important;
+        background-image: -ms-linear-gradient(top, rgb(54,111,180) 0%, rgb(0,42,89) 100%) !important;
 
         background-image: -webkit-gradient(
             linear,
@@ -21,25 +21,25 @@
             left bottom,
             color-stop(0, rgb(54,111,180)),
             color-stop(1, rgb(0,42,89))
-        );
-        margin: auto;
+        ) !important;
+        margin: auto !important;
     }
     .block{
-        border-color: rgb(54,111,180);
-        border-style: ridge;
-        border-width: 3px;
-        border-radius: 5px;
-        box-shadow: 0px 0px 2px 2px rgb(0,42,89);
-        padding: 5px;
-        vertical-align: top;
+        border-color: rgb(54,111,180) !important;
+        border-style: ridge !important;
+        border-width: 3px !important;
+        border-radius: 5px !important;
+        box-shadow: 0px 0px 2px 2px rgb(0,42,89) !important;
+        padding: 5px !important;
+        vertical-align: top !important;
     }	
     #rptitle h1{
-        padding: 5px;
+        padding: 5px !important;
     }
     table{
-        width:95%;
-        border-spacing: 8px;
-        margin:auto;
+        width:95% !important;
+        border-spacing: 8px !important;
+        margin:auto !important;
     }
 </style>';
 	echo '<div style="margin: auto; padding: 15px; width: auto; text-align:left;">';

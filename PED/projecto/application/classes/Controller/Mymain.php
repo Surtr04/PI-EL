@@ -212,7 +212,7 @@ class Controller_Mymain extends Controller {
         if ($r !== null) $this->redirect($r); else $this->goHome ();
     }
     protected function getTheme(){
-        return $this->session->get(Controller_Themes::THEME_SESSION, self::THEME_DEFAULT);
+        return $this->session->get(Controller_Themes::THEME_SESSION, Kohana::$config->load('defs.theme'));
     }
 	public static function isProduction(){
 		return (Kohana::$environment === Kohana::PRODUCTION);

@@ -61,13 +61,12 @@ class Controller_Users extends Controller_Mymain {
 	private function canEdit($id){
         if ($id == -1) return $this->goHome();
         $change = $this->user->canDo(Kohana::$config->load('perms.'.$this->nperm), 'U');
-		if(!$this->user || (!$change && !$this->user->getId() == $id))
-			return $this->goHome();
+		if(!isset($this->user) || (!$change && !$this->user->getId() == $id)) return $this->goHome();
+        return $change;
     }
 	public function action_update(){
 		$id = (int) Arr::get($_POST,'form_id',-1);
-
-        $this->canEdit($id);
+        $change = $this->canEdit($id);
 		if (trim($_POST['username']) == "" || trim($_POST['nome']) == "" || trim($_POST['email']) == "" || trim($_POST['grupo']) == "") return $this->action_insere();
 		$users = new Model_Users();
 		$info = $users->getUserWithId($id);

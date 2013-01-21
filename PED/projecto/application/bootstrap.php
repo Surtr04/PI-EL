@@ -146,7 +146,7 @@ Route::set('resget', 'get/<type>/<id>',
 
 Route::set('themeset', 'theme/<theme>',
     array(
-        'theme' => '(blank|ugly)'
+        'theme' => '(blank|twitter)'
     ))
 	->defaults(array(
 		'controller' => 'themes',

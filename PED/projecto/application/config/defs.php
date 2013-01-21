@@ -9,6 +9,7 @@ return array(
     'linhas_pagina' => 10,
     'noreply' => 'noreply@localhost',
     'adminemail' => 'admin@localhost',
+    'theme' => 'twitter',
 );
 
 ?>

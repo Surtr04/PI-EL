@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <?php defined('SYSPATH') or die('No direct script access.');
 /*
 	(C) António Silva e Rui Brito - 2012/2013
@@ -10,7 +10,7 @@
     TPL::newInstance($theme);
 	if ($t->can_include('header.php')) include_once($t->my_include('header.php'));
 	
-	if (isset($youngtitle) && $youngtitle != "") echo "<h1>".__($youngtitle)."</h1>";
+	if (isset($youngtitle) && $youngtitle != "") echo TPL::makeTitle(__($youngtitle));
 	if (isset($beforehtml)) echo $beforehtml;
 	if (isset($toinclude)){
 		switch($toinclude){
