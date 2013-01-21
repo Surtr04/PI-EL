@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.oasis-open.org/docbook/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<article xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <info>
+        <title>AAA - Arquivo Aberto de trabalhos de Alunos</title>
+        <author>
+            <personname>António Silva</personname>           
+            <email>pg22820@alunos.uminho.pt</email>
+            <affiliation>
+                <jobtitle>PG22820</jobtitle>
+                <orgname>Universidade do Minho</orgname>                
+            </affiliation>
+        </author>
+        <author>
+            <personname>Rui Brito</personname>
+            <email>pg22781@alunos.uminho.pt</email>
+            <affiliation>
+                <jobtitle>PG22781</jobtitle>
+                <orgname>Universidade do Minho</orgname>                
+            </affiliation>
+        </author>
+    </info>
+    
+  
+    <sect1>        
+        
+        <title>Introdução</title>        
+        <para>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </para>                    
+    </sect1>
+    
+    
+    <sect1>
+        <title>Arquivo Aberto</title>
+        <para>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </para>
+        <sect2>
+            <title>Descrição do Problema</title>
+            <para>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </para>
+        </sect2>
+    </sect1>
+        
+    
+</article>
