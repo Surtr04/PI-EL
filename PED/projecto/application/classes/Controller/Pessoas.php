@@ -9,9 +9,10 @@ class Controller_Pessoas extends Controller_Mymain {
 	public function __construct(Request $request, Response $response){
 		parent::__construct($request,$response);
 		$this->view->set('youngtitle', $this->request->param('tt'));
-        $this->nperm = $this->request->param('perm');
+        $this->nperm = $this->request->param('perms');
         $this->_str = $this->request->param('table');
         $this->view->set('route', $this->_str);
+        $this->updateHome($this->request->param('perms'));
 	}
 	
 	

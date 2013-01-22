@@ -9,8 +9,8 @@
     $form = array();
     $form[] = array("tipo" => "hidden", "nome" => 'form_id', "valor" => $form_id);
     $form[] = array("label" => __('Category'), "nome" => 'nome', "tipo" => "text", "valor" => $nome);
-    $form[] = array("label" => __('Start Date'), "nome" => 'inicio', "tipo" => "datetime", "valor" => $inicio);
-    $form[] = array("label" => __('End Date'), "nome" => 'fim', "tipo" => "datetime", "valor" => $fim);
+    $form[] = array("label" => __('Start Date'), "nome" => 'inicio', "tipo" => "date", "valor" => $inicio);
+    $form[] = array("label" => __('End Date'), "nome" => 'fim', "tipo" => "date", "valor" => $fim);
     $form[] = array("label" => __('Groups'), "nome" => 'selectedGroups', "valor" => $allGroups, "sel" => $selectedGroups, "tipo" => "multi");
     
     

@@ -34,11 +34,12 @@
         vertical-align: top !important;
     }	
     #rptitle h1{
-        padding: 5px !important;
+        padding: 2px !important;
     }
     table{
         width:95% !important;
         border-spacing: 8px !important;
+        border-collapse: separate !important;
         margin:auto !important;
     }
 </style>';

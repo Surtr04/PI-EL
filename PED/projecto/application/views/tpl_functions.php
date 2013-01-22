@@ -106,6 +106,15 @@ class baseTpl {
     
     public function makeForm($lista, $action, $btns){return $btns;}
     
+    protected function parseArrayForm($arr){
+		$campos = array('label' => '', 'nome' => '', 'valor' => '', 'checked' => false, 'sel' => array(-1), 
+						'size' => 10, 'tipo' => 'text', 'disabled' => false, 'class-size' => (is_array($arr['valor']) ? '' : 'input-xxlarge'));
+		foreach($campos as $chave => $valor)
+			if (!isset($arr[$chave])) $arr[$chave] = $valor;
+		if (!is_array($arr['sel'])) $arr['sel'] = array($arr['sel']);
+		return $arr;
+	}
+    
     private function linkadd($action, $texto, $tipo){
         if ($texto === null) $texto = __($tipo);
 		if ($texto != '' && substr($texto, 0, 1) != ' ') $texto = '&nbsp;'.$texto;

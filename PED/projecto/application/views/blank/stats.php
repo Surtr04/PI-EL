@@ -4,8 +4,38 @@
 */
 //http://www.1stwebdesigner.com/css/top-jquery-chart-libraries-interactive-charts/
 //http://www.highcharts.com/demo/
+    echo '
+    <div class="input-append">
+        <input data-datepicker-format="dd/mm/yyyy" data-datepicker-nodefault="false" class="input-small" type="date" id="dia" name="dia"/>
+        <div class="btn-group">
+            <button class="btn" tabindex="-1">
+                '.__('View by').': 
+            </button>
+            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="javascript:sendDate(0)">'.__('Day').'</a></li>
+                <li><a href="#" onclick="javascript:sendDate(1)">'.__('Month').'</a></li>
+                <li><a href="#" onclick="javascript:sendDate(2)">'.__('Year').'</a></li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function sendDate(d){
+            var loc = "'.TPL::base().'/stats/"
+            var valor = $("#dia").val().replace(/-/g, ".");
+            switch(d){
+                case 0: loc += "day/"+valor; break;
+                case 1: loc += "month/"+valor.substr(0, 7); break;
+                case 2: loc += "year/"+valor.substr(0, 4); break;
+            }
+            window.location = loc;
+        }
+    </script>';
+
     if ($sub != "") echo '<h3>'.__('Data from').": ".$sub.'</h3>';
-    echo '<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    echo '
             <script src="http://code.highcharts.com/highcharts.js"></script>
             <script src="http://code.highcharts.com/modules/exporting.js"></script>
             <table><tr><td>

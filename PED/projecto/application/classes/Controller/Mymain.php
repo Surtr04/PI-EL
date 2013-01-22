@@ -22,8 +22,8 @@ class Controller_Mymain extends Controller {
         $this->picturesPath = APPPATH."docs/pictures";
 		$this->user = Auth::instance()->get_user(new Model_User());
         if ($this->isManut()) $this->redirect($this->createUrl('manut'));
-		$this->view = View::Factory('pagina');
-        $this->view->set('theme', $this->getTheme());
+        $this->view = View::Factory('pagina');
+		$this->view->set('theme', $this->getTheme());
         $this->view->set('dtheme', self::THEME_DEFAULT);
 		$this->view->set('titulo', Kohana::$config->load('defs.titulo'));
 		$this->view->set('youngtitle', '');

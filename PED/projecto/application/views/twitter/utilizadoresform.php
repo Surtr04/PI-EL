@@ -7,14 +7,14 @@
     
     $form = array();
     $form[] = array("tipo" => "hidden", "nome" => 'form_id', "valor" => $form_id);
-    $form[] = array("label" => __('Username'), "nome" => 'username', "tipo" => "text", "valor" => $username);
+    $form[] = array("label" => __('Username'), "nome" => 'username', "valor" => $username);
     $form[] = array("label" => __('Password'), "nome" => 'password', "tipo" => 'password');
     $form[] = array("label" => __('Repeat Password'), "nome" => 'rsenha', "tipo" => 'password');
-    $form[] = array("label" => __('Name'), "nome" => 'nome', "tipo" => "text", "valor" => $nome);
-    $form[] = array("label" => __('Email'), "nome" => 'email', "tipo" => "email", "valor" => $email);
-    $form[] = array("label" => __('Address'), "nome" => 'morada', "tipo" => "textarea", "valor" => $morada, "linhas" => 5);
-    $form[] = array("label" => __('Picture'), "nome" => 'foto', "tipo" => "text", "valor" => $foto);
-    $form[] = array("label" => __('Group'), "nome" => 'grupo', "valor" => $grupos, "sel" => $grupo, "tipo" => "select");
+    $form[] = array("label" => __('Name'), "nome" => 'nome', "valor" => $nome);
+    $form[] = array("label" => __('Email'), "nome" => 'email', "tipo" => 'email', "valor" => $email);
+    $form[] = array("label" => __('Address'), "nome" => 'morada', "tipo" => 'textarea', "valor" => $morada, "linhas" => 5);
+    $form[] = array("label" => __('Picture'), "nome" => 'foto', "valor" => $foto);
+    $form[] = array("label" => __('Group'), "nome" => 'grupo', "valor" => $grupos, "sel" => $grupo, "tipo" => 'select');
     
     echo TPL::makeForm($form, TPL::base().($form_id != NULL ? 'users/update' : 'users/insere2'), TPL::BtnsForm('users'));
     

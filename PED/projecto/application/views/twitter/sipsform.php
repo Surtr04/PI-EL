@@ -10,7 +10,7 @@
     function simpleadd(pre, conta){
         tr = document.createElement("TR");
         tr.innerHTML += 
-           "<td>" + conta + "</td>" +
+            "<td><span class='badge'>"+ conta +"</span></td>" +
             "<td><input type='text' name='"+pre+"nome"+conta+"'/></td>" +
             "<td><input type='text' name='"+pre+"id"+conta+"'/></td>" + 
             "<td><input type='text' name='"+pre+"mail"+conta+"'/></td>" +
@@ -28,7 +28,7 @@
      function adicionaRes(nome){
         tr = document.createElement("TR");
         tr.innerHTML += 
-            "<td>" + cr + "</td>" +
+            "<td><span class='badge'>"+ cr +"</span></td>" +
             "<td><input type='file' name='rurl"+cr+"'/></td>" +
             "<td><input type='text' name='rdesc"+cr+"'/></td>";
         document.getElementById('tbl'+nome).appendChild(tr);
@@ -40,7 +40,38 @@
 $sip['autores'] = Arr::get($sip, 'autores', array());
 $sip['supervisores'] = Arr::get($sip, 'supervisores', array());
 $sip['resultados'] = Arr::get($sip, 'resultados', array());
-echo '<form method="POST" onSubmit="return checkForm()" action="'.TPL::base().$route.($form_id != null ? '/update' : '/insere2').'" style="padding:10px;" enctype="multipart/form-data">
+
+$aux = "";
+foreach(Arr::get($sip, 'resumo', array()) as $valor)
+	$aux .= $valor['para']."\n";
+$aux = substr($aux,0,-1);
+
+
+$form = array();
+$form[] = array("tipo" => "hidden", "nome" => 'form_id', "valor" => $form_id);
+$form[] = array("tipo" => "hidden", "nome" => 'isForm', "valor" => 1);
+$form[] = array("label" => __('Category'), "nome" => 'categoria', "valor" => $categorias, "sel" => $categoria, "tipo" => "select");
+if ($canBePrivate) $form[] = array("label" => __('Private'), "nome" => 'privado', "tipo" => 'check', "valor" => 1);
+$form[] = array("label" => __('Identifier'), "nome" => 'id', "valor" => Arr::get($sip, 'ident', ''));
+$form[] = array("label" => __('Title'), "nome" => 'titulo', "valor" => Arr::get($sip, 'titulo', ''));
+$form[] = array("label" => __('Subtitle'), "nome" => 'subtitulo', "valor" => Arr::get($sip, 'subtitulo', ''));
+$form[] = array("label" => __('Start Date'), "nome" => 'data_inic', "tipo" => 'date', "valor" => Arr::get($sip, 'data_inic', ''));
+$form[] = array("label" => __('End Date'), "nome" => 'data_fim', "tipo" => 'date', "valor" => Arr::get($sip, 'data_fim', ''));
+
+$form[] = array("tipo" => 'free', "valor" => '<div class="controls"><button class="btn btn-primary" type="button" onclick="javascript:adicionaSuper(\'Super\')">'.__('Add Supervisors').'</button></div>');
+$form[] = array("tipo" => 'free', "valor" => '<div class="controls"><div id="Super"><table style="text-align:center;" id="tblSuper"><tr><th>'.__('Supervisor').'</th><th>'.__('Name').'</th><th>'.__('Identifier').'</th><th>'.__('Email').'</th><th>'.__('Web').'</th></tr></table></div></div><br/>');
+
+$form[] = array("tipo" => 'free', "valor" => '<div class="controls"><button class="btn btn-primary" type="button" onclick="javascript:adicionaAutor(\'Autor\')">'.__('Add Authors').'</button></div>');
+$form[] = array("tipo" => 'free', "valor" => '<div class="controls"><div id="Autor"><table style="text-align:center;" id="tblAutor"><tr><th>'.__('Author').'</th><th>'.__('Name').'</th><th>'.__('Identifier').'</th><th>'.__('Email').'</th><th>'.__('Web').'</th></tr></table></div></div><br/>');
+
+$form[] = array("label" => __('Abstract'), "nome" => 'resumo', "tipo" => 'textarea', "valor" => $aux, "linhas" => 10);
+
+$form[] = array("tipo" => 'free', "valor" => '<div class="controls"><button class="btn btn-primary" type="button" onclick="javascript:adicionaRes(\'Resultados\')">'.__('Add Results').'</button></div>');
+$form[] = array("tipo" => 'free', "valor" => '<div class="controls"><div id="Resultados"><table style="text-align:center;" id="tblResultados"><tr><th>'.__('Result').'</th><th>Url</th><th>'.__('Description').'</th></tr></table></div></div><br/>');
+
+echo TPL::makeForm($form, TPL::base().$route.($form_id != null ? '/update' : '/insere2'), TPL::BtnsForm($route));
+
+/*echo '<form method="POST" onSubmit="return checkForm()" action="'.TPL::base().$route.($form_id != null ? '/update' : '/insere2').'" style="padding:10px;" enctype="multipart/form-data">
     <fieldset>
         <legend>SIP:</legend>
         <input type="hidden" id="form_id" name="form_id" value="'.$form_id.'"/>
@@ -84,8 +115,7 @@ echo '<form method="POST" onSubmit="return checkForm()" action="'.TPL::base().$r
         </table>
     </fieldset>
     '.TPL::BtnsForm($route).'
-</form>';
-
+</form>';*/
 
 $c1 = array("id" => "identificador", "nome" => "nome", "mail"=>"email", "web"=>"web");
 $c2 = array("url" => "", "desc" => "desc");
@@ -95,7 +125,6 @@ echo '<script type="text/javascript">
 
 echo javascriptAutoAdd('adicionaAutor',$sip['autores'], 'Autor', 'a', $c1);
 echo javascriptAutoAdd('adicionaSuper',$sip['supervisores'], 'Super', 's', $c1);
-
 echo javascriptAutoAdd('adicionaRes', $sip['resultados'], 'Resultados', 'r', $c2);
 
           

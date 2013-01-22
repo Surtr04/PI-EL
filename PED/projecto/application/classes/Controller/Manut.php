@@ -13,6 +13,8 @@ class Controller_Manut extends Controller_Mymain {
 	}
 	public function action_index(){
 		$this->view = View::Factory('manut');
+		$this->view->set('theme', $this->getTheme());
+        $this->view->set('dtheme', self::THEME_DEFAULT);
 		$this->render(array('youngtitle' => "Maintenance", 'titulo'=> Kohana::$config->load('defs.titulo'), 'dtheme' => self::THEME_DEFAULT));
 	}
 	

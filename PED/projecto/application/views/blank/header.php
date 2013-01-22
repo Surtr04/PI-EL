@@ -10,6 +10,7 @@ define('MSGS', 1);
 	
 	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
 	<title><?php echo $titulo; ?></title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <?php 
 		foreach(array("style.css", "override.css") as $valor){
 			if (file_exists(DOCROOT.$valor)) echo '<link href="'.TPL::base().$valor.'" rel="stylesheet" type="text/css" />'."\n";
