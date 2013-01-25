@@ -39,7 +39,7 @@ class Controller_Perms extends Controller{
     public function getDelete(){return $this->_DELETE;}
 	public function setSelect($value){$this->_SELECT = $value;}
 	public function setInsert($value){$this->_INSERT = $value;}
-	public function setUpdate($value){$this->_UPDATE = ($value && $this->_SELECT);}
+	public function setUpdate($value){$this->_UPDATE = ($value && ($this->_SELECT || $this->_INSERT));}
     public function setRemove($value){$this->setDelete($value);}
 	public function setDelete($value){$this->_DELETE = ($value && $this->_SELECT && $this->_INSERT && $this->_UPDATE);}
 }

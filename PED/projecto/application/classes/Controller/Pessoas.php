@@ -57,7 +57,7 @@ class Controller_Pessoas extends Controller_Mymain {
 	
 		$pessoas = new Model_Pessoas($this->_str);
 		$pessoas->edita($_POST['form_id'], $_POST['identificador'], $_POST['nome'], $_POST['email'], $_POST['web']);
-		$this->goIndex();
+		$this->redirect($this->_str);
 	}
 	
 	public function action_insere(){
@@ -76,18 +76,11 @@ class Controller_Pessoas extends Controller_Mymain {
 		if (trim($_POST['nome']) == "" || trim($_POST['identificador']) == "") return $this->action_insere();
 		$pessoas = new Model_Pessoas($this->_str);
 		$id = $pessoas->insere($_POST['identificador'], $_POST['nome'], $_POST['email'], $_POST['web']);
-		$this->goIndex();
+		$this->redirect($this->_str);
 	}
 	
 	private function initTable($lista){
         $this->_initTable($lista, 'pessoas');
-		/*$perms = $this->user->canDo(Kohana::$config->load('perms.'.$this->nperm));
-		$this->view->set('lista', $lista->getList());
-		$this->view->set('toinclude', 'pessoas'); 
-        $this->view->set('perms', $perms);
-		$this->view->set('min', $lista->getMin());
-		$this->view->set('int', $lista->getIntervalo());
-		echo $this->view->render();*/
 	}
 } 
 ?>

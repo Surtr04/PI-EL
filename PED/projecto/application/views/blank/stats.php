@@ -4,7 +4,7 @@
 */
 //http://www.1stwebdesigner.com/css/top-jquery-chart-libraries-interactive-charts/
 //http://www.highcharts.com/demo/
-    echo '
+    echo '<div style="width:90%; margin:auto;">
     <div class="input-append">
         <input data-datepicker-format="dd/mm/yyyy" data-datepicker-nodefault="false" class="input-small" type="date" id="dia" name="dia"/>
         <div class="btn-group">
@@ -18,9 +18,12 @@
                 <li><a href="#" onclick="javascript:sendDate(0)">'.__('Day').'</a></li>
                 <li><a href="#" onclick="javascript:sendDate(1)">'.__('Month').'</a></li>
                 <li><a href="#" onclick="javascript:sendDate(2)">'.__('Year').'</a></li>
+                <li><a href="'.TPL::base().'stats/ver" >'.__('See all').'</a></li>
             </ul>
         </div>
-    </div>
+    </div>'.
+    ($sub != "" ? '<h3>'.__('Data from').": ".$sub.'</h3>' : '')
+    .'</div>
     <script type="text/javascript">
         function sendDate(d){
             var loc = "'.TPL::base().'/stats/"
@@ -34,7 +37,6 @@
         }
     </script>';
 
-    if ($sub != "") echo '<h3>'.__('Data from').": ".$sub.'</h3>';
     echo '
             <script src="http://code.highcharts.com/highcharts.js"></script>
             <script src="http://code.highcharts.com/modules/exporting.js"></script>

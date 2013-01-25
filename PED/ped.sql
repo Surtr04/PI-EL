@@ -335,6 +335,6 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `ped`;
-INSERT INTO `ped`.`sip_users` (`id`, `username`, `senha`, `nome`, `email`, `morada`, `foto`, `grupo`, `is_online`) VALUES (1, 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'Admin', 'admin@localhost', 'Internet', NULL, 1, 0);
+INSERT INTO `ped`.`sip_users` (`id`, `username`, `senha`, `nome`, `email`, `morada`, `foto`, `grupo`, `is_online`) VALUES (1, 'admin', '6cba738fb31f8238d10edaad9e78def2459f29914fa07b81e5094bede31a9254', 'Admin', 'admin@localhost', 'Internet', '', 1, 0);
 
 COMMIT;

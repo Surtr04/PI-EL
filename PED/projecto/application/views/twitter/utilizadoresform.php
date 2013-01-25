@@ -8,7 +8,7 @@
     $form = array();
     $form[] = array("tipo" => "hidden", "nome" => 'form_id', "valor" => $form_id);
     $form[] = array("label" => __('Username'), "nome" => 'username', "valor" => $username);
-    $form[] = array("label" => __('Password'), "nome" => 'password', "tipo" => 'password');
+    $form[] = array("label" => __('Password'), "nome" => 'senha', "tipo" => 'password');
     $form[] = array("label" => __('Repeat Password'), "nome" => 'rsenha', "tipo" => 'password');
     $form[] = array("label" => __('Name'), "nome" => 'nome', "valor" => $nome);
     $form[] = array("label" => __('Email'), "nome" => 'email', "tipo" => 'email', "valor" => $email);

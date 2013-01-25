@@ -47,6 +47,7 @@ class Controller_Categories extends Controller_Mymain {
         $this->view->set('inicio', $info['inicio']);
         $this->view->set('fim', $info['fim']);
         $this->view->set('selectedGroups', $info['grupos']);
+        $this->view->set('canDelete', $info['canDelete']);
         $this->putAllGroups();
 		echo $this->view->render();
 	}
@@ -62,7 +63,7 @@ class Controller_Categories extends Controller_Mymain {
 		if (trim($_POST['nome']) == "" || trim($_POST['inicio']) == "" || trim($_POST['fim']) == "") return $this->action_editar($_POST['form_id']);
 	
 		$cats = new Model_Categorias();
-		$cats->editarCategoria($_POST['form_id'], $_POST['nome'], $_POST['inicio'], $_POST['fim'], $_POST['selectedGroups']);
+		$cats->editarCategoria($_POST['form_id'], $_POST['nome'], $_POST['inicio'], $_POST['fim'], $_POST['selectedGroups'], ($_POST['canDelete'] ? true : false));
 		$this->goIndex();
 	}
 	
@@ -75,6 +76,7 @@ class Controller_Categories extends Controller_Mymain {
         $this->view->set('inicio', '');
         $this->view->set('fim', '');
         $this->view->set('selectedGroups', array());
+        $this->view->set('canDelete', '');
         $this->putAllGroups();
 		echo $this->view->render();
 	}
@@ -83,7 +85,7 @@ class Controller_Categories extends Controller_Mymain {
 		$this->restrictAcess('I');
 		if (trim($_POST['nome']) == "" || trim($_POST['inicio']) == "" || trim($_POST['fim']) == "") return $this->action_insere();
 		$cats = new Model_Categorias();
-		$id = $cats->insereCategoria($_POST['nome'],$_POST['inicio'], $_POST['fim'], $_POST['selectedGroups']);
+		$id = $cats->insereCategoria($_POST['nome'],$_POST['inicio'], $_POST['fim'], $_POST['selectedGroups'], ($_POST['canDelete'] ? true : false));
 		$this->goIndex();
 	}
 	

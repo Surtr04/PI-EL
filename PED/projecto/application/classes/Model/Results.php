@@ -31,6 +31,10 @@ class Model_Results extends Model_Mymodel {
         return $this->getBy('id_sip', $sip);
     }
     
+   
+
+	
+    
  
 	
 	

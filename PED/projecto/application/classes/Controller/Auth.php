@@ -14,7 +14,7 @@ class Controller_Auth extends Controller_Mymain {
     public function action_index(){ $this->action_login();}
     
 	public function action_login(){
-		if (!$this->user->isGuest()) $this->goHome(); //Há uma sessão activa
+		//if (!$this->user->isGuest()) $this->goHome(); //Há uma sessão activa
         
 		$username = (Arr::get($_POST, 'username', ''));
 		$password = (Arr::get($_POST, 'password', ''));

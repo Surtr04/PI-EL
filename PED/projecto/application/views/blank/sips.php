@@ -21,7 +21,7 @@
     $v = array('ident' => 0, 'titulo' => 0, 'subtitulo' => 0, 'data_inic' => 0, 'data_fim' => 0, 'data_submissao' => 0, 'username' => 0, 'privado' => 'YesNo');
     if (!isset($bycat) || !$bycat) {$c[] = 'Category'; $v['categoria']= 'categoriaLink';}
     $special = ($catperms['D']  ? true : 'canDelete');
-    $actions = array('see'=> true, 'edit'=>$special, 'downzip'=>true, 'delete' => $special);
+    $actions = array('see'=> true, 'edit'=>true, 'downzip'=>true, 'delete' => $special);
     
     echo TPL::showInfos($c, $v, $lista, $perms, $route, $actions);
     
@@ -32,7 +32,7 @@
     function YesNo($v, $valor){return ( $v ? __('Yes') : __('No'));}
     
     function canDelete($id, $perm, $valor){
-        return ($valor["categoria_aberta"] && ($perm > 1 || $valor["own"]));
+        return ($valor["canDelete"] && $valor["categoria_aberta"] && ($perm > 1 || $valor["own"]));
     }
     
     function categoriaLink($categoria, $valor){

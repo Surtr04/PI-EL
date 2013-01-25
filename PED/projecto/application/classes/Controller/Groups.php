@@ -79,6 +79,8 @@ class Controller_Groups extends Controller_Mymain {
 		
 		$grupos = new Model_Grupos();
 		$grupos->editarGrupo($_POST['form_id'], $_POST['nome'], $perms);
+        if (!$grupos->isAdminGroup($_POST['form_id']))
+            $this->log('Group change', array('group' => $_POST['nome'] , 'id' => $_POST['form_id']));
 		$this->action_ver((int)$_POST['form_id']);
 	}
 	

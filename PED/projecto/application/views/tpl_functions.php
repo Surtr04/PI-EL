@@ -108,10 +108,11 @@ class baseTpl {
     
     protected function parseArrayForm($arr){
 		$campos = array('label' => '', 'nome' => '', 'valor' => '', 'checked' => false, 'sel' => array(-1), 
-						'size' => 10, 'tipo' => 'text', 'disabled' => false, 'class-size' => (is_array($arr['valor']) ? '' : 'input-xxlarge'));
+						'size' => 10, 'tipo' => 'text', 'disabled' => false, 'after' => '');
 		foreach($campos as $chave => $valor)
 			if (!isset($arr[$chave])) $arr[$chave] = $valor;
-		if (!is_array($arr['sel'])) $arr['sel'] = array($arr['sel']);
+        if (!isset($arr['class-size'])) $arr['class-size'] = (is_array($arr['valor']) ? '' : 'input-xxlarge');    
+        if (!is_array($arr['sel'])) $arr['sel'] = array($arr['sel']);
 		return $arr;
 	}
     

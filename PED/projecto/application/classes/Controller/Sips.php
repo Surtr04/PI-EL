@@ -4,6 +4,7 @@
 */
 class Controller_Sips extends Controller_Mymain {
 
+    const ERR_NOTHING = "";
     const ERR_MANIFESTO = "ERR_SIP_MANIFESTO";
     const ERR_FILE = "ERR_SIP_FILE";
     const ERR_SCHEMA = "ERR_SIP_SCHEMA";
@@ -164,7 +165,7 @@ class Controller_Sips extends Controller_Mymain {
 
         /*$xml->addAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
         $xml->addAttribute("xsi:noNamespaceSchemaLocation","sip.xsd");*/
-        $xml->addAttribute("iden", $nvs['id']);
+        $xml->addAttribute("ident", $nvs['id']);
         $meta = $xml->addChild("meta");
 
         $this->mostra($meta, true, $nvs, 'titulo');
@@ -225,7 +226,7 @@ class Controller_Sips extends Controller_Mymain {
     }
     private function mostra($fp, $obr, $nvs, $x, $nx=""){
         if ($nx == "") $nx = $x;
-        if (empty($nvs[$nx]) && $obr) die ('Missing field '. $x . "($nx)"); 
+        if (empty($nvs[$nx]) && $obr) {$this->setError('Missing field '. $x . "($nx)"); $this->goBack();} 
         if (!empty($nvs[$nx])) $fp->addChild($x, $nvs[$nx]);  
     }
     private function trata($arr){
@@ -273,19 +274,38 @@ class Controller_Sips extends Controller_Mymain {
 			if ($id <= -1) return $this->action_index();
 		}
 		
-        if (!$this->verifyAcess('D', 'categories')) $sips->restrictByCat();
-        $info = $sips->getAllInfoSip($id);
-		$this->callForm($id, $info);
-        $this->view->set('categoria', $info["id_categoria"]);
-
+        if (!$this->verifyAcess('D', 'categories') ){
+            if (!$this->verifyAcess('U', $this->prv)) return $this->goIndex();
+            
+            $sips->restrictByCat();
+            $info = $sips->getAllInfoSip($id);
+            
+            $this->view->set('form_id', $id);
+            $this->view->set('ident', $info["ident"]);
+            $this->view->set('titulo', $info["titulo"]);
+            $this->view->set('canBePrivate', $info["privado"]);
+            $this->view->set('toinclude', 'sips_private');
+        } else {
+            $info = $sips->getAllInfoSip($id);
+            $this->callForm($id, $info);
+            $this->view->set('categoria', $info["id_categoria"]);
+        }
+        
 		echo $this->view->render();
 	}
 	
 	public function action_update(){
 		$sips = $this->restrictAcess('U');
         
+        $private = Arr::get($_POST,'onlyPrivate',0);
         $id = (int) Arr::get($_POST,'form_id',-1);
         if (!$this->verifyAcess('D', 'categories')) $sips->restrictByCat();
+        
+        if ($private) {
+            $sips->setPrivate($id, (int)$_POST['privado']);
+            return $this->goIndex();
+        }
+        
         $info = $sips->getAllInfoSip($id);
         
         $arr = $this->processaResultsFromBD($info['resultados']);
@@ -346,8 +366,8 @@ class Controller_Sips extends Controller_Mymain {
         if ($aux == 1) $zip = $this->build($_POST, $_FILES); else $zip = $_FILES['sip']['tmp_name'];
                 
         $res = $this->processaZip($zip);
-        if (!is_array($res)){
-            $this->setError($res);
+        if (isset($res['erro']) && $res['erro'] !== self::ERR_NOTHING){
+            $this->setError($res['erro'], $res);
             $this->goBack();
         }
         //$sips = new Model_Sips();
@@ -361,21 +381,25 @@ class Controller_Sips extends Controller_Mymain {
         $zip = new ZipArchive();
         $zip->open($file);
         $tmpxml = $zip->getFromName(self::MANIFESTO);
-        if ($tmpxml === false) return self::ERR_MANIFESTO;
+        if ($tmpxml === false) return array('erro' => self::ERR_MANIFESTO, ':nome' => self::MANIFESTO);
         $xml = new DOMDocument();
         $xml->loadXML($tmpxml);
-        if (!$xml->schemaValidate(Controller_Resources::getOthers().'sip.xsd')) return self::ERR_SCHEMA;
+        libxml_use_internal_errors(true);
+        if (!$xml->schemaValidate(Controller_Resources::getOthers().'sip.xsd')){
+            $error = Arr::get(libxml_get_errors(), 0, new libXMLError());
+            return array('erro' => self::ERR_SCHEMA, ':msg' => $error->message, ':code' => $error->code, ':line' => $error->line);
+        }
         $info = array();
         
         $xpath = new DOMXPath($xml);
-        $info["iden"] = $xpath->query("/sip/@iden")->item(0)->textContent;
+        $info["ident"] = $xpath->query("/sip/@ident")->item(0)->textContent;
         
         $with = "/sip/meta/";
         $aux = array("titulo", "subtitulo", "data-inic", "data-fim");
         foreach($aux as $valor)
             $info[$valor] = $xpath->query($with.$valor)->item(0)->textContent;
         
-        if (isset($info['data-inic']) && $info['data-inic'] > $info['data-fim']) return self::ERR_DATA;
+        if (isset($info['data-inic']) && $info['data-inic'] > $info['data-fim']) return array('erro' => self::ERR_DATA);
         
         $info["supervisores"] = $this->processaPessoas($xpath, $with."supervisores/supervisor");
         $info["autores"] = $this->processaPessoas($xpath, $with."autores/autor");
@@ -395,7 +419,7 @@ class Controller_Sips extends Controller_Mymain {
             $res = array();
             foreach($naux as $valor)
                 $res[$valor] = $xpath->query($valor, $node)->item(0)->textContent;
-            if (($fiche = $zip->getFromName($res["@url"])) === false) return self::ERR_FILE;
+            if (($fiche = $zip->getFromName($res["@url"])) === false) return array('erro' => self::ERR_FILE, ':nome' => $res["@url"]);
             $res["name"] = $res["@url"];
             $res["desc"] = $res["."];
             $res["url"] = Controller_Resources::randomize(Controller_Resources::getResults(), $res["name"]);

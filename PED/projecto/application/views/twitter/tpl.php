@@ -29,7 +29,7 @@ class themeTPL extends baseTpl{
 	}
 	
 	public function LinkApagar($action, $texto = null){
-        return $this->linkadd(array('href' => "#", 'onclick' => TPL::base().$action), $texto, 'icon-trash', 'btn-danger');
+        return $this->linkadd(array('href' => "#", 'onclick' => "javascript:callModal('".TPL::base().$action."', '')"), $texto, 'icon-trash', 'btn-danger');
 	}
 	
 	public function LinkVer($action, $texto = null){
@@ -50,7 +50,7 @@ class themeTPL extends baseTpl{
 	
     public function makeForm($lista, $action, $btns){
         if (isset($lista['options'])) {$options = $lista['options']; unset($lista['options']);}
-        $aux = '<form method="post" class="'.( isset($options['class']) ? $options['class'] : 'form-horizontal').'" onSubmit="return checkForm()" action="'.$action.'">';
+        $aux = '<form method="post" class="'.( isset($options['class']) ? $options['class'] : 'form-horizontal').'" onSubmit="return checkForm()" action="'.$action.'" enctype="multipart/form-data">';
         foreach($lista as $valor){
 			//$valor = $this->parseArrayForm($valor);
             switch($valor['tipo']){
@@ -70,13 +70,13 @@ class themeTPL extends baseTpl{
         
     public function createCheckbox($valor){ //$label, $nome, $value, $checked = false, $disabled = false){
         $valor = $this->parseArrayForm($valor);
-		return $this->surroundWithLabel($valor['label'], $valor['nome'], '<input type="checkbox" id="'.$valor['nome'].'" name="'.$valor['nome'].'" value="'.$valor['valor'].'" '.($valor['checked'] ? 'checked="true"' : '').$this->disabled($valor['disabled']).'/>');
+		return $this->surroundWithLabel($valor['label'], $valor['nome'], '<input type="checkbox" id="'.$valor['nome'].'" name="'.$valor['nome'].'" value="'.$valor['valor'].'" '.($valor['checked'] ? 'checked="true"' : '').$this->disabled($valor['disabled']).'/>'.$valor['after']);
 		
 	}
     
     public function createInputFile($valor){//$label, $nome, $disabled = false){
         $valor = $this->parseArrayForm($valor);
-		return $this->surroundWithLabel($valor['label'], $valor['nome'], '<input type="file" id="'.$valor['nome'].'" name="'.$valor['nome'].'"'.$this->disabled($valor['disabled']).'/>');
+		return $this->surroundWithLabel($valor['label'], $valor['nome'], '<input type="file" id="'.$valor['nome'].'" name="'.$valor['nome'].'" '.$this->disabled($valor['disabled']).'/>'.$valor['after']);
 	}
     
     public function disabled($d){return ($d ? ' disabled="true"' : '');}
@@ -91,7 +91,7 @@ class themeTPL extends baseTpl{
     
     public function createTextArea($valor){ //$label, $nome, $value = '', $linhas = 5, $disabled = false){
         $valor = $this->parseArrayForm($valor);
-        return $this->surroundWithLabel($valor['label'], $valor['nome'], '<textarea class="input-xxlarge" id="'.$valor['nome'].'" name="'.$valor['nome'].'" rows="'.$valor['linhas'].'" '.$this->disabled($valor['disabled']).'>'.$valor['value'].'</textarea>');
+        return $this->surroundWithLabel($valor['label'], $valor['nome'], '<textarea class="input-xxlarge" id="'.$valor['nome'].'" name="'.$valor['nome'].'" rows="'.$valor['linhas'].'" '.$this->disabled($valor['disabled']).'>'.$valor['value'].'</textarea>'.$valor['after']);
     }
     public function createInput($valor){ //$label, $nome, $value = '', $placeholder = '', $type = 'text', $disabled = false){
         $valor = $this->parseArrayForm($valor);
@@ -109,8 +109,8 @@ class themeTPL extends baseTpl{
 				break;
 			case 'web' : $preaddon .= ' <span class="add-on"><i class="icon-globe"></i></span>'; break;
 		}
-        $posaddon .= '</div>';
-		$input = $preaddon.'<input '.$insert.' class="'.$valor['class-size'].'" type="'.$valor['tipo'].'" id="'.$valor['nome'].'" name="'.$valor['nome'].'" '.($valor['placeholder'] != '' ? 'placeholder="'.$valor['placeholder'].'"' : '').($valor['value'] != '' ? 'value="'.$valor['value'].'"' : '').$this->disabled($valor['disabled']).'/>'.$posaddon;
+        $posaddon .= '</div>'.$valor['after'];
+		$input = $preaddon.'<input '.$insert.' class="'.$valor['class-size'].'" type="'.$valor['tipo'].'" id="'.$valor['nome'].'" name="'.$valor['nome'].'" '.($valor['placeholder'] != '' ? 'placeholder="'.$valor['placeholder'].'"' : '').($valor['valor'] != '' ? 'value="'.$valor['valor'].'"' : '').$this->disabled($valor['disabled']).'/>'.$posaddon;
         return $this->surroundWithLabel($valor['label'], $valor['nome'], $input);
     }
     private function _createSelect($valor){
@@ -122,7 +122,7 @@ class themeTPL extends baseTpl{
         
         $aux = '<select class="'.$valor['class-size'].'" type="text" id="'.$valor['nome'].'" name="'.$valor['nome'].'" '.($valor['tipo'] == 'multi' ? 'size="'.$valor['size'].'" multiple="true"' : '').'>';
         foreach($valor['valor'] as $chave => $value){
-            $aux .= '<option '.($s[$value['id']] ? 'selected="true "' : '' ).'value="'.$value['id'].'">'.$value['nome'].'</option>';
+            $aux .= '<option '.($s[$value['id']] ? 'selected="true" ' : '' ).'value="'.$value['id'].'">'.$value['nome'].'</option>';
         }
         $aux .= '</select><br />';
         return $aux;

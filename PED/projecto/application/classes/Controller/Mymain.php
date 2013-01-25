@@ -6,6 +6,9 @@ class Controller_Mymain extends Controller {
 
     const THEME_DEFAULT = 'blank';
     const SESSION_ERROR = 'ERRORMSG';
+    const SESSION_MSG = 'MSGMSG';
+    const SESSION_WARNING = 'WARNINGMSG';
+    const SESSION_SUCCESS = 'SUCCESSMSG';
     
 	protected $view;
     protected $session;
@@ -22,12 +25,16 @@ class Controller_Mymain extends Controller {
         $this->picturesPath = APPPATH."docs/pictures";
 		$this->user = Auth::instance()->get_user(new Model_User());
         if ($this->isManut()) $this->redirect($this->createUrl('manut'));
+        if (Route::name($this->request->route()) == 'pessoas') $this->goHome();
         $this->view = View::Factory('pagina');
 		$this->view->set('theme', $this->getTheme());
         $this->view->set('dtheme', self::THEME_DEFAULT);
 		$this->view->set('titulo', Kohana::$config->load('defs.titulo'));
 		$this->view->set('youngtitle', '');
-        $this->view->set('errors', $this->getErrors());
+        $this->view->set('errors', $this->getMsgs(self::SESSION_ERROR));
+        $this->view->set('warnings', $this->getMsgs(self::SESSION_WARNING));
+        $this->view->set('successes', $this->getMsgs(self::SESSION_SUCCESS));
+        $this->view->set('msgs', $this->getMsgs(self::SESSION_MSG));
 		$this->view->set('isManut', MANUT);
 		$this->view->set('img', $this->createUrl() . "images/logo.gif");
         $this->view->set('route', strtolower($this->request->controller()));
@@ -36,11 +43,14 @@ class Controller_Mymain extends Controller {
 		$this->scripts = "";
 		$this->nperm = "";
 	}
-    private function getErrors(){
-        $errors = $this->session->get(self::SESSION_ERROR, array());
-        $this->session->set(self::SESSION_ERROR, array());
+        
+    private function getMsgs($locale){
+        $errors = $this->session->get($locale, array());
+        $this->session->set($locale, array());
         return $errors;
     }
+    
+    
 	public function isManut(){
         $u = Auth::instance()->get_user();
 		if (self::isProduction()) $b = ""; else $b = "/";
@@ -174,11 +184,29 @@ class Controller_Mymain extends Controller {
 		$this->view->set('scripts', $this->scripts);
 	}
 	
-    protected function setError($msg){
-        $msgs = $this->session->get(self::SESSION_ERROR, array());
-        $msgs[] = $msg;
-        $this->session->set(self::SESSION_ERROR, $msgs);
+    protected function setError($msg, $params = array()){
+        return $this->_setMsg(self::SESSION_ERROR, $msg, $params);
     }
+    
+    protected function setMsg($msg, $params = array()){
+        return $this->_setMsg(self::SESSION_MSG, $msg, $params);
+    }
+    
+    protected function setSucess($msg, $params = array()){
+        return $this->_setMsg(self::SESSION_SUCCESS, $msg, $params);
+    }
+    
+    protected function setWarning($msg, $params = array()){
+        return $this->_setMsg(self::SESSION_WARNING, $msg, $params);
+    }
+    
+    private function _setMsg($locale, $msg, $params){
+        $msgs = $this->session->get($locale, array());
+        $msgs[] = array('msg' => $msg, 'params' => $params);
+        $this->session->set($locale, $msgs);
+    }
+    
+    
     
     protected function _initTable($m, $include = '', $render = true){
         $perms = $this->user->canDo(Kohana::$config->load('perms.').$this->nperm);

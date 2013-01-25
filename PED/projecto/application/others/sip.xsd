@@ -87,7 +87,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="iden" type="xs:ID"/>
+            <xs:attribute name="ident" type="xs:ID"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>

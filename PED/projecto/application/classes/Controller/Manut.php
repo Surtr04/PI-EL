@@ -12,6 +12,7 @@ class Controller_Manut extends Controller_Mymain {
 		
 	}
 	public function action_index(){
+        if (!MANUT) $this->goHome();
 		$this->view = View::Factory('manut');
 		$this->view->set('theme', $this->getTheme());
         $this->view->set('dtheme', self::THEME_DEFAULT);
@@ -19,18 +20,20 @@ class Controller_Manut extends Controller_Mymain {
 	}
 	
 	public function action_activate(){
-		if (!$this->user->isAdmin()) if (MANUT) return $this->action_index ;else return $this->goHome();
+		if (!$this->user->isAdmin()) if (MANUT) return $this->action_index() ;else return $this->goHome();
 		$fp = fopen($this->MFILE, "w");
 		fwrite($fp, "Manut");
 		fclose($fp);
 		$this->view->set('isManut', true);
+        $this->log('Manut act');
 		$this->goBack();
 	}
 	
 	public function action_deactivate(){
-		if (!$this->user->isAdmin()) if (MANUT) return $this->action_index;else return $this->goHome();
+		if (!$this->user->isAdmin()) if (MANUT) return $this->action_index();else return $this->goHome();
 		unlink($this->MFILE);
 		$this->view->set('isManut', false);
+        $this->log('Manut deact');
 		$this->goBack();
 	}
 } 

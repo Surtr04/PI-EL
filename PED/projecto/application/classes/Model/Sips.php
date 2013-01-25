@@ -11,7 +11,7 @@ class Model_Sips extends Model_Mymodel {
     
 	public function __construct(){
         parent::__construct('sips');
-        $query = DB::select($this->_table.'.*', 'users.username', 'categorias.nome', Model::factory('Categorias')->abertaExpr())->from($this->_table)
+        $query = DB::select($this->_table.'.*', 'users.username', 'categorias.nome', 'categorias.canDelete', Model::factory('Categorias')->abertaExpr())->from($this->_table)
                 ->join('users')->on($this->_table.'.submetido', '=', 'users.id')
                 ->join('categorias')->on($this->_table.'.id_categoria', '=', 'categorias.id')
                 ->order_by('data_submissao', 'DESC');
@@ -49,7 +49,7 @@ class Model_Sips extends Model_Mymodel {
                         "subtitulo" => $linha["subtitulo"], "data_inic" => $linha["data_inic"], "data_fim" => $linha["data_fim"], 
                         "data_submissao" => $linha["data_submissao"], "submetido" => $linha["submetido"], "username" => $linha["username"],
                         "id_categoria" => $linha["id_categoria"], "categoria" => $linha["nome"], "categoria_aberta" => $linha["aberta"],
-                        "privado" => (int)$linha['privado']));
+                        "privado" => (int)$linha['privado'], "canDelete" => ((int)$linha['canDelete'] ? true : false)));
 	}
 	
 	public function	getAllSips(){ return $this->getList();}
@@ -67,6 +67,10 @@ class Model_Sips extends Model_Mymodel {
         return $info;
     }
     
+    public function setPrivate($id, $p){
+        DB::update($this->_table)->set(array('privado' => ($p ? 1 : 0)))->where('id', '=', $id)->execute();
+    }
+    
 	public function apaga($id){
 		$id = (int) $id;
 
@@ -79,7 +83,7 @@ class Model_Sips extends Model_Mymodel {
         
         $querys = array();
         
-        foreach(array("sips_autores", "sips_supervisores", "resumos", "resultados") as $tbl)
+        foreach(array("sips_autores", "sips_supervisores", "resumos", "resultados", "sips_stats") as $tbl)
             $querys[] = DB::delete($tbl)->where('id_sip', '=', $id);        
         
         $querys[] = DB::delete($this->_table)->where('id', '=', $id);
@@ -123,7 +127,7 @@ class Model_Sips extends Model_Mymodel {
         $autores = $this->verificaPessoas(new Model_Autores(), $sip["autores"]);
         $supervisores = $this->verificaPessoas(new Model_Supervisores(), $sip["supervisores"]);
         
-        $querys["id"] = DB::insert($this->_table)->values(array($id['v'],$sip["iden"], $sip["titulo"], $this->parseNull($sip["subtitulo"]), $sip["data-inic"], $sip["data-fim"], $this->translateDate($data), $privado, $user, $cat));
+        $querys["id"] = DB::insert($this->_table)->values(array($id['v'],$sip["ident"], $sip["titulo"], $this->parseNull($sip["subtitulo"]), $sip["data-inic"], $sip["data-fim"], $this->translateDate($data), $privado, $user, $cat));
         
         $i = 0;
         foreach($autores as $valor)

@@ -6,8 +6,8 @@
 	if ($perms['I']) echo '<p>'.TPL::LinkAdicionar($route.'/insere', __('Insert new category')).'</p><br/><br/>';
 	
 
-    $c = array('Category', 'Start Date', 'End Date', 'Opened');
-    $v = array('nome' => 'makeLinkCat', 'inicio' => 0, 'fim' => 0, 'aberta' => 'YesNo');
+    $c = array('Category', 'Start Date', 'End Date', 'Opened', 'Can delete sips');
+    $v = array('nome' => 'makeLinkCat', 'inicio' => 0, 'fim' => 0, 'aberta' => 'YesNo', 'canDelete' => 'YesNo');
     echo TPL::showInfos($c, $v, $lista, $perms, $route, array('edit'=>true, 'delete'=>true, 'downzip'=>true));
     
 	echo TPL::NavLista($min, $int, $total, $route);

@@ -28,23 +28,6 @@ define('MSGS', 1);
 </head>
 
 <body <?php if ($onload != '') echo 'onload="'.$onload.'()" '?>>
-<?php
-    $boxmsgs = array(
-            'errors' => array('msg' => 'Error', 'type' => 'alert-error'), 
-            'msgs' => array('msg' => 'Info', 'type' => 'alert-info'), 
-            'warnings' => array('msg' => 'Warning', 'type' => ''),
-            'successes' => array('msg' => 'Success', 'type' => 'alert-success'),
-    );
-    if (MSGS){
-        foreach($boxmsgs as $chave => $valor){
-            if (isset($$chave)) {
-                foreach($$chave as $erro)
-                   echo '<div class="alert '.$valor['type'].'"><button type="button" class="close" data-dismiss="alert">&times;</button>'.
-                        ($valor['msg'] != "" ? '<strong>'.__($valor['msg']).': </strong>' : '').__($erro).'</div>';
-             }
-        }
-    }
-?>
 	<div id="pack">
 		<!--<div id="head">
 			<!--<div id="text">
@@ -74,5 +57,24 @@ define('MSGS', 1);
 	}
 	echo "</ul></div></div>";
 	?>
+    <?php
+        $boxmsgs = array(
+                'errors' => array('msg' => 'Error', 'type' => 'alert-error'), 
+                'msgs' => array('msg' => 'Info', 'type' => 'alert-info'), 
+                'warnings' => array('msg' => 'Warning', 'type' => ''),
+                'successes' => array('msg' => 'Success', 'type' => 'alert-success'),
+        );
+        if (MSGS){
+            $aux = '';
+            foreach($boxmsgs as $chave => $valor){
+                if (isset($$chave)) {
+                    foreach($$chave as $erro)
+                       $aux .= '<div class="alert '.$valor['type'].'"><button type="button" class="close" data-dismiss="alert">&times;</button>'.
+                            ($valor['msg'] != "" ? '<strong>'.__($valor['msg']).': </strong>' : '').__($erro['msg'], $erro['params']).'</div>';
+                 }
+            }
+            if ($aux != '') echo '<div style="margin:5px;">'.$aux.'</div>';
+        }
+    ?>
 	</div>
 	

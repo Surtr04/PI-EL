@@ -19,7 +19,7 @@ class Model_Categorias extends Model_Mymodel {
         $grps = array();
         foreach($res as $row)
             $grps[] = $row['id_grupo'];        
-		return array("key" => (int)$linha["id"],  "value" => array("id" => (int)$linha["id"], "nome" => $linha["nome"], "inicio" => $linha["inicio"], "fim" => $linha["fim"], "aberta" => (int)$linha["aberta"], "grupos" => $grps));
+		return array("key" => (int)$linha["id"],  "value" => array("id" => (int)$linha["id"], "nome" => $linha["nome"], "inicio" => $linha["inicio"], "fim" => $linha["fim"], "aberta" => (int)$linha["aberta"], "grupos" => $grps, "canDelete" => ((int)$linha["canDelete"] ? true : false)));
 	}
 	
 	public function	getAllCategorias(){ return $this->getList(); }
@@ -53,13 +53,13 @@ class Model_Categorias extends Model_Mymodel {
 		if ($this->_cached) $this->cache($this->_min);
 	}
 	
-	public function editarCategoria($id, $nome, $inicio, $fim, $grupos){
+	public function editarCategoria($id, $nome, $inicio, $fim, $grupos, $canDelete = false){
 		$id = (int) $id;
         $inicio = $this->translateDate($inicio);
         $fim = $this->translateDate($fim);
         
         $querys = array();
-        $querys[] = DB::update($this->_table)->set(array('nome' => $nome, 'inicio' => $inicio, 'fim' => $fim))->where('id', '=', $id);
+        $querys[] = DB::update($this->_table)->set(array('nome' => $nome, 'inicio' => $inicio, 'fim' => $fim, 'canDelete' => $canDelete))->where('id', '=', $id);
         $querys[] = DB::delete('categorias_grupos')->where('id_categoria', '=', $id);
         foreach($grupos as $valor)
             $querys[] = DB::insert('categorias_grupos')->values(array($id, (int)$valor));
@@ -76,9 +76,9 @@ class Model_Categorias extends Model_Mymodel {
         return $this->findBy('id', $id);
 	}
 	
-	public function insereCategoria($nome, $inicio, $fim, $grupos){
+	public function insereCategoria($nome, $inicio, $fim, $grupos, $canDelete = false){
         $querys = array();
-        $querys["id"] = DB::insert($this->_table)->values(array(null, $nome, $this->translateDate($inicio), $this->translateDate($fim)));
+        $querys["id"] = DB::insert($this->_table)->values(array(null, $nome, $this->translateDate($inicio), $this->translateDate($fim), $canDelete));
         foreach($grupos as $valor)
             $querys["ref_".$valor] = DB::insert('categorias_grupos')->values(array(':id', (int)$valor));
         $id = $this->executeInTransaction($querys);
