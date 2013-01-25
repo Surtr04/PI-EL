@@ -51,7 +51,7 @@ $form = array();
 $form[] = array("tipo" => "hidden", "nome" => 'form_id', "valor" => $form_id);
 $form[] = array("tipo" => "hidden", "nome" => 'isForm', "valor" => 1);
 $form[] = array("label" => __('Category'), "nome" => 'categoria', "valor" => $categorias, "sel" => $categoria, "tipo" => "select");
-if ($canBePrivate) $form[] = array("label" => __('Private'), "nome" => 'privado', "tipo" => 'check', "valor" => 1);
+if ($canBePrivate) $form[] = array("label" => __('Private'), "nome" => 'privado', "tipo" => 'check', "checked" =>  Arr::get($sip, 'privado', false) ,"valor" => 1);
 $form[] = array("label" => __('Identifier'), "nome" => 'id', "valor" => Arr::get($sip, 'ident', ''));
 $form[] = array("label" => __('Title'), "nome" => 'titulo', "valor" => Arr::get($sip, 'titulo', ''));
 $form[] = array("label" => __('Subtitle'), "nome" => 'subtitulo', "valor" => Arr::get($sip, 'subtitulo', ''));

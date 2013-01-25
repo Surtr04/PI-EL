@@ -24,7 +24,6 @@
     
   
     <sect1>        
-        
         <title>Introdução</title>        
         <para>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -36,7 +35,21 @@
         </para>                    
     </sect1>
     
-    
+    <sect1>
+        <title>Descrição do Problema</title>
+        <para>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Base de Dados</title>
+        <para></para>
+    </sect1>
     <sect1>
         <title>Arquivo Aberto</title>
         <para>
@@ -48,16 +61,85 @@
             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </para>
         <sect2>
-            <title>Descrição do Problema</title>
-            <para>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </para>
+            <title>Utilizadores</title>
+            <para></para>
         </sect2>
+        <sect2>
+            <title>Grupos</title>
+            <para></para>
+        </sect2>
+        <sect2>
+            <title>Logs</title>
+            <para></para>
+        </sect2>
+        <sect2>
+            <title>Estatísticas</title>
+            <para></para>
+        </sect2>
+        <sect2>
+            <title>Categorias</title>
+            <para></para>
+        </sect2>
+        <sect2>
+            <title>Trabalhos</title>
+            <para></para>
+            <sect3>
+                <title>Submissão</title>
+                <para></para>
+            </sect3>
+            <sect3>
+                <title>Privados</title>
+                <para></para>
+            </sect3>
+            <sect3>
+                <title>DIP</title>
+                <para></para>
+            </sect3>
+        </sect2>
+        <sect2>
+            <title>Autores</title>
+            <para></para>
+        </sect2>
+        <sect2>
+            <title>Supervisores</title>
+            <para></para>
+        </sect2>
+    </sect1>
+    
+    <sect1>
+        <title>Especificidades do desenvolvimento</title>
+        <para></para>
+        <sect2>
+            <title>Ferramentas utilizadas</title>
+            <sect3>
+                <title>Framework Kohana</title>
+                <para></para>
+            </sect3>
+            <sect3>
+                <title>Twitter Bootstrap</title>
+                <para></para>
+            </sect3>
+            <sect3>
+                <title>Highcharts</title>
+                <para></para>
+            </sect3>
+        </sect2>
+        <sect2>
+            <title>Sistema de manutenção</title>
+            <para></para>
+        </sect2>
+        <sect2>
+            <title>Opção multilíngue</title>
+            <para></para>
+        </sect2>
+        <sect2>
+            <title>Adaptatibilidade de temas</title>
+            <para></para>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Conclusão e trabalho futuro</title>
+        <para></para>
     </sect1>
         
     

@@ -5,17 +5,24 @@
     
 	echo '<div style="margin: auto; padding: 15px; width: auto; text-align:left;">';
     
-    if ($bycat) echo TPL::LinkDownZip('categories/downzip/?id='.$categoria['id'], __('Download category sips'))."<br/><br/>";
+    
     
     $show = (!$bycat || $categoria["aberta"]);
-    
 	if ($perms['I'] && $show){ 
-        echo '<p>'.TPL::LinkAdicionar($route.'/insere'.(isset($bycat) && $bycat ? '/'.$categoria['id'] : ''), __('Insert new sip') . ' (' . __('Form'). ')').'<br/>';
-        echo TPL::LinkAdicionar($route.'/insereFile'.(isset($bycat) && $bycat ? '/'.$categoria['id'] : ''), __('Insert new sip') . ' (' . __('File').')').'</p><br/><br/>';
+        echo '<div class="btn-group">';
+        echo TPL::LinkAdicionar($route.'/insere'.(isset($bycat) && $bycat ? '/'.$categoria['id'] : ''), __('Insert new sip') . ' (' . __('Form'). ')');
+        echo TPL::LinkAdicionar($route.'/insereFile'.(isset($bycat) && $bycat ? '/'.$categoria['id'] : ''), __('Insert new sip') . ' (' . __('File').')');
     }
-	
-    foreach($lista as &$valor)
+    
+    if ($bycat) echo TPL::LinkDownZip('categories/downzip/?id='.$categoria['id'], __('Download category sips'))."<br/><br/>";
+
+    if ($perms['I'] && $show) echo '</div><br/><br/>'; else echo '<br/><br/>';
+    
+    foreach($lista as &$valor){
         $valor["own"] = ($valor["submetido"] == $userid);
+        if ($valor["privado"]) $valor['__class'] = 'warning';
+    }
+    
     
     $c = array('Identifier', 'Title', 'Subtitile', 'Start Date', 'End Date', 'Submission Date', 'User', 'Private');
     $v = array('ident' => 0, 'titulo' => 0, 'subtitulo' => 0, 'data_inic' => 0, 'data_fim' => 0, 'data_submissao' => 0, 'username' => 0, 'privado' => 'YesNo');

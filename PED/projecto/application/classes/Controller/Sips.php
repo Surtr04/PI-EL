@@ -41,6 +41,17 @@ class Controller_Sips extends Controller_Mymain {
 		$this->initTable($sips);
 	}
 	
+    public function writeManifestoCat($arr){
+        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><dip_container></dip_container>');
+        foreach($arr as $valor){
+            $elem = $xml->addChild('zip', $valor['titulo']);
+            $elem->addAttribute('nome', $valor['nome']);
+        }
+        $tmpxml = tempnam("tmp","man");
+        $xml->asXml($tmpxml);
+        return $tmpxml;
+    }
+    
     public function action_zipcat(){
         parent::restrictAcess('S', 'categories');
         $id = (int) (Arr::get($_GET,'id',0));
@@ -53,15 +64,23 @@ class Controller_Sips extends Controller_Mymain {
         if ($bycat->open($file, ZipArchive::OVERWRITE) != 1) return false;
         $catname = $id;
         $unlink = array();
+        $arr = array();
         foreach($sips->getList() as $valor){
             $catname = $valor['categoria'];
             $infos = $this->buildZipFromDB($valor['id'], $sips);
-            $bycat->addFile($infos['zip'], $valor['id'].'_'.$infos['ident'].'.zip');
+            $nome = $valor['id'].'_'.$infos['ident'].'.zip';
+            $bycat->addFile($infos['zip'], $nome);
+            $arr[] = array('nome' => $nome, 'titulo' => $infos['titulo']);
             $unlink[] = $infos['zip'];
         }
+        
+        $man = $this->writeManifestoCat($arr);
+        $bycat->addFile($man, self::MANIFESTO);
+        
         $bycat->close();
         foreach($unlink as $valor)
             unlink($valor);
+        unlink($man);
         $this->response->send_file($file, $catname.'.zip', array( 'delete'=>true));
     }
     
@@ -82,7 +101,7 @@ class Controller_Sips extends Controller_Mymain {
         }
         $info['cr'] = $i;
         $zip = $this->build($info, $files, 'dip', new DipBuild($info, $files));
-        return array('zip'=>$zip, 'ident'=>$info['ident']);
+        return array('zip'=>$zip, 'ident'=>$info['ident'], 'titulo' => $info['titulo']);
     }
     public function action_downzip(){
         $sips = $this->restrictAcess('S');

@@ -12,7 +12,7 @@
             $i = 0;
             foreach($blocos as $chave => $valor){
                 if ($i % 3 == 0) echo '<div class="row-fluid">';
-                echo '<div class="span4">';
+                echo '<div class="span4 well">';
                 echo '<h2>'.$valor['titulo'].(isset($valor['action']) ?  ' '.TPL::LinkVer($valor['action'], '') : '').'</h2>';
                 if (isset($valor['desc']) && $valor['desc'] != '')echo '<p>'.__($valor['desc']).'</p>';
                 foreach($valor['links'] as $c => $v){
@@ -34,4 +34,4 @@
         ?>
         
 </div>
-<br/><br/><hr/>
+

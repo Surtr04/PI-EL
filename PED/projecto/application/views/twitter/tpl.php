@@ -9,6 +9,7 @@ class themeTPL extends baseTpl{
     public function makeTitle($title){ return '<div class="page-header">'.parent::makeTitle($title).'</div>';}
     
     private function linkadd($action, $texto, $tipo, $btnclass = ''){
+        $size = ($texto == ''  ? 'mini' : 'small');
         if ($texto === null) $texto = __($tipo);
 		if ($texto != '' && substr($texto, 0, 1) != ' ') $texto = '&nbsp;'.$texto;
         if (is_array($action)){
@@ -17,7 +18,7 @@ class themeTPL extends baseTpl{
                 $aux .= $chave.'="'.$valor.'" ';
         } else
             $aux = 'href="'.TPL::base().$action.'" ';
-		return '<a class="btn btn-mini '.$btnclass.'" '.$aux.'><i class="'.$tipo.'"></i>'.$texto.'</a>';
+		return '<a class="btn '.$btnclass.' btn-'.$size.'" '.$aux.'><i class="'.$tipo.'"></i>'.$texto.'</a>';
 	}
     
     public function LinkAdicionar($action, $texto = null){
@@ -91,7 +92,7 @@ class themeTPL extends baseTpl{
     
     public function createTextArea($valor){ //$label, $nome, $value = '', $linhas = 5, $disabled = false){
         $valor = $this->parseArrayForm($valor);
-        return $this->surroundWithLabel($valor['label'], $valor['nome'], '<textarea class="input-xxlarge" id="'.$valor['nome'].'" name="'.$valor['nome'].'" rows="'.$valor['linhas'].'" '.$this->disabled($valor['disabled']).'>'.$valor['value'].'</textarea>'.$valor['after']);
+        return $this->surroundWithLabel($valor['label'], $valor['nome'], '<textarea class="input-xxlarge" id="'.$valor['nome'].'" name="'.$valor['nome'].'" rows="'.$valor['linhas'].'" '.$this->disabled($valor['disabled']).'>'.$valor['valor'].'</textarea>'.$valor['after']);
     }
     public function createInput($valor){ //$label, $nome, $value = '', $placeholder = '', $type = 'text', $disabled = false){
         $valor = $this->parseArrayForm($valor);
@@ -137,7 +138,7 @@ class themeTPL extends baseTpl{
             $aux .= '<th>'.__($valor).'</th>';
         $aux .= ($act ? '<th>'.__('Actions').'</th>' : '').'</tr></thead>';
         foreach($lista as $chave => $valor){
-            $aux.= '<tr>';
+            $aux.= '<tr '.(isset($valor['__class']) ? 'class = "'.$valor['__class'].'"' : '').'>';
             foreach($values as $c => $v){
                 if (is_callable($v))
                     $aux .= '<td>'.$v($valor[$c], $valor).'</td>';
