@@ -7,10 +7,13 @@
 	
 
     $c = array('Identifier', 'Name', 'Email', 'Web');
-    $v = array('identificador' => 0, 'nome' => 0, 'email' => 0, 'web' => 0);
+    $v = array('identificador' => 0, 'nome' => 0, 'email' => 'makeMail', 'web' => 'makeWeb');
     echo TPL::showInfos($c, $v, $lista, $perms, $route);
     
 	
 	echo TPL::NavLista($min, $int, $total, $route);
 	echo '</div>';
+    
+    function makeMail($v, $valor){return '<a href="mailto:'.$v.'">'.$v.'</a>';}
+    function makeWeb($v, $valor){return '<a href="'.$v.'">'.$v.'</a>';}
 ?>

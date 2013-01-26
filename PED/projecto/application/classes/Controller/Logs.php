@@ -24,10 +24,10 @@ class Controller_Logs extends Controller_Mymain {
         $log = new Model_Logs();
         
         $min = (int) (Arr::get($_GET,'s',0));
-        $num = (int) (Arr::get($_GET,'n',-1));
+        $num = (int) (Arr::get($_GET,'n',0));
         
         $b = Arr::get($_REQUEST,'before',null);
-        if ($b !== null) $log->setBefore($b);
+        if ($b !== null) $log->setBefore($b.' 23:59:59');
         $a = Arr::get($_REQUEST,'after',null);
         if ($a !== null) $log->setAfter($a); 
         

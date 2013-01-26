@@ -108,7 +108,7 @@ class themeTPL extends baseTpl{
 				$posaddon .= '<span class="add-on"><i class="icon-time"></i></span>'; 
 				$insert = 'data-datepicker-format="dd/mm/yyyy hh:ii:ss" data-datepicker-nodefault="false"';
 				break;
-			case 'web' : $preaddon .= ' <span class="add-on"><i class="icon-globe"></i></span>'; break;
+			case 'web' : case 'url': $preaddon .= ' <span class="add-on"><i class="icon-globe"></i></span>'; break;
 		}
         $posaddon .= '</div>'.$valor['after'];
 		$input = $preaddon.'<input '.$insert.' class="'.$valor['class-size'].'" type="'.$valor['tipo'].'" id="'.$valor['nome'].'" name="'.$valor['nome'].'" '.($valor['placeholder'] != '' ? 'placeholder="'.$valor['placeholder'].'"' : '').($valor['valor'] != '' ? 'value="'.$valor['valor'].'"' : '').$this->disabled($valor['disabled']).'/>'.$posaddon;

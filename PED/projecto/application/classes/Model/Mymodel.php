@@ -33,7 +33,7 @@ class Model_Mymodel extends Model {
     public function cacheAll(){
 		/*$aux = $this->_intervalo;
 		$this->_intervalo = -1;*/
-		$this->cache(0,-1);
+		$this->cache(0,0);
 		//$this->_intervalo = $aux;
 	}
     

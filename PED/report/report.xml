@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="http://www.oasis-open.org/docbook/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
-<article xmlns="http://docbook.org/ns/docbook"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
     <info>
         <title>AAA - Arquivo Aberto de trabalhos de Alunos</title>
         <author>
-            <personname>António Silva</personname>           
+            <personname>António Silva</personname>
             <email>pg22820@alunos.uminho.pt</email>
             <affiliation>
                 <jobtitle>PG22820</jobtitle>
-                <orgname>Universidade do Minho</orgname>                
+                <orgname>Universidade do Minho</orgname>
             </affiliation>
         </author>
         <author>
@@ -17,130 +17,377 @@
             <email>pg22781@alunos.uminho.pt</email>
             <affiliation>
                 <jobtitle>PG22781</jobtitle>
-                <orgname>Universidade do Minho</orgname>                
+                <orgname>Universidade do Minho</orgname>
             </affiliation>
         </author>
     </info>
-    
-  
-    <sect1>        
-        <title>Introdução</title>        
-        <para>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </para>                    
+
+
+    <sect1>
+        <title>Introdução</title>
+        <para> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum. </para>
     </sect1>
-    
+
     <sect1>
         <title>Descrição do Problema</title>
-        <para>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </para>
+        <para> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum. </para>
     </sect1>
     <sect1>
         <title>Base de Dados</title>
-        <para></para>
+        <figure>
+            <title>Estrutura da Base de Dados</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="imgs/bd.svg" scale="35" format="SVG"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para> A estrutura da Base de Dados foi inicialmente concebida tendo por base um esquema
+            inicial desenvolvido nas aulas. No entanto foi substancialmente expandindo, permitindo
+            albergar várias outras funcionalidades, como por exemplo, as permissões dinâmicas, as
+            estatísticas, as categorias, entre outras. </para>
     </sect1>
     <sect1>
         <title>Arquivo Aberto</title>
-        <para>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </para>
+        <para> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum. </para>
+        <sect2>
+            <title>Página Principal</title>
+            <figure>
+                <title>Página principal da plataforma</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="imgs/home.png" scale="35" format="PNG"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para> A página principal, serve simplesmente para permitir um acesso rápido a várias
+                funcionalidades, que estão disponíveis para aquele utilizador. </para>
+        </sect2>
+        <sect2>
+            <title>Autenticação</title>
+            <figure>
+                <title>Página de autenticação na plataforma</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="imgs/login.png" scale="35"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para> A página da autenticação, serve como em qualquer outro tipo de serviço para
+                identificar o utilizador perante a plataforma, permitindo assim saber que permissões
+                é que o mesmo têm, e o que pode ou não fazer. No caso de introduzir uma combinação
+                de nome de utilizador e senha errados, o utilizador será alertado que a informação
+                está errada. </para>
+        </sect2>
         <sect2>
             <title>Utilizadores</title>
-            <para></para>
+            <figure>
+                <title>Página de gestão e visualização de utilizadores</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="imgs/users.png" scale="35"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para> A gestão de utilizadores permite ver um utilizador e a sua informação relativa,
+                que está armazenada na Base de Dados, como o e-mail, o nome, o grupo a que
+                pertence... Um utilizador que possua trabalhos entregues não pode ser eliminado até
+                os trabalhos desse mesmo serem eliminados. </para>
+            <para> Mesmo que tenha permissões para o fazer, por motivos de segurança um utilizador
+                nunca se poderá apagar a ele próprio. </para>
         </sect2>
         <sect2>
             <title>Grupos</title>
-            <para></para>
+            <figure>
+                <title>Página de gestão e visualização de grupos</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="imgs/grupos.png" scale="35"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para> A gestão de grupos permite uma maior flexibilidade na utilização da plataforma,
+                já que os grupos podem ter permissões que são definidas e alteradas directamente por
+                um administrador. </para>
+            <para> Deste modo podem ser facilmente acrescentados outros modos de utilização à
+                plataforma, sem que o seu código necessite de ser alterado. </para>
+            <para> São considerados dois grupos especiais, o de Administrador e o de Visitante. No
+                grupo de Administrador só é possível alterar o nome visível, sendo que o
+                administrador terá sempre permissões para fazer tudo, independentemente do nome
+                indicado. Pelo contrário, o Visitante não poderá fazer nada por omissão, podendo no
+                entanto o administrador dar permissões normalmente como faria com outro grupo, mas
+                tendo sempre presente que um utilizador desse grupo é qualquer utilizador não
+                registado, logo não existem muitas informações sobre o mesmo. </para>
+            <figure>
+                <title>Página de visualização das permissões dos grupos</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="imgs/gperms.png" scale="35"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
         </sect2>
         <sect2>
             <title>Logs</title>
-            <para></para>
+            <figure>
+                <title>Página de gestão e visualização dos logs</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="imgs/logs.png" scale="35"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para> A gestão dos logs permite ver dois tipos de <emphasis>logs</emphasis>, os
+                automáticos e os manuais, sendo que apenas podem ser editados e eliminados
+                directamente os logs manuais (sendo necessário no entanto ter permissões para tal).
+                Os logs manuais, podem ser inseridos pelo utilizador directamente pelo formulário, e
+                não aceitam parâmetros (terão que estar presentes na descrição, de forma textual). </para>
+            <para> Pelo contrário os logs automáticos, não podem ser inseridos pelo utilizador
+                manualmente, e sim como o nome indica, são inseridos automaticamente pela aplicação
+                quando é despoletado um evento (por exemplo a autenticação de um administrador), e
+                pode ser guardado juntamente com um conjunto de parâmetros (por exemplos na
+                alteração de um grupo, uma parâmetro pode ser o id do grupo, ou mesmo o nome). </para>
+            <para> Ambos os tipos de logs permitem guardar o utilizador que realizou a acção, a data
+                e hora, que acção foi realizada, e ainda uma descrição. Nos logs automáticos essa
+                descrição ao ser mostrada, será antes interpretada pelo sistema de tradução e
+                ser-lhe-ão adicionados os parâmetros, para produzir mensagens do idênticas à
+                seguinte (ao utilizar a versão portuguesa): <code>O grupo Consumidor (id: 3) foi
+                    alterado.</code>
+            </para>
         </sect2>
         <sect2>
             <title>Estatísticas</title>
-            <para></para>
+            <figure>
+                <title>Página de visualização das estatísticas nas categorias</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="imgs/estatisticas.png" scale="35"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <figure>
+                <title>Página de visualização das estatísticas dos trabalhos na
+                    categoria <emphasis>Outros Trabalhos</emphasis></title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="imgs/estatisticas_cat.png" scale="35"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para> As estatísticas permitem ver o número de visualizações e downloads de um
+                determinado trabalho. Estas podem ser acedidas para ver gráficos com todos os
+                trabalhos existentes na plataforma, as estatísticas de cada categoria (que são a
+                soma das estatísticas de cada trabalho pertencente a determinada categoria), ou os
+                trabalhos de determinada categoria. </para>
+            <para> Também é possível, para todas as estatísticas anteriores ver as mesmas por ano,
+                mês ou dia indicados. </para>
+            <para> Em qualquer das situações serão mostrados dois gráficos, um contendo o número e
+                percentagem de visualizações da página html do trabalho, outro o número e
+                percentagem de downloads do trabalho. </para>
         </sect2>
         <sect2>
             <title>Categorias</title>
-            <para></para>
+            <figure>
+                <title>Página de gestão e visualização das categorias</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="imgs/categorias.png" scale="35"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para> As categorias foram um adição feita ao pedido no enunciado do trabalho pelo facto
+                de serem algo, a nosso ver, bastante interessante para o tema. </para>
+            <para> Cada trabalho pertence a uma categoria que pode ser gerida, de modo a apenas
+                permitir inserções de trabalhos num determinado período de tempo, ser visível apenas
+                por alguns grupos, e permite ainda definir se nessa categoria um utilizador normal
+                pode ou não eliminar os seus próprios trabalhos nessa categoria. No entanto um
+                administrador, independentemente, dos grupos seleccionados que podem ver as
+                categorias conseguirá sempre ver as categorias todas. </para>
+            <para> É também possível obter para cada categoria um <code>DIP_CONTAINER</code> que é
+                uma agregação de DIP's, com um manifesto próprio e o formato zip. </para>
         </sect2>
         <sect2>
             <title>Trabalhos</title>
-            <para></para>
+            <figure>
+                <title>Página de gestão e visualização dos trabalhos</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="imgs/trabalhos.png" scale="35"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para> Os trabalhos são parte central da plataforma, a sua espinha dorsal. Como já foi
+                referido anteriormente, os trabalhos estão divididos em categorias e dessa maneira,
+                certos trabalhos poderão não estar visíveis para um utilizador pelo facto de este
+                não poder aceder a Categoria à qual pertence o trabalho. </para>
             <sect3>
-                <title>Submissão</title>
-                <para></para>
+                <title>O processo de ingestão</title>
+                <para> Um trabalho pode ser submetido de dois modos pelos utilizadores, desde que os
+                    mesmos possuam permissões para o fazer. O primeiro método é uma ingestão simples
+                    de um ficheiro zip, indicando claramente nesse mesmo formulário a categoria onde
+                    são inseridos e se o mesmo será público ou privado. </para>
+                <para> O outro método para o fazer é através de um formulário que permite criar o
+                    pacote que seria submetido, através da indicação de dados como título, datas,
+                    autores, resumo, resultados... Este formulário irá gerar um zip que será depois
+                    tratado exactamente da mesma forma que o processo anterior. </para>
+                <para> Deste modo, em ambos os casos, depois de o sistema obter um pacote zip do
+                    trabalho irá validá-lo e inseri-lo na Base de Dados e no Sistema de ficheiros
+                    (no caso da existência de resultados). A validação pressupõe que o manifesto
+                    exista com o nome <emphasis>pr.xml</emphasis>, que seja válido segundo o Schema
+                    construído nas aulas, e que todos os resultados indicados nesse manifesto
+                    estejam presentes no pacote com o nome indicado. Depois de passar por todas
+                    estas validações o pacote é inserido. </para>
+                <figure>
+                    <title>Tentativa de inserção de um pacote inválido</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="imgs/trabalhos_erro.png" scale="35"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
             </sect3>
             <sect3>
-                <title>Privados</title>
-                <para></para>
+                <title>A gestão de trabalhos</title>
+                <para> Para cada trabalho existem várias operações que podem ser realizadas,
+                    dependendo das informações guardadas sobre o próprio trabalho e das permissões
+                    do utilizador. Se o trabalho for privado, apenas o utilizador que o submeteu e
+                    utilizadores com permissões de ver trabalhos privados (por exemplo os
+                    administradores) poderão ver esse trabalho. Na lista, aparecerá com cor bege,
+                    para diferenciar dos outros trabalhos públicos. </para>
+                <para> Um trabalho só poderá ser eliminado, se o utilizador que o estiver a fazer
+                    for administrador, ou se for o utilizador que submeteu o trabalho, com
+                    permissões para o fazer, numa categoria aberta e que permita a eliminação de
+                    trabalhos. No caso da categoria já estar fechada, ou não permitir a eliminação
+                    de trabalhos, apenas o administrador os poderá eliminar. </para>
+                <para> Um administrador poderá editar o trabalho, sendo por isso apresentado um
+                    formulário para a alteração desse mesmo trabalho. No caso do utilizador que o
+                    submeteu, apenas pode editar a sua visibilidade (público ou privado). </para>
             </sect3>
             <sect3>
                 <title>DIP</title>
-                <para></para>
+                <figure>
+                    <title>DIP em HTML de um trabalho presente na plataforma</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="imgs/trabalhos_html.png" scale="35"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <para> Existem dois tipos de DIP's na nossa plataforma (excluindo o
+                        <code>DIP_CONTAINER</code>), um é o formato html do trabalho, que possui
+                    entre outras coisas links directos para os resultados do trabalho, assim como o
+                    resumo e todas as informações relevantes do mesmo. O outro é um pacote zip,
+                    semelhante ao SIP, mas com algumas diferenças no manifesto. A primeira diferença
+                    é o facto do elemento <emphasis>root</emphasis> ser dip e não sip. Para além
+                    dessa diferença são exportados dados como a data de submissão, quem submeteu, em
+                    que categoria se encontra... A forma de enviar os resultados e referenciá-los no
+                    pacote DIP é igual ao SIP. </para>
             </sect3>
         </sect2>
         <sect2>
-            <title>Autores</title>
-            <para></para>
+            <title>Pessoas</title>
+            <para> Tanto os supervisores como os autores possuem mais elementos que os unem, do que
+                elementos que os separem. Deste modo a sua gestão é bastante semelhante, pelo o que
+                for dito para um é por norma válido para o outro. Essencialmente a sua informação
+                reflecte a informação inserida na plataforma pelos trabalhos, e que poder ser
+                alterada por utilizadores com permissões para tal. </para>
+            <sect3>
+                <title>Autores</title>
+                <figure>
+                    <title>Página de gestão e visualização de autores</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="imgs/autores.png" scale="35"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+            </sect3>
+            <sect3>
+                <title>Supervisores</title>
+                <figure>
+                    <title>Página de gestão e visualização de
+                        supervisores</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="imgs/supervisores.png" scale="35"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <para/>
+            </sect3>
+
         </sect2>
-        <sect2>
-            <title>Supervisores</title>
-            <para></para>
-        </sect2>
+
     </sect1>
-    
+
     <sect1>
         <title>Especificidades do desenvolvimento</title>
-        <para></para>
+        <para/>
         <sect2>
             <title>Ferramentas utilizadas</title>
             <sect3>
                 <title>Framework Kohana</title>
-                <para></para>
+                <para/>
             </sect3>
             <sect3>
                 <title>Twitter Bootstrap</title>
-                <para></para>
+                <para/>
             </sect3>
             <sect3>
                 <title>Highcharts</title>
-                <para></para>
+                <para/>
             </sect3>
         </sect2>
         <sect2>
             <title>Sistema de manutenção</title>
-            <para></para>
+            <figure>
+                <title>Exemplo de uma página vista pelo administrador, quando o sistema
+                    está em manutenção</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="imgs/manut.png" scale="35"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para/>
+            <figure>
+                <title>Página de autenticação, quando o sistema está em
+                    manutenção</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="imgs/manut_home.png" scale="35"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
         </sect2>
         <sect2>
-            <title>Opção multilíngue</title>
-            <para></para>
+            <title>Opção multilíngua</title>
+            <para/>
         </sect2>
         <sect2>
-            <title>Adaptatibilidade de temas</title>
-            <para></para>
+            <title>Adaptabilidade de temas</title>
+            <para/>
         </sect2>
     </sect1>
     <sect1>
         <title>Conclusão e trabalho futuro</title>
-        <para></para>
+        <para/>
     </sect1>
-        
-    
+
+
 </article>

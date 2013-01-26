@@ -19,6 +19,7 @@ return array(
     'Do you really want to delete the selected record?' => 'Deseja realmente apagar o registo selecionado?',
     'Confirmation' => 'Confirmação',
     'Confirm' => 'Confirmar',
+    'Get' => 'Obter',
     /*Home*/
     'home_desc_users' => 'Zona dos Utilizadores',
     'home_desc_groups' => 'Zona dos grupos',
