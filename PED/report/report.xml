@@ -25,22 +25,26 @@
 
     <sect1>
         <title>Introdução</title>
-        <para> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+        <para>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
             exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
             dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum. </para>
+            mollit anim id est laborum.
+        </para>
     </sect1>
 
     <sect1>
         <title>Descrição do Problema</title>
-        <para> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum. </para>
+        <para>
+            No dia a dia de uma instituição universitária produzem-se centenas de trabalhos,
+            com mais ou menos profundidade, pelos alunos dessa instituição.
+            Muitos desses trabalhos acabam na prateleira do professor uma vez avaliados.
+            Neste projecto, pretende-se arquivar de forma segura esses projectos e garantir o 
+            acesso continuado a toda esta informação. Desta forma, poderemos promover a troca de 
+            ideias e dar alguma visibilidade a projectos e alunos que de outra forma seriam ignorados.
+        </para>
     </sect1>
     <sect1>
         <title>Base de Dados</title>
@@ -48,7 +52,7 @@
             <title>Estrutura da Base de Dados</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="imgs/bd.svg" scale="35" format="SVG"/>
+                    <imagedata fileref="imgs/bd.svg" scale="75" format="SVG"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -59,12 +63,9 @@
     </sect1>
     <sect1>
         <title>Arquivo Aberto</title>
-        <para> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum. </para>
+        <para>
+            
+        </para>
         <sect2>
             <title>Página Principal</title>
             <figure>
@@ -75,8 +76,10 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para> A página principal, serve simplesmente para permitir um acesso rápido a várias
-                funcionalidades, que estão disponíveis para aquele utilizador. </para>
+            <para>
+                A página principal, serve simplesmente para permitir um acesso rápido a várias
+                funcionalidades, que estão disponíveis para aquele utilizador.
+            </para>
         </sect2>
         <sect2>
             <title>Autenticação</title>
@@ -88,11 +91,13 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para> A página da autenticação, serve como em qualquer outro tipo de serviço para
+            <para>
+                A página da autenticação, serve como em qualquer outro tipo de serviço para
                 identificar o utilizador perante a plataforma, permitindo assim saber que permissões
                 é que o mesmo têm, e o que pode ou não fazer. No caso de introduzir uma combinação
                 de nome de utilizador e senha errados, o utilizador será alertado que a informação
-                está errada. </para>
+                está errada. 
+            </para>
         </sect2>
         <sect2>
             <title>Utilizadores</title>
@@ -104,12 +109,16 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para> A gestão de utilizadores permite ver um utilizador e a sua informação relativa,
+            <para>
+                A gestão de utilizadores permite ver um utilizador e a sua informação relativa,
                 que está armazenada na Base de Dados, como o e-mail, o nome, o grupo a que
                 pertence... Um utilizador que possua trabalhos entregues não pode ser eliminado até
-                os trabalhos desse mesmo serem eliminados. </para>
-            <para> Mesmo que tenha permissões para o fazer, por motivos de segurança um utilizador
-                nunca se poderá apagar a ele próprio. </para>
+                os trabalhos desse mesmo serem eliminados.
+            </para>
+            <para>
+                Mesmo que tenha permissões para o fazer, por motivos de segurança um utilizador
+                nunca se poderá apagar a ele próprio.
+            </para>
         </sect2>
         <sect2>
             <title>Grupos</title>
@@ -121,18 +130,24 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para> A gestão de grupos permite uma maior flexibilidade na utilização da plataforma,
+            <para>
+                A gestão de grupos permite uma maior flexibilidade na utilização da plataforma,
                 já que os grupos podem ter permissões que são definidas e alteradas directamente por
-                um administrador. </para>
-            <para> Deste modo podem ser facilmente acrescentados outros modos de utilização à
-                plataforma, sem que o seu código necessite de ser alterado. </para>
-            <para> São considerados dois grupos especiais, o de Administrador e o de Visitante. No
+                um administrador.
+            </para>
+            <para>
+                Deste modo podem ser facilmente acrescentados outros modos de utilização à
+                plataforma, sem que o seu código necessite de ser alterado.
+            </para>
+            <para>
+                São considerados dois grupos especiais, o de Administrador e o de Visitante. No
                 grupo de Administrador só é possível alterar o nome visível, sendo que o
                 administrador terá sempre permissões para fazer tudo, independentemente do nome
                 indicado. Pelo contrário, o Visitante não poderá fazer nada por omissão, podendo no
                 entanto o administrador dar permissões normalmente como faria com outro grupo, mas
                 tendo sempre presente que um utilizador desse grupo é qualquer utilizador não
-                registado, logo não existem muitas informações sobre o mesmo. </para>
+                registado, logo não existem muitas informações sobre o mesmo.
+            </para>
             <figure>
                 <title>Página de visualização das permissões dos grupos</title>
                 <mediaobject>
@@ -152,22 +167,27 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para> A gestão dos logs permite ver dois tipos de <emphasis>logs</emphasis>, os
+            <para>
+                A gestão dos logs permite ver dois tipos de <emphasis>logs</emphasis>, os
                 automáticos e os manuais, sendo que apenas podem ser editados e eliminados
                 directamente os logs manuais (sendo necessário no entanto ter permissões para tal).
                 Os logs manuais, podem ser inseridos pelo utilizador directamente pelo formulário, e
-                não aceitam parâmetros (terão que estar presentes na descrição, de forma textual). </para>
-            <para> Pelo contrário os logs automáticos, não podem ser inseridos pelo utilizador
+                não aceitam parâmetros (terão que estar presentes na descrição, de forma textual).
+            </para>
+            <para>
+                Pelo contrário os logs automáticos, não podem ser inseridos pelo utilizador
                 manualmente, e sim como o nome indica, são inseridos automaticamente pela aplicação
                 quando é despoletado um evento (por exemplo a autenticação de um administrador), e
                 pode ser guardado juntamente com um conjunto de parâmetros (por exemplos na
-                alteração de um grupo, uma parâmetro pode ser o id do grupo, ou mesmo o nome). </para>
-            <para> Ambos os tipos de logs permitem guardar o utilizador que realizou a acção, a data
+                alteração de um grupo, uma parâmetro pode ser o id do grupo, ou mesmo o nome).
+            </para>
+            <para>
+                Ambos os tipos de logs permitem guardar o utilizador que realizou a acção, a data
                 e hora, que acção foi realizada, e ainda uma descrição. Nos logs automáticos essa
                 descrição ao ser mostrada, será antes interpretada pelo sistema de tradução e
                 ser-lhe-ão adicionados os parâmetros, para produzir mensagens do idênticas à
-                seguinte (ao utilizar a versão portuguesa): <code>O grupo Consumidor (id: 3) foi
-                    alterado.</code>
+                seguinte (ao utilizar a versão portuguesa): 
+                <code>O grupo Consumidor (id: 3) foi alterado.</code>
             </para>
         </sect2>
         <sect2>
@@ -189,16 +209,22 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para> As estatísticas permitem ver o número de visualizações e downloads de um
+            <para>
+                As estatísticas permitem ver o número de visualizações e downloads de um
                 determinado trabalho. Estas podem ser acedidas para ver gráficos com todos os
                 trabalhos existentes na plataforma, as estatísticas de cada categoria (que são a
                 soma das estatísticas de cada trabalho pertencente a determinada categoria), ou os
-                trabalhos de determinada categoria. </para>
-            <para> Também é possível, para todas as estatísticas anteriores ver as mesmas por ano,
-                mês ou dia indicados. </para>
-            <para> Em qualquer das situações serão mostrados dois gráficos, um contendo o número e
+                trabalhos de determinada categoria.
+            </para>
+            <para>
+                Também é possível, para todas as estatísticas anteriores ver as mesmas por ano,
+                mês ou dia indicados.
+            </para>
+            <para>
+                Em qualquer das situações serão mostrados dois gráficos, um contendo o número e
                 percentagem de visualizações da página html do trabalho, outro o número e
-                percentagem de downloads do trabalho. </para>
+                percentagem de downloads do trabalho.
+            </para>
         </sect2>
         <sect2>
             <title>Categorias</title>
@@ -210,16 +236,22 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para> As categorias foram um adição feita ao pedido no enunciado do trabalho pelo facto
-                de serem algo, a nosso ver, bastante interessante para o tema. </para>
-            <para> Cada trabalho pertence a uma categoria que pode ser gerida, de modo a apenas
+            <para>
+                As categorias foram um adição feita ao pedido no enunciado do trabalho pelo facto
+                de serem algo, a nosso ver, bastante interessante para o tema.
+            </para>
+            <para>
+                Cada trabalho pertence a uma categoria que pode ser gerida, de modo a apenas
                 permitir inserções de trabalhos num determinado período de tempo, ser visível apenas
                 por alguns grupos, e permite ainda definir se nessa categoria um utilizador normal
                 pode ou não eliminar os seus próprios trabalhos nessa categoria. No entanto um
                 administrador, independentemente, dos grupos seleccionados que podem ver as
-                categorias conseguirá sempre ver as categorias todas. </para>
-            <para> É também possível obter para cada categoria um <code>DIP_CONTAINER</code> que é
-                uma agregação de DIP's, com um manifesto próprio e o formato zip. </para>
+                categorias conseguirá sempre ver as categorias todas.
+            </para>
+            <para>
+                É também possível obter para cada categoria um <code>DIP_CONTAINER</code> que é
+                uma agregação de DIP's, com um manifesto próprio e o formato zip.
+            </para>
         </sect2>
         <sect2>
             <title>Trabalhos</title>
@@ -237,21 +269,27 @@
                 não poder aceder a Categoria à qual pertence o trabalho. </para>
             <sect3>
                 <title>O processo de ingestão</title>
-                <para> Um trabalho pode ser submetido de dois modos pelos utilizadores, desde que os
+                <para>
+                    Um trabalho pode ser submetido de dois modos pelos utilizadores, desde que os
                     mesmos possuam permissões para o fazer. O primeiro método é uma ingestão simples
                     de um ficheiro zip, indicando claramente nesse mesmo formulário a categoria onde
-                    são inseridos e se o mesmo será público ou privado. </para>
-                <para> O outro método para o fazer é através de um formulário que permite criar o
+                    são inseridos e se o mesmo será público ou privado.
+                </para>
+                <para>
+                    O outro método para o fazer é através de um formulário que permite criar o
                     pacote que seria submetido, através da indicação de dados como título, datas,
                     autores, resumo, resultados... Este formulário irá gerar um zip que será depois
-                    tratado exactamente da mesma forma que o processo anterior. </para>
-                <para> Deste modo, em ambos os casos, depois de o sistema obter um pacote zip do
+                    tratado exactamente da mesma forma que o processo anterior.
+                </para>
+                <para>
+                    Deste modo, em ambos os casos, depois de o sistema obter um pacote zip do
                     trabalho irá validá-lo e inseri-lo na Base de Dados e no Sistema de ficheiros
                     (no caso da existência de resultados). A validação pressupõe que o manifesto
                     exista com o nome <emphasis>pr.xml</emphasis>, que seja válido segundo o Schema
                     construído nas aulas, e que todos os resultados indicados nesse manifesto
                     estejam presentes no pacote com o nome indicado. Depois de passar por todas
-                    estas validações o pacote é inserido. </para>
+                    estas validações o pacote é inserido.
+                </para>
                 <figure>
                     <title>Tentativa de inserção de um pacote inválido</title>
                     <mediaobject>
@@ -263,20 +301,26 @@
             </sect3>
             <sect3>
                 <title>A gestão de trabalhos</title>
-                <para> Para cada trabalho existem várias operações que podem ser realizadas,
+                <para>
+                    Para cada trabalho existem várias operações que podem ser realizadas,
                     dependendo das informações guardadas sobre o próprio trabalho e das permissões
                     do utilizador. Se o trabalho for privado, apenas o utilizador que o submeteu e
                     utilizadores com permissões de ver trabalhos privados (por exemplo os
                     administradores) poderão ver esse trabalho. Na lista, aparecerá com cor bege,
-                    para diferenciar dos outros trabalhos públicos. </para>
-                <para> Um trabalho só poderá ser eliminado, se o utilizador que o estiver a fazer
+                    para diferenciar dos outros trabalhos públicos. 
+                </para>
+                <para>
+                    Um trabalho só poderá ser eliminado, se o utilizador que o estiver a fazer
                     for administrador, ou se for o utilizador que submeteu o trabalho, com
                     permissões para o fazer, numa categoria aberta e que permita a eliminação de
                     trabalhos. No caso da categoria já estar fechada, ou não permitir a eliminação
-                    de trabalhos, apenas o administrador os poderá eliminar. </para>
-                <para> Um administrador poderá editar o trabalho, sendo por isso apresentado um
+                    de trabalhos, apenas o administrador os poderá eliminar.
+                </para>
+                <para>
+                    Um administrador poderá editar o trabalho, sendo por isso apresentado um
                     formulário para a alteração desse mesmo trabalho. No caso do utilizador que o
-                    submeteu, apenas pode editar a sua visibilidade (público ou privado). </para>
+                    submeteu, apenas pode editar a sua visibilidade (público ou privado).
+                </para>
             </sect3>
             <sect3>
                 <title>DIP</title>
@@ -320,8 +364,7 @@
             <sect3>
                 <title>Supervisores</title>
                 <figure>
-                    <title>Página de gestão e visualização de
-                        supervisores</title>
+                    <title>Página de gestão e visualização de supervisores</title>
                     <mediaobject>
                         <imageobject>
                             <imagedata fileref="imgs/supervisores.png" scale="35"/>
@@ -330,9 +373,7 @@
                 </figure>
                 <para/>
             </sect3>
-
         </sect2>
-
     </sect1>
 
     <sect1>
@@ -342,46 +383,174 @@
             <title>Ferramentas utilizadas</title>
             <sect3>
                 <title>Framework Kohana</title>
-                <para/>
+                <para>
+                    Para o desenvolvimento em PHP optamos por utilizar a framework
+                    Kohana, que nos permitia já ter de base o sistema MVC, um sistema
+                    de routing, adaptada a POO (plenamente funcional com PHP 5),
+                    facilidade para extender sistemas de autenticação, comunicação
+                    com a Base de Dados, gravação de definições...
+                </para>
+                <para>
+                    Também no desenvolvimento optamos por utilizar uma ferramenta auxiliar
+                    do Kohana, que permitia a comunicação da Base de Dados, os Query
+                    Builders, em que poderíamos utilizar simplesmente algo como:
+                    <programlisting>
+    $db = new MyDB();
+    $query = $db->prepare('SELECT * FROM tabela WHERE campo = :id');
+    $res = $query->execute(array(':id' => $valor));
+                    </programlisting>
+                    Enquanto com a versão do Kohana (que por baixo utiliza na mesma uma 
+                    versão do PDO), colocaríamos simplesmente:
+                    <programlisting>    $res = DB::select()->from('tabela')->where('campo', '=', $valor)
+            ->execute();</programlisting>
+                    Sendo que em ambos os casos temos garantida a protecção contra
+                    SQL Injection.
+                </para>
             </sect3>
             <sect3>
-                <title>Twitter Bootstrap</title>
-                <para/>
+                <title>Twitter Bootstrap e JQuery</title>
+                <para>
+                    Em relação à parte mais visual e interactiva, linguagens da responsabilidade 
+                    do browser como o html, css e javascript optámos por usar JQuery juntamente
+                    com o Twitter Bootstrap. Deste modo conseguimos facilmente uma aplicação visualmente 
+                    mais agradável de utilização e também mais interactiva (por exemplo as caixas
+                    de diálogo que permitem confirmar a eliminação).
+                </para>
             </sect3>
             <sect3>
                 <title>Highcharts</title>
-                <para/>
+                <para>
+                    Em conjunto com o anterior, esta ferramenta permitiu-nos facilmente criar
+                    gráficos de qualidade, e ainda com alguns efeitos, para serem apresentados
+                    nas estatísticas. De forma simples, e passando um conjunto de dados e
+                    um conjunto de opções obtemos um gráfico visualmente atraente, sem 
+                    ser necessário reinventar a roda.
+                </para>
             </sect3>
+        </sect2>
+        <sect2>
+            <title>MVC</title>
+            <para>
+                Tal como foi explicado optamos por utilizar a framework Kohana para desenvolver
+                a aplicação, o que nos permitiu logo de raiz construir a aplicação sobre
+                o conceito de Model-View-Controller. Deste modo, podemos facilmente mexer numa
+                das camadas prejudicando minimamente as outras (no caso de mexermos por exemplo
+                na API de uma delas).
+            </para>
+            <para>
+                Assim qualquer acesso à Base de Dados é sempre realizado dentro de uma instância
+                de uma classe descendente da classe MyModel (que por sua vez é descendente da classe
+                Model do Kohana). A Classe MyModel implementa variadas funções que são transversais
+                a todas as classes que comunicam com a Base de Dados, o que permite poupar bastante código.
+            </para>
+            <para>
+                No caso dos Controllers, também cada Controller (que podemos designar
+                como a camada de negócio) é descendente da classe MyMain, que uma vez
+                mais implementa funções transversais a qualquer Controller, e que permite
+                saber que qualquer pedido realizado ao servidor irá sempre inicialmente
+                chamar o construtor dessa mesma classe. Desse modo é possível, por exemplo
+                verificar e carregar directamente aí o utilizador em sessão. Mais 
+                uma vez a poupança de código é bastante evidente.
+            </para>
+            <para>
+                Para as Views, a framework Kohana já não utiliza classes, mas simplesmente ficheiros
+                PHP, que podem ser inclusive HTML puro, mas que nesse caso perderiam as
+                vantagens da utilização do PHP. Essas mesmas views apenas podem aceder
+                às variáveis disponibilizadas pelo Controller, depois de indicar a View
+                que seria chamada. Para melhorar o sistema, optamos por desenvolver por cima
+                da framework um método de permitir tematizar de forma mais fácil a
+                aplicação, método esse que é explicado mais à frente.
+            </para>
         </sect2>
         <sect2>
             <title>Sistema de manutenção</title>
             <figure>
-                <title>Exemplo de uma página vista pelo administrador, quando o sistema
-                    está em manutenção</title>
+                <title>Página de autenticação, quando o sistema está em manutenção</title>
                 <mediaobject>
                     <imageobject>
                         <imagedata fileref="imgs/manut.png" scale="35"/>
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para/>
+            <para>
+                Para permitir a própria manutenção do sistema, e de forma fácil condicionar
+                o acesso à aplicação, até por razões de segurança, foi criado um modo de manutenção
+                que só pode ser activado e desactivado por um administrador. Depois de activado
+                apenas um administrador poderá autenticar-se e entrar no sistema, sendo que existirá
+                sempre uma fita no canto superior direito do ecrã a lembrar que os sistema está
+                em modo de manutenção, como exemplifica a imagem abaixo.
+            </para>
             <figure>
-                <title>Página de autenticação, quando o sistema está em
-                    manutenção</title>
+                <title>Exemplo de uma página vista pelo administrador, quando o sistema está em manutenção</title>
                 <mediaobject>
                     <imageobject>
                         <imagedata fileref="imgs/manut_home.png" scale="35"/>
                     </imageobject>
                 </mediaobject>
             </figure>
+            <para>
+                Um utilizador normal ou não autenticado será sempre redireccionado para
+                página de autenticação do modo de manutenção enquanto o sistema estiver
+                em modo de manutenção.
+            </para>
         </sect2>
         <sect2>
             <title>Opção multilíngua</title>
-            <para/>
+            <para>
+                Num sistema cada vez mais global a necessidade de personalização das plataformas
+                é crucial, o que na nossa opinião se reflecte também na opção de existirem múltiplas
+                escolhas de língua da plataforma. Deste modo a plataforma foi desenvolvida de modo
+                a permitir mais que uma língua, sendo apenas necessário acrescentar um ficheiro
+                na pasta <emphasis>i18n</emphasis>, idêntico ao ficheiro lá presente pt.php, onde
+                os textos do lado direito (após o <emphasis>=></emphasis>) serão a tradução na 
+                língua que se pretende acrescentar. Tudo isto sem necessidade de andar alterar
+                ficheiros de código, como controllers ou views...
+            </para>
         </sect2>
         <sect2>
             <title>Adaptabilidade de temas</title>
-            <para/>
+            <para>
+                Tal como foi referido anteriormente, a framework Kohana, não possuia nenhum
+                método simples de permitir a tematização a plataforma. Assim, nós resolvemos
+                desenvolver por cima da mesma um sistema que nos auxiliaria nesse aspecto.
+                Cada tema possui dentro da pasta <emphasis>views</emphasis> uma pasta com o
+                nome do tema. Dentro dessa pasta estão os ficheiros que podem ser chamados.
+                No entanto quem faz essa gestão é o ficheiro <emphasis>pagina.php</emphasis> e
+                o <emphasis>tpl_functions.php</emphasis> que está directamente debaixo da 
+                pasta <emphasis>views</emphasis>. Ambos os ficheiros são responsáveis por
+                interpretar o pedido do Controller (que indica qual o tipo de página que pretende)
+                e chamar a página respectiva.
+            </para>
+            <para>
+                Cada tema possuirá no mínimo a pasta com o seu nome. No caso de o ficheiro
+                pedido pelo Controller não estar disponível no tema que está a ser utilizado
+                o mesmo será chamado a partir do tema default. Deste modo, páginas que não
+                sejam alteradas entre o tema default e o tema a ser adicionado não necessitam
+                de ser replicados.
+            </para>
+            <para>
+                Também para aproveitar melhor a funcionalidade anterior, críamos uma classe
+                <emphasis>baseTpl</emphasis> e outra estática <emphasis>TPL</emphasis>, que
+                gere a instância activa da classe baseTpl, porque cada tema pode ter uma
+                classe themeTPL, descendente da baseTpl e que será instanciada e gerida
+                pela classe estática TPL. Deste modo, por exemplo para colocar um link
+                para uma tarefa de edição, por exemplo, basta chamar:
+                <programlisting>TPL::LinkEditar('http://site/action', 'Texto do Botão')</programlisting>
+                Sendo que a função devolve o código html necessário para a criação desse
+                botão no tema que está a ser utilizado, independentemente de qual seja.
+            </para>
+            <para>
+                Assim, personalizar partes da plataforma é extremamente simples, criando 
+                uma nova classe themeTPL, ou criando novos ficheiros debaixo da pasta
+                do tema.
+            </para>
+            <para>
+                Para permitir funções mais especificas em cada tema, é possível também
+                obter o objecto instanciado pela classe TPL, através do 
+                <code>TPL::instance()</code> sendo que é devolvida a instância utilizada naquele tema
+                e que permitirá ao programador do tema uma maior liberdade para expandir
+                o seu próprio tema de maneira estruturada.
+            </para>
         </sect2>
     </sect1>
     <sect1>
