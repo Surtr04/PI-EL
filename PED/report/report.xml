@@ -82,11 +82,11 @@
             Em todas as grande secções é, por norma, possível inserir, editar e eliminar registos. Nalguns
             casos é também possível obter ficheiros, ou mesmo ver de forma menos condensada toda a informação
             sobre o registo. Todas as eliminações necessitam de ser confirmadas, para garantir que o utilizador
-            não se enganou ao tentar por exemplo ao tentar clicar no botão para editar. Todos os botões mantêm
+            não se enganou ao tentar, por exemplo, clicar no botão para editar. Todos os botões mantêm
             semelhanças, também de modo a manter a coerência na apresentação visual da plataforma.
         </para>
         <para>
-            As tabelas de informações também tentam ser o mais genéricas possíveis de modo a permitir
+            As tabelas de informações também tentam ser o mais genéricas possivel de modo a permitir
             a mesma adaptação, e também uma facilidade para a criação e implementação de novos temas.
             Em cada tabela, haverá no máximo N registos (definidos na aplicação no ficheiro
             de configurações), sendo que haverá uma barra de navegação que permitirá ver todos os
@@ -94,7 +94,7 @@
         </para>
         <para>
             Os formulários possuem algumas indicações, como por exemplo em campos como
-            os do e-mail, da páginas web, datas... Desta forma é visualmente mais fácil ao
+            os do e-mail, das páginas web, datas, etc... Desta forma é visualmente mais agradável ao
             utilizador inserir a informação e perceber o que é pedido.
         </para>
         <sect2>
@@ -109,7 +109,7 @@
             </figure>
             <para>
                 A página principal, serve simplesmente para permitir um acesso rápido a várias
-                funcionalidades, que estão disponíveis para aquele utilizador.
+                funcionalidades, que estão disponíveis para aquele utilizador.  
             </para>
         </sect2>
         <sect2>
@@ -143,7 +143,7 @@
             <para>
                 A gestão de utilizadores permite ver um utilizador e a sua informação relativa,
                 que está armazenada na Base de Dados, como o e-mail, o nome, o grupo a que
-                pertence... Um utilizador que possua trabalhos entregues não pode ser eliminado até
+                pertence, etc... Um utilizador que possua trabalhos entregues não pode ser eliminado até
                 os trabalhos desse mesmo serem eliminados.
             </para>
             <para>
@@ -206,8 +206,8 @@
                 não aceitam parâmetros (terão que estar presentes na descrição, de forma textual).
             </para>
             <para>
-                Pelo contrário os logs automáticos, não podem ser inseridos pelo utilizador
-                manualmente, e sim como o nome indica, são inseridos automaticamente pela aplicação
+                Pelo contrário os logs automáticos, como o nome indica, não podem ser inseridos pelo utilizador
+                manualmente, são inseridos automaticamente pela aplicação
                 quando é despoletado um evento (por exemplo a autenticação de um administrador), e
                 pode ser guardado juntamente com um conjunto de parâmetros (por exemplos na
                 alteração de um grupo, uma parâmetro pode ser o id do grupo, ou mesmo o nome).
@@ -279,7 +279,7 @@
                 </mediaobject>
             </figure>
             <para>
-                As categorias foram um adição feita ao pedido no enunciado do trabalho pelo facto
+                As categorias foram uma adição feita ao pedido no enunciado do trabalho pelo facto
                 de serem algo, a nosso ver, bastante interessante para o tema.
             </para>
             <para>
@@ -392,7 +392,7 @@
             <para> Tanto os supervisores como os autores possuem mais elementos que os unem, do que
                 elementos que os separem. Deste modo a sua gestão é bastante semelhante, pelo o que
                 for dito para um é por norma válido para o outro. Essencialmente a sua informação
-                reflecte a informação inserida na plataforma pelos trabalhos, e que poder ser
+                reflecte a informação inserida na plataforma pelos trabalhos, e que pode ser
                 alterada por utilizadores com permissões para tal. </para>
             <sect3>
                 <title>Autores</title>
