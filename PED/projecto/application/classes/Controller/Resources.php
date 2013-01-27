@@ -4,6 +4,7 @@
 */
 class Controller_Resources extends Controller_Mymain {
     
+    const NOPIC = "_Vazio_.png";
     const PATH = "docs/";
 	const PICTURES = "pictures/";
     const RESULTS = "results/";
@@ -24,10 +25,11 @@ class Controller_Resources extends Controller_Mymain {
             case 'img' : 
                 $u = new Model_Users();
                 $info = $u->getUserWithId($id);
-                if (strpos($info["foto"], "/") === false)
-                    //$this->sendFile(self::getPictures().$info["foto"], $info['username']);
-                    $this->response->send_file(self::getPictures().$info["foto"], $info['username'], array('inline' => true));
-                else
+                if (strpos($info["foto"], "/") === false){
+                    $file = self::getPictures().$info["foto"];
+                    if (!file_exists(self::getPictures().$info["foto"]) || !is_file($file)) $file = self::getPictures().self::NOPIC;
+                    $this->response->send_file($file, $info['username'], array('inline' => true));
+                }else
                     $this->redirect($info["foto"]);
                 break;
             case 'doc' : 
@@ -41,25 +43,7 @@ class Controller_Resources extends Controller_Mymain {
         }
 
     }
-    /*public function sendFile($file, $name = '', $dsp = 'inline'){
-		if (file_exists($file)) {
-			header('Content-Description: File Transfer');
-			header('Content-Type: '.mime_content_type($file)); //octet-stream');
-			header('Content-Disposition: '.$dsp.'; filename="'.($name = '' ? basename($file) : $name).'"');
-			header('Content-Transfer-Encoding: binary');
-            header('Content-Encoding: identity');
-			header('Expires: 0');
-			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-			header('Pragma: public');
-			header('Content-Length: ' . filesize($file));
-			ob_clean();
-			flush();
-			readfile($file);
-		} else {
-            $this->notFound();
-        }
-    }*/
-    
+        
     public static function deleteFiles($path, $arr){
         foreach($arr as $valor){
             if (file_exists($path.$valor)) unlink($path.$valor);

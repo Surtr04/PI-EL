@@ -19,7 +19,14 @@ class Controller_Users extends Controller_Mymain {
 		$this->initTable($users);
 	}
 	
-	
+	public function action_ver(){
+        $this->restrictAcess('S');
+        $id = (int) Arr::get($_GET,'id',-1);
+        $this->view->set('isSee', true);
+        $users = new Model_Users();
+        $info = $users->getUserWithId($id);
+        $this->callForm($id, $info['username'], $info['nome'], $info['email'], $info['morada'], $info['foto'], $info['grupo']);
+    }
 	public function action_apagar(){
 		$this->restrictAcess('D');
 		$id = (int) Arr::get($_GET,'id',-1);
@@ -29,6 +36,17 @@ class Controller_Users extends Controller_Mymain {
 		$this->action_index();
 	}
 	
+    public function action_resetImg(){
+        $id = $this->request->param('id', -1);
+        $this->canEdit($id);
+        $users = new Model_Users();
+        $info = $users->getUserWithId($id);
+        if ($info['foto'] != '' && strpos($info['foto'], "/") == 0) unlink(Controller_Resources::getPictures().$info['foto']);
+        $users->resetImg($id);
+        $_GET['id'] = $id;
+        return $this->action_editar();
+    }
+    
 	public function action_editar(){
 		$id = (int) Arr::get($_GET,'id',-1);
 		
@@ -39,19 +57,16 @@ class Controller_Users extends Controller_Mymain {
 		$info = $users->getUserWithId($id);
 		$users->cache(0);
 		$this->view->set('grupochange', $change);
-        if (($aux = $this->uploadfFoto($id)) !== '') {
-            $info['foto'] = $aux; 
-        } else {
-            //Tratar a imagem externa para ter a certeza que é algo válido
-        }
-		$this->callForm($id, $info['username'], $info['senha'], $info['nome'], $info['email'], $info['morada'], $info['foto'], $info['grupo']);
+        if (strpos($info['foto'], "/") == 0) $info['foto'] = '';
+        
+		$this->callForm($id, $info['username'], $info['nome'], $info['email'], $info['morada'], $info['foto'], $info['grupo']);
 	}
     
     private function uploadfFoto($id){
         if (isset($_FILES['ffoto']) && $_FILES['ffoto']['error'] == UPLOAD_ERR_OK){
             $fiche = $_FILES['ffoto'];
-            $fotolink = $id . substr($fiche['name'], strrpos($fiche['name'], '.')+1);
-            move_uploaded_file($fiche['tmp_name'], $this->picturesPath . $fotolink);
+            $fotolink = Controller_Resources::randomize(Controller_Resources::getPictures(), $fiche['name']);//$id . substr($fiche['name'], strrpos($fiche['name'], '.')+1);
+            move_uploaded_file($fiche['tmp_name'], Controller_Resources::getPictures() . $fotolink);
             return $fotolink;
         } else
             return '';
@@ -69,12 +84,28 @@ class Controller_Users extends Controller_Mymain {
         $change = $this->canEdit($id);
 		if (trim($_POST['username']) == "" || trim($_POST['nome']) == "" || trim($_POST['email']) == "" || trim($_POST['grupo']) == "") return $this->action_insere();
 		$users = new Model_Users();
-		$info = $users->getUserWithId($id);
-		$users->editarUser($id, $_POST['username'], $_POST['senha'], $_POST['nome'], $_POST['email'], $_POST['morada'], $_POST['foto'], ($change ? $_POST['grupo'] : -1));
+		//$info = $users->getUserWithId($id);
+        if (($aux = $this->uploadfFoto($id)) !== '') {
+            $foto = $aux; 
+        } else if ($_POST['foto'] != ''){
+            /*$ch = curl_init($_POST['foto']);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_exec($ch);
+
+            $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+            switch($type){
+                case 'image/png' : case 'image/jpeg' : case 'image/jpeg' : case 'image/gif' : case 'image/bmp' : $foto = $_POST['foto']; break;
+                default : $foto = ''; break;
+            }*/
+            $foto = $_POST['foto'];
+        } else
+            $foto = '';
+        
+		$users->editarUser($id, $_POST['username'], $_POST['senha'], $_POST['nome'], $_POST['email'], $_POST['morada'], $foto, ($change ? $_POST['grupo'] : -1));
 		$this->action_index();
 	}
 	
-	private function callForm($id = NULL, $username = "", $senha = "", $nome = "", $email = "", $morada="", $foto="", $grupo = ""){
+	private function callForm($id = NULL, $username = "", $nome = "", $email = "", $morada="", $foto="", $grupo = ""){
 		$grps = new Model_Grupos();
 		$grps->cacheAll();
 		$this->addScript(NULL, 'function checkForm(){
@@ -87,7 +118,6 @@ class Controller_Users extends Controller_Mymain {
 		$this->view->set('toinclude', 'utilizadoresform');
 		$this->view->set('form_id', $id);
 		$this->view->set('username', $username);
-		$this->view->set('senha', $senha);
 		$this->view->set('nome', $nome);
 		$this->view->set('email', $email);
         $this->view->set('morada', $morada);

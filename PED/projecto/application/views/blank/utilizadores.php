@@ -5,10 +5,12 @@
 	echo '<div style="margin: auto; padding: 15px; width: auto; text-align:left;">';
 	if ($perms['I']) echo '<p>'.TPL::LinkAdicionar($route.'/insere', __('Insert new user')).'</p><br/><br/>';
 	
-
+    foreach($lista as $chave => &$valor)
+        $valor['userid'] = $userid;
+    
 	$c = array('Username', 'Name', 'Email', 'Group', 'Online');
     $v = array('username' => 0, 'nome' => 0, 'email' => 0, 'ngrupo' => 0, 'is_online' => 'YesNo');
-    echo TPL::showInfos($c, $v, $lista, $perms, $route);
+    echo TPL::showInfos($c, $v, $lista, $perms, $route, array('see' => true, 'edit' => true, 'delete' => 'isPossible'));
     
     
     /*echo '<table style="margin:10px;"><tr><th class="th_normal">'.__('Username').'</th><th class="th_normal">'.__('Name').'</th><th class="th_normal">'.__('Email').'</th><th class="th_normal">'.__('Group').'</th><th class="th_normal">'.__('Online').'</th>'.(($perms['U'] || $perms['D']) ? '<th class="th_normal">'.__('Actions').'</th>' : '').'</tr>';
@@ -21,7 +23,9 @@
 	echo TPL::NavLista($min, $int, $total, $route);
 	echo '</div>';
     
-    
+    function isPossible($id, $perm, $valor){
+        return ($id != $valor['userid']);
+    }
     function YesNo($v, $valor){return ( $v ? __('Yes') : __('No'));}
 
 ?>

@@ -87,6 +87,8 @@ return array(
     'Online' => 'Online',
     'Repeat Password' => 'Repetir Senha',
     'Change Profile' => 'Editar Perfil',
+    'Remove Image' => 'Remover Imagem',
+    'Upload Image' => 'Carregar Imagem',
     /*Grupos*/
     'Groups' => 'Grupos',
     'Group' => 'Grupo',
