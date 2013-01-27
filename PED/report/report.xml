@@ -26,12 +26,13 @@
     <sect1>
         <title>Introdução</title>
         <para>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.
+            Foi-nos solicitado o desenvolvimento de uma aplicação web que permitisse
+            colmatar falhas que existem no arquivamento dos trabalhos dos alunos.
+            Essa mesma aplicação deveria permitir manter um acesso a trabalhos já avaliados
+            uma vez que estes podem constituir uma mais valia dessa instituição.
+            Deste modo e tendo por base um enunciado muito aberto, e que nos permitia
+            desenvolver bastante de acordo com as necessidades que achávamos existir,
+            foi ganhando forma a nossa aplicação.
         </para>
     </sect1>
 
@@ -41,8 +42,8 @@
             No dia a dia de uma instituição universitária produzem-se centenas de trabalhos,
             com mais ou menos profundidade, pelos alunos dessa instituição.
             Muitos desses trabalhos acabam na prateleira do professor uma vez avaliados.
-            Neste projecto, pretende-se arquivar de forma segura esses projectos e garantir o 
-            acesso continuado a toda esta informação. Desta forma, poderemos promover a troca de 
+            Neste projecto, pretende-se arquivar de forma segura esses projectos e garantir o
+            acesso continuado a toda esta informação. Desta forma, poderemos promover a troca de
             ideias e dar alguma visibilidade a projectos e alunos que de outra forma seriam ignorados.
         </para>
     </sect1>
@@ -56,15 +57,45 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para> A estrutura da Base de Dados foi inicialmente concebida tendo por base um esquema
+        <para>
+            A estrutura da Base de Dados foi inicialmente concebida tendo por base um esquema
             inicial desenvolvido nas aulas. No entanto foi substancialmente expandindo, permitindo
             albergar várias outras funcionalidades, como por exemplo, as permissões dinâmicas, as
-            estatísticas, as categorias, entre outras. </para>
+            estatísticas, as categorias, entre outras.
+        </para>
+        <para>
+            Ao serem feitas adições à mesma tentámos que a mantivessem o mais simples possível, mas
+            ao mesmo tempo estivesse também relativamente genérica para permitir futuras adições
+            sem necessitar de bastantes reformulações. Exemplo disso são os parâmetros dos logs,
+            que permitem que facilmente seja indicados mais tipos de parâmetros sem fazer nenhum
+            tipo de alteração na base de dados.
+        </para>
     </sect1>
     <sect1>
         <title>Arquivo Aberto</title>
         <para>
-            
+            A nossa plataforma foi desenvolvida tendo por base uma tentativa de uniformização,
+            para facilitar ao utilizador a aprendizagem, uma grande flexibilidade, como a possibilidade
+            de definir as permissões.
+        </para>
+        <para>
+            Em todas as grande secções é, por norma, possível inserir, editar e eliminar registos. Nalguns
+            casos é também possível obter ficheiros, ou mesmo ver de forma menos condensada toda a informação
+            sobre o registo. Todas as eliminações necessitam de ser confirmadas, para garantir que o utilizador
+            não se enganou ao tentar por exemplo ao tentar clicar no botão para editar. Todos os botões mantêm
+            semelhanças, também de modo a manter a coerência na apresentação visual da plataforma.
+        </para>
+        <para>
+            As tabelas de informações também tentam ser o mais genéricas possíveis de modo a permitir
+            a mesma adaptação, e também uma facilidade para a criação e implementação de novos temas.
+            Em cada tabela, haverá no máximo N registos (definidos na aplicação no ficheiro
+            de configurações), sendo que haverá uma barra de navegação que permitirá ver todos os
+            registos.
+        </para>
+        <para>
+            Os formulários possuem algumas indicações, como por exemplo em campos como
+            os do e-mail, da páginas web, datas... Desta forma é visualmente mais fácil ao
+            utilizador inserir a informação e perceber o que é pedido.
         </para>
         <sect2>
             <title>Página Principal</title>
@@ -96,7 +127,7 @@
                 identificar o utilizador perante a plataforma, permitindo assim saber que permissões
                 é que o mesmo têm, e o que pode ou não fazer. No caso de introduzir uma combinação
                 de nome de utilizador e senha errados, o utilizador será alertado que a informação
-                está errada. 
+                está errada.
             </para>
         </sect2>
         <sect2>
@@ -186,8 +217,19 @@
                 e hora, que acção foi realizada, e ainda uma descrição. Nos logs automáticos essa
                 descrição ao ser mostrada, será antes interpretada pelo sistema de tradução e
                 ser-lhe-ão adicionados os parâmetros, para produzir mensagens do idênticas à
-                seguinte (ao utilizar a versão portuguesa): 
+                seguinte (ao utilizar a versão portuguesa):
                 <code>O grupo Consumidor (id: 3) foi alterado.</code>
+            </para>
+            <para>
+                Os logs também podem ser obtidos para um ficheiro xml, recorrendo a uma data
+                de início, e a uma data de fim. Apesar de a interface visual não possuir
+                nenhuma informação nesse sentido é também possível definir um offset (número
+                de registos a ignorar) e um número máximo de registos a obter (por defeito
+                são obtidos todos). Através do link 
+                <code>http://site/logs/export?after=[data]&amp;before=[data]&amp;n=[maximo]&amp;s=[offset]</code>
+                pode ser facilmente personalizado exactamente omitindo ou introduzindo valores
+                diferentes. Isto pode ser principalmente importante para obtenção automática
+                ou por parte de outras aplicações de ficheiros.
             </para>
         </sect2>
         <sect2>
@@ -307,7 +349,7 @@
                     do utilizador. Se o trabalho for privado, apenas o utilizador que o submeteu e
                     utilizadores com permissões de ver trabalhos privados (por exemplo os
                     administradores) poderão ver esse trabalho. Na lista, aparecerá com cor bege,
-                    para diferenciar dos outros trabalhos públicos. 
+                    para diferenciar dos outros trabalhos públicos.
                 </para>
                 <para>
                     Um trabalho só poderá ser eliminado, se o utilizador que o estiver a fazer
@@ -332,15 +374,17 @@
                         </imageobject>
                     </mediaobject>
                 </figure>
-                <para> Existem dois tipos de DIP's na nossa plataforma (excluindo o
-                        <code>DIP_CONTAINER</code>), um é o formato html do trabalho, que possui
+                <para>
+                    Existem dois tipos de DIP's na nossa plataforma (excluindo o
+                    <code>DIP_CONTAINER</code>), um é o formato html do trabalho, que possui
                     entre outras coisas links directos para os resultados do trabalho, assim como o
                     resumo e todas as informações relevantes do mesmo. O outro é um pacote zip,
                     semelhante ao SIP, mas com algumas diferenças no manifesto. A primeira diferença
                     é o facto do elemento <emphasis>root</emphasis> ser dip e não sip. Para além
                     dessa diferença são exportados dados como a data de submissão, quem submeteu, em
                     que categoria se encontra... A forma de enviar os resultados e referenciá-los no
-                    pacote DIP é igual ao SIP. </para>
+                    pacote DIP é igual ao SIP.
+                </para>
             </sect3>
         </sect2>
         <sect2>
@@ -399,9 +443,9 @@
     $query = $db->prepare('SELECT * FROM tabela WHERE campo = :id');
     $res = $query->execute(array(':id' => $valor));
                     </programlisting>
-                    Enquanto com a versão do Kohana (que por baixo utiliza na mesma uma 
+                    Enquanto com a versão do Kohana (que por baixo utiliza na mesma uma
                     versão do PDO), colocaríamos simplesmente:
-                    <programlisting>    $res = DB::select()->from('tabela')->where('campo', '=', $valor)
+                    <programlisting> $res = DB::select()->from('tabela')->where('campo', '=', $valor)
             ->execute();</programlisting>
                     Sendo que em ambos os casos temos garantida a protecção contra
                     SQL Injection.
@@ -410,9 +454,9 @@
             <sect3>
                 <title>Twitter Bootstrap e JQuery</title>
                 <para>
-                    Em relação à parte mais visual e interactiva, linguagens da responsabilidade 
+                    Em relação à parte mais visual e interactiva, linguagens da responsabilidade
                     do browser como o html, css e javascript optámos por usar JQuery juntamente
-                    com o Twitter Bootstrap. Deste modo conseguimos facilmente uma aplicação visualmente 
+                    com o Twitter Bootstrap. Deste modo conseguimos facilmente uma aplicação visualmente
                     mais agradável de utilização e também mais interactiva (por exemplo as caixas
                     de diálogo que permitem confirmar a eliminação).
                 </para>
@@ -423,7 +467,7 @@
                     Em conjunto com o anterior, esta ferramenta permitiu-nos facilmente criar
                     gráficos de qualidade, e ainda com alguns efeitos, para serem apresentados
                     nas estatísticas. De forma simples, e passando um conjunto de dados e
-                    um conjunto de opções obtemos um gráfico visualmente atraente, sem 
+                    um conjunto de opções obtemos um gráfico visualmente atraente, sem
                     ser necessário reinventar a roda.
                 </para>
             </sect3>
@@ -449,7 +493,7 @@
                 mais implementa funções transversais a qualquer Controller, e que permite
                 saber que qualquer pedido realizado ao servidor irá sempre inicialmente
                 chamar o construtor dessa mesma classe. Desse modo é possível, por exemplo
-                verificar e carregar directamente aí o utilizador em sessão. Mais 
+                verificar e carregar directamente aí o utilizador em sessão. Mais
                 uma vez a poupança de código é bastante evidente.
             </para>
             <para>
@@ -502,7 +546,7 @@
                 escolhas de língua da plataforma. Deste modo a plataforma foi desenvolvida de modo
                 a permitir mais que uma língua, sendo apenas necessário acrescentar um ficheiro
                 na pasta <emphasis>i18n</emphasis>, idêntico ao ficheiro lá presente pt.php, onde
-                os textos do lado direito (após o <emphasis>=></emphasis>) serão a tradução na 
+                os textos do lado direito (após o <emphasis>=></emphasis>) serão a tradução na
                 língua que se pretende acrescentar. Tudo isto sem necessidade de andar alterar
                 ficheiros de código, como controllers ou views...
             </para>
@@ -516,7 +560,7 @@
                 Cada tema possui dentro da pasta <emphasis>views</emphasis> uma pasta com o
                 nome do tema. Dentro dessa pasta estão os ficheiros que podem ser chamados.
                 No entanto quem faz essa gestão é o ficheiro <emphasis>pagina.php</emphasis> e
-                o <emphasis>tpl_functions.php</emphasis> que está directamente debaixo da 
+                o <emphasis>tpl_functions.php</emphasis> que está directamente debaixo da
                 pasta <emphasis>views</emphasis>. Ambos os ficheiros são responsáveis por
                 interpretar o pedido do Controller (que indica qual o tipo de página que pretende)
                 e chamar a página respectiva.
@@ -540,13 +584,13 @@
                 botão no tema que está a ser utilizado, independentemente de qual seja.
             </para>
             <para>
-                Assim, personalizar partes da plataforma é extremamente simples, criando 
+                Assim, personalizar partes da plataforma é extremamente simples, criando
                 uma nova classe themeTPL, ou criando novos ficheiros debaixo da pasta
                 do tema.
             </para>
             <para>
                 Para permitir funções mais especificas em cada tema, é possível também
-                obter o objecto instanciado pela classe TPL, através do 
+                obter o objecto instanciado pela classe TPL, através do
                 <code>TPL::instance()</code> sendo que é devolvida a instância utilizada naquele tema
                 e que permitirá ao programador do tema uma maior liberdade para expandir
                 o seu próprio tema de maneira estruturada.
@@ -555,7 +599,23 @@
     </sect1>
     <sect1>
         <title>Conclusão e trabalho futuro</title>
-        <para/>
+        <para>
+            Este trabalho, com bastante liberdade permitiu que fôssemos desenvolvendo 
+            um conjunto de funcionalidades, que não eram inicialmente pedidas, como
+            as categorias, o sistema de manutenção, o sistema multilingue entre outras.
+            No entanto, e no nosso entender, o trabalho ainda poderia ser extendido 
+            com outras funcionalidades interessantes que não puderam ser implementadas
+            para respeitar o prazo de entrega. No futuro poderiam ainda ser implementadas
+            funcionalidades como grupos com hierarquias (em que as permissões seriam herdadas
+            e permitiria mais facilmente criar grupos idênticos), sistema de pesquisa por campos,
+            adição da disponibilização de serviços, por exemplo através de SOAP, entre outras.
+        </para>
+        <para>
+            Apesar de tudo isso achamos que o essencial do trabalho foi bem conseguido,
+            tendo um sistema bastante funcional e ao mesmo tempo com um design apelativo,
+            não o melhor do mundo (uma vez que nenhum de nós é designer), mas algo que
+            não é completamente inestético, como uma página em branco com links.
+        </para>
     </sect1>
 
 
