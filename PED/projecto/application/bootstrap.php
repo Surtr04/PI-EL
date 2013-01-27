@@ -175,6 +175,12 @@ Route::set('bycat', 'sips/bycat/<id>')
 		'action'     => 'bycat',
 	));
 
+Route::set('resetImg', 'resetImg/<id>')
+	->defaults(array(
+		'controller' => 'users',
+		'action'     => 'resetImg',
+	));
+
 Route::set('pessoas', '<nome>(/<action>)', array('nome' => '(P|p)essoas')) //This route isn't possible. Only exists to main do redirect
 	->defaults(array(
         'controller' => 'pessoas',

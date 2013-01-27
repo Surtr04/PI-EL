@@ -121,7 +121,7 @@ class themeTPL extends baseTpl{
             $s[$value] = 1;
         if ($valor['tipo'] == 'multi') $valor['nome'] .= "[]";
         
-        $aux = '<select class="'.$valor['class-size'].'" type="text" id="'.$valor['nome'].'" name="'.$valor['nome'].'" '.($valor['tipo'] == 'multi' ? 'size="'.$valor['size'].'" multiple="true"' : '').'>';
+        $aux = '<select class="'.$valor['class-size'].'" type="text" id="'.$valor['nome'].'" name="'.$valor['nome'].'" '.($valor['tipo'] == 'multi' ? 'size="'.$valor['size'].'" multiple="true"' : '').$this->disabled($valor['disabled']).'>';
         foreach($valor['valor'] as $chave => $value){
             $aux .= '<option '.($s[$value['id']] ? 'selected="true" ' : '' ).'value="'.$value['id'].'">'.$value['nome'].'</option>';
         }
