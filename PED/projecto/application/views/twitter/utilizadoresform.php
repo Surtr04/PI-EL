@@ -4,7 +4,8 @@
 */
     if (!isset($isSee)) $isSee = false;
 	echo '<div style="margin: auto; padding: 15px; width: auto; text-align:left;  -moz-border-radius: 15px; border-radius: 15px;">
-        '.($form_id != null ? '<img src="'.TPL::base().'get/img/'.$form_id.'"/><br/>'.(!$isSee ? TPL::LinkApagar('resetImg/'.$form_id, __('Remove Image')) : '') : '').'<br/>';
+        '.($form_id != null ? '<div class="container"><img src="'.TPL::base().'get/img/'.$form_id.'"/><br/>'.(!$isSee ? TPL::LinkApagar('resetImg/'.$form_id, __('Remove Image')) : '').'</div>' : '').'<br/>';
+    
     
     $form = array();
     $form[] = array("tipo" => "hidden", "nome" => 'form_id', "valor" => $form_id);

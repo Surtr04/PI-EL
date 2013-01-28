@@ -117,7 +117,7 @@ class Controller_Sips extends Controller_Mymain {
         foreach($arr as $valor){
             $res[$pre."nome".$i] = $valor["nome"];
             $res[$pre."id".$i] = $valor["identificador"];
-            $res[$pre."email".$i] = $valor["email"];
+            $res[$pre."mail".$i] = $valor["email"];
             $res[$pre."web".$i] = $valor["web"];
             $i++;
         }
@@ -391,7 +391,7 @@ class Controller_Sips extends Controller_Mymain {
         }
         //$sips = new Model_Sips();
         $sips->restrictByCat();
-        $sips->insere($_POST['categoria'], $this->user->getId(), $res, ($this->verifyAcess('I', $this->prv) ? $_POST['privado'] : false));
+        $sips->insere($_POST['categoria'], $this->user->getId(), $res, ($this->verifyAcess('I', $this->prv) ? (int)$_POST['privado'] : false));
         $this->view->set('afterhtml',$this->buildHtml($zip));
         echo $this->view->render();
 	}

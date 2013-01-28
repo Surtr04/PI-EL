@@ -130,12 +130,13 @@ class Model_Sips extends Model_Mymodel {
         $querys["id"] = DB::insert($this->_table)->values(array($id['v'],$sip["ident"], $sip["titulo"], $this->parseNull($sip["subtitulo"]), $sip["data-inic"], $sip["data-fim"], $this->translateDate($data), $privado, $user, $cat));
         
         $i = 0;
+
         foreach($autores as $valor)
-            $querys["ref_autores".$i] = DB::insert("sips_autores")->values(array($id['c'], $valor));
+            $querys["ref_autores".$i++] = DB::insert("sips_autores")->values(array($id['c'], $valor));
         
         $i = 0;
         foreach($supervisores as $valor)
-            $querys["ref_supervisores".$i] = DB::insert("sips_supervisores")->values(array($id['c'], $valor));
+            $querys["ref_supervisores".$i++] = DB::insert("sips_supervisores")->values(array($id['c'], $valor));
         
         foreach($sip["resumo"] as $chave => $valor)
             $querys["ref_resumo".$chave] = DB::insert("resumos")->values(array($id['c'], $chave, $valor));
@@ -143,13 +144,14 @@ class Model_Sips extends Model_Mymodel {
         foreach($sip["resultados"] as $chave => $valor)
             $querys["ref_resultados".$chave] = DB::insert("resultados")->values(array(null, $id['c'], $valor["name"], $valor["url"], $valor["desc"]));
         
+
         $this->executeInTransaction($querys);
     }
     
 	public function insere($cat, $user , $sip, $privado = false){
         
         if ($this->_restricted && !Model::factory('Categorias')->canBeInsertedIn($cat)) return false;
-        $this->_insere($cat, $user, $sip, $privado, new DateTime());
+        $this->_insere($cat, $user, $sip, new DateTime(), $privado);
       
         
 		if ($this->_cached) $this->cache($this->_min);
