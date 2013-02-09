@@ -1,0 +1,12 @@
+TAM{ 10 x 11 }
+INI{ 0 , 0 , SUL }
+
+ORDENS{
+	LIGAR,
+	(5,SUL),
+	(6,SUL),
+	DESLIGAR,
+	(10, NORTE),
+	LIGAR,
+	(9, ESTE)
+}
