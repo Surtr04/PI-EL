@@ -1,0 +1,154 @@
+\documentclass[a4paper,11pt,openright,openbib]{article}
+\usepackage[portuges]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{ae}
+\usepackage[utf8]{inputenc}
+\usepackage[pdftex]{graphicx}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{enumerate}
+\usepackage[a4paper, pdftex, bookmarks, colorlinks, linkcolor=black, urlcolor=blue]{hyperref} 
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=3.5cm,bottom=3.5cm]{geometry}
+\usepackage{colortbl}
+\usepackage[margin=10pt,font=small,labelfont=bf]{caption}
+\usepackage{mdwlist}
+
+
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{2pt}
+
+\newcommand{\addimg}[3]{
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=\textwidth,keepaspectratio]{#1}
+	\end{center}	
+	\caption{\label{#2}#3}
+\end{figure}
+}
+
+
+\title{
+	\large{\includegraphics[width=0.3\textwidth]{../../../report-template/UM.jpg}} \\
+	\large{Universidade do Minho}  \\
+	\large{Mestrado em Engenharia Informática}  \\
+	\large{Engenharia de Linguagens}  \\
+	\large{Engenharia Gramatical - Grupo 1}  \\	
+	\large{\textbf{Resolução da Avaliação 3}} \\
+	\large{Ano Lectivo de 2012/2013} \\
+	\date{\today}
+}
+
+\author{	
+	\begin{tabular}[t]{c c}      
+        pg22820 - \textbf{António Silva} \\        
+		pg22781 - \textbf{Rui Brito} \\   				
+	\\ 
+	\end{tabular}
+}
+
+\begin{document}
+
+\maketitle
+
+
+\pagestyle{headings}
+\pagenumbering{arabic}
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introdução}
+Neste documento é descrito o processo para a resolução da ficha de avaliação nº3. Tal como pedido no enunciado, foi implementada uma gramática para processar ficheiros com rotinas de limpeza do robot. Também posteriormente foi adicionada uma interface visual que mostra o deslocamento do robot.
+
+\section{Resolução}
+\label{sec:resolucao}
+
+\subsection{Gramática} 
+\label{sub:gram_tica}
+
+Numa fase inicial, e depois de interpretarmos os requisitos da linguagem, implementamos uma gramática em \emph{ANTLR}.\\
+Um exemplo de um ficheiro válido é:
+\small
+\begin{verbatim}
+AREA: 10:10;
+ORIGIN: 0:0:SUL;
+
+LIGAR;
+MOVER SUL 6;
+MOVER SUL 2;
+DESLIGAR;
+MOVER NORTE 4;
+LIGAR;
+MOVER ESTE 2;
+MOVER OESTE 0;
+\end{verbatim}
+
+Como podemos ver no exemplo, inicialmente é declarada a área disponível para o robot limpar. Depois poderá ou não (opcional) ser declarado a localização inicial do robot.\\
+De seguida e até ao fim do ficheiro virá uma lista de ordens, em que cada uma poderá ser ou \emph{LIGAR}, ou \emph{DESLIGAR} ou \emph{MOVER <NORTE|SUL|ESTE|OESTE> <num>}.\\
+O \emph{num} será um valor numérico inteiro maior ou igual a 0 e indicará quantas unidades o robot se irá mover a partir da posição onde se encontra.\\
+
+\normalsize
+
+
+\subsection{Deteção de Erros} 
+Detetámos alguns erros, como por exemplo a movimentação, no caso de o robot tentar sair da área disponível:
+\small
+\begin{verbatim}
+if($order.area.outside($order.coord))
+          System.out.println("Error: RobotPoint is outside determined area "
+                     + "(line: " + $d.line + " column: " + $d.column + ")" );
+}
+\end{verbatim}
+Também existe uma linha idêntica de verificação se o robot é inicialmente colocado fora da área prevista:
+\begin{verbatim}
+if ($header.area.outside($header.coord)) {
+        System.out.println("Error: initial RobotPoint is outside determined area "
+                    + "(line: " + $y1.line + " column: " + $y1.pos + ")");
+        $header.coord = new RobotPoint(0,0, $header.janela, movement.SOUTH);
+        $header.coord.putRobot();	
+} 
+\end{verbatim}
+\normalsize
+
+Como pode ser visto acima, sempre que um erro é detetado, faz-se simplesmente um \emph{println()}. Pode também ver-se, que não só erro, mas também a linha a coluna onde esse erro acontece são mostrados no ecrã, de forma a facilitar a vida do utilizador final. \\
+No segundo caso, caso a posição inicial indicada seja inválida será assumida a posição (0,0), virado para SUL.
+
+
+\subsection{Contador de estados}
+\label{sub:contador_de_estados}
+\small
+\begin{verbatim}
+HashMap<movement,Integer> dist;
+\end{verbatim}
+\normalsize
+A distância total é guardada num HashMap, estabelecendo a relação entre a direção e as unidades percorridas nessa mesma direção.
+\small
+\begin{verbatim}
+public enum movement {
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+}
+\end{verbatim}
+\normalsize
+No final a soma da distância percorrida pelo Robot quando está ligado é mostrada diretamente da variável distOn, mas a distância total percorrida é a soma das quatros distâncias percorridas, para Norte, Sul, Este e Oeste. Deste modo é também possível mostrar a média de unidades foram percorridas em cada direção de cada vez.\\
+Existe também um contador que indica quantas vezes o robot mudou de direção.
+
+\subsection{Movimentação do Robot}
+O nossa área, que será representada computacionalmente, é um array, onde a posição (0,0) é o topo esquerdo da mesma, e direção para cima representa o norte (no eixo dos y).\\
+É possível visualizar a movimentação do Robot, numa janela, como podemos ver na figura \ref{tabuleiro} .  Para permitir uma animação de visualizar o robot a mexer-se, entre cada instrução de movimentação a aplicação esperará 1 segundo.\\
+Quando o robot está ligado será representado por um símbolo verde e preto quando estiver desligado.
+\addimg{tabuleiro.png}{tabuleiro}{Área disponível para movimentação do robot.}
+Depois de iniciar a aplicação, o utilizador é inquirido sobre a localização do ficheiro de input, como podemos ver na figura \ref{file_input}.
+\addimg{file_input.png}{file_input}{Janela para escolha do ficheiro de input.}
+
+\section{Ficheiros}
+Seguem juntamente com o relatório, os ficheiros de código Java gerados pelos \emph{ANTLR}, mais alguns criados por nós, na pasta \emph{Robot}. Segue também o ficheiro AV3.jar que é executável, e o ficheiro da gramática criado com recurso ao \emph{ANTLR}. Por fim segue no formato txt um ficheiro com um input de exemplo.
+
+\section{Conclusão}
+Após a resolução desta ficha de avaliação, julgamos que todos os objetivos foram cumpridos com sucesso. A forma visual poderia estar mais apelativa, mas acreditamos que o essencial está lá.
+
+
+\end{document}

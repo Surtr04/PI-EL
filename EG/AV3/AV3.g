@@ -1,34 +1,46 @@
 grammar AV3;
 
 @header {
+	package Robot;
 	import java.util.HashMap;
+	import javax.swing.JButton;
+	import javax.swing.JFrame;
+	import javax.swing.JOptionPane;
 }
 
-robot		
-	: a=header orders[$a.area,$a.coord]	
+@lexer::header {
+	package Robot;
+}
+
+robot[JFrame janela] returns [RobotPoint area,RobotPoint coord]		
+	: a=header[$robot.janela] orders[$a.area,$a.coord, $robot.janela]	{$robot.area = $a.area; $robot.coord = $a.coord;}
 	;
 	
-header returns [RobotPoint area,RobotPoint coord]
-	: 'AREA:' x=INT ':' y=INT (';' 'ORIGIN:' x1=INT ':' y1=INT ':' orientation)? ';' 
+header[JFrame janela] returns [RobotPoint area,RobotPoint coord]
+	: {int vx = 0, vy = 0; movement vor = movement.SOUTH;}'AREA:' x=INT ':' y=INT (';' 'ORIGIN:' x1=INT ':' y1=INT ':' b=orientation {vx = $x1.int; vy = $y1.int; vor = $b.or;})? ';' 
 	{
-	$header.area = new RobotPoint($x.int,$y.int); 
-	$header.coord = new RobotPoint($x1.int,$y1.int);
-	
+	$header.area = new RobotPoint($x.int,$y.int, $header.janela);
+	$header.area.fillWindow();
+	$header.coord = new RobotPoint(vx,vy, $header.janela, vor);
+	$header.coord.putRobot();	
 	if ($header.area.outside($header.coord)) {
 		System.out.println("Error: initial RobotPoint is outside determined area " + "(line: " + $y1.line + " column: " + $y1.pos + ")");
+		$header.coord = new RobotPoint(0,0, $header.janela, movement.SOUTH);
+		$header.coord.putRobot();	
 	} 
 	};
 
 
 
-orders [RobotPoint area, RobotPoint coord]
+orders [RobotPoint area, RobotPoint coord, JFrame janela]
 	: order[area,coord] (';' order[area,coord])* ';' 
 	{
-	System.out.println("Distance traversed: " + $orders.coord.distance() * 25 +"cm");
-	System.out.println("Distance traversed while on: " + $orders.coord.getOnDist()*25 + "cm");
-	System.out.println("Robot changed direction: " + $orders.coord.getNumTurns() + " times");
-	System.out.println("Mean traversed units in earch direction:" + "\n" + $orders.coord.distanceOrientation());
-	
+	StringBuilder sb = new StringBuilder();
+	sb.append("Distance traversed: ").append($orders.coord.distance() * 25).append("cm\n");
+	sb.append("Distance traversed while on: ").append($orders.coord.getOnDist()*25).append("cm\n");
+	sb.append("Robot changed direction: ").append($orders.coord.getNumTurns()).append(" times\n");
+	sb.append("Mean traversed units in earch direction:\n").append($orders.coord.distanceOrientation());
+	JOptionPane.showMessageDialog($orders.janela, sb.toString());
 	};
 
 
@@ -38,7 +50,6 @@ order [RobotPoint area, RobotPoint coord]
 	: 'MOVER' o=orientation d=distance 
 	{
 	$order.coord.move($d.d,o);
-	
 	if($order.area.outside($order.coord))
 		System.out.println("Error: RobotPoint is outside determined area " + "(line: " + $d.line + " column: " + $d.column + ")" );
 		
