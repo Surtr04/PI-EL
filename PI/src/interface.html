@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cv_form">
+	<head>
+        <meta charset="utf-8">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+		<script src="js/angular-ui.min.js"></script>
+		<script src="js/ui-bootstrap-tpls-0.1.0.min.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="css/angular-ui.min.css" rel="stylesheet"/>
+		<style type="text/css">
+			html, body{
+				height: 100%;
+			}
+			#tblUtilizacao td {
+				border: solid;
+				vertical-align: top;
+			}
+			.animations {
+				list-style: none outside none;
+				margin: 10px 0;
+				padding: 0;
+			}
+			#tblUtilizacao ul{
+				list-style-type: none;
+			}
+			.inline{
+				display:inline;
+			}
+			.animations li {
+			  transition: all 0.5s ease;
+			  -o-transition: all 0.5s ease;
+			  -moz-transition: all 0.5s ease;
+			  -webkit-transition: all 0.5s ease;
+			  /*background: lightblue;*/
+			  max-height: 50px; /* 1000px works too */
+			  overflow: hidden;
+			  padding: 5px;
+			}
+			.animations li.ui-animate {
+			  opacity: 0;
+			  max-height: 0;
+			  padding: 0 5px;
+			}
+			.animations li.ui-not-animate {
+			  opacity: 1 !important;
+			  max-height: 100% !important;
+			  padding: 5px !important;
+			}
+			
+		</style>
+		<script type="text/javascript">
+			angular.module("cv_form", ['ui']);
+			function InfoCtrl($scope){
+                $scope.order = 'pos';
+                $scope.fields =  [{name: "name", label : "Nome", value: "xpto2", type: "text"},
+								  {name: "nacionalities", label : "Nacionalidades", value: ["Portuguese","Canadian"], type: "list", max:2},
+                                  {name: "contacts", label : "Contactos Pessoais", values: [{type:"email", value:"xpto@xpto.pt"},{type:"phone", value:"259225225"}], value: "xpto2", type: "contacts"},
+								  {name: "birthdate", label : "Data de Nascimento", value: "01/01/2012", type: "date"},
+                                  {name: "gender", label : "Gender", value: "M", values: [{name:"M", value:"Masculino"},{name:"F", value:"Feminino"}], type:"check"},
+								  {name: "nativelang", label : "Linguagens Nativas", value: ["Portuguese", "English"], type: "list", max:0},
+                                  {name: "web", label : "Endereço Web", value: "http://", type: "url"},
+                                ];
+                $scope.formation = [];
+				$scope.institutions = { __new__ : {text: "--Nova--", name: "", address: "", country: "", type: ""},
+										id2: {text: "Universidade do Minho", name: "Universidade do Minho", address: "", country: "Portugal", type: "Public University"}};
+				$scope.selectedIns = [];
+                $scope.errors = {};
+                $scope.getType = function(txt){ return (txt == 'email' ? 'email' : 'text');}
+                $scope.validateList = function(name, list, max){if (max > 0 && list.length > max) $scope.errors[name] = true; else $scope.errors[name] = false;}
+				$scope.putIns = function(item, index){ 
+					var inst = $scope.institutions[$scope.selectedIns[index]];
+					item.inst.name = inst.name;
+					item.inst.address = inst.address;
+					item.inst.country = inst.country;
+					item.inst.type = inst.type;
+				}
+				$scope.addFormation = function(){
+					$scope.formation.push({begin:'', end:'', degreeT:'', degree:'', result: '', inst: {}}); 
+					$scope.selectedIns.push('__new__');
+				}
+				
+			}
+			function PublicationsCtrl($scope){
+			
+			}
+			function ActivitiesCtrl($scope){
+				$scope.activities = [];
+				$scope.types = [{name: "conference", text:"Conferência"}, 
+								{name: "internship", text:"Estágio"},
+								{name: "phd_monitoring", text:"Acompahnamento de PhD"},
+								{name: "msc_monitoring", text:"Acompanhamento de MSc"},
+								{name: "other", text:"Outro"},
+							   ]
+				
+				$scope.selectedIns = [];
+				$scope.institutions = { __new__ : {text: "--Nova--", name: "", address: "", country: "", type: ""},
+										id2: {text: "Universidade do Minho", name: "Universidade do Minho", address: "", country: "Portugal", type: "Public University"}};
+				$scope.putIns = function(item, index){ 
+					var inst = $scope.institutions[$scope.selectedIns[index]];
+					item.inst.name = inst.name;
+					item.inst.address = inst.address;
+					item.inst.country = inst.country;
+					item.inst.type = inst.type;
+				}
+				
+				
+				
+				$scope.addActivity = function(){
+					$scope.activities.push({begin: '', end: '', description: '', inst: {},  org : {type: '', name: '', address: ''}, partners: [], activity: { type: "other", isorg: false}});
+				}
+				
+			}
+		</script>
+	</head>
+	<body>
+        <form name="frmPrincipal" method="post" class="form-horizontal" action="full_import.php" enctype="multipart/form-data">
+            <div class="tabbable"> 
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab1" data-toggle="tab">Informação e Formação</a></li>
+                    <li><a href="#tab2" data-toggle="tab">Actividades</a></li>
+                    <li><a href="#tab3" data-toggle="tab">Publicações</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active animations" id="tab1" ng-controller="InfoCtrl">
+                        <div class="control-group" ng-repeat="item in fields">
+                            <label class="control-label" for="{{item.name}}">{{item.label}}: </label>
+                            <div class="controls" ng-switch="item.type">
+                                <div ng-switch-when="check" class="btn-group" data-toggle="buttons-radio">
+									<input type="hidden" id="{{item.name}}" name="{{item.name}}" value="{{item.value}}"/>
+                                    <button type="button" ng-click="item.value=vl.name" ng-repeat="vl in item.values" id="{{vl.name}}" class="btn">{{vl.value}}</button>
+                                </div>
+								<table ng-switch-when="contacts">
+									<tr><th>Tipo</th><th>Valor</th></tr>
+									<tr ng-repeat="vl in item.values">
+										<td>
+											<select id="{{item.name}}T[]" name="{{item.name}}T[]" ng-model="vl.type">
+												<option value="email">Email</option>
+												<option value="phone">Telefone</option>
+												<option value="fax">Fax</option>
+											</select>
+										</td>
+										<td><input id="{{item.name}}V[]" name="{{item.name}}V[]" type="{{getType(vl.type)}}" ng-model="vl.value"/></td>
+									</tr>
+									<tr><td colspan="2"><button type="button" ng-click="item.values.push({type: 'email', value:''})" class="btn">Inserir nova formação</button></td></tr>
+								</table>
+								<div ng-switch-when="list">
+									<input id="{{item.name}}" type="text" ng-change="validateList(item.name, item.value, item.max)" name="{{item.name}}" ng-model="item.value" ng-list required>
+									&nbsp;&nbsp;<div class="alert alert-error inline" style="display: inline;" ng-show="errors[item.name]"><strong>Erro!</strong> Mais valores inseridos do que os permitidos (max: {{item.max}}).</div>
+									&nbsp;&nbsp;(lista separada por vírgulas)
+								</div>
+                                <input ng-switch-default id="{{item.name}}" name="{{item.name}}" type="{{item.type}}" ng-model="item.value"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<button type="button" ng-click="addFormation()" class="btn">Inserir nova formação</button>
+								<h2>Formação</h2>
+							</div>
+						</div>
+						<!--<div class="control-group">-->
+							<div class="control-group well" ng-repeat="item in formation" ui-animate>
+
+								<span class="controls"><b>Instituição:</b></span>
+								<select ng-change="putIns(item, $index)" ng-model="selectedIns[$index]">
+									<option ng-repeat="(key,inst) in institutions" value="{{key}}">{{inst.text}}</option>
+								</select>
+								<div class="control-group" style="padding:20px;">
+									<label class="control-label" for="insName[]">Nome: </label>
+									<div class="controls"><input id="insName[]" name="insName[]" type="text" ng-model="item.inst.name"/></div>
+									
+									<label class="control-label" for="insAddress[]">Morada: </label>
+									<div class="controls"><input id="insAddress[]" name="insAddress[]" type="text" ng-model="item.inst.address"/></div>
+									
+									<label class="control-label" for="insCountry[]">País: </label>
+									<div class="controls"><input id="insCountry[]" name="insCountry[]" type="text" ng-model="item.inst.country"/></div>
+									
+									<label class="control-label" for="insType[]">Tipo: </label>
+									<div class="controls"><input id="insType[]" name="insType[]" type="text" ng-model="item.inst.type"/></div>
+									
+								</div>
+
+							
+								<label class="control-label" for="fBegin[]">Início: </label>
+								<div class="controls"><input id="fBegin[]" name="fBegin[]" type="date" ng-model="item.begin"/></div>
+								
+								<label class="control-label" for="fEnd[]">Fim: </label>
+								<div class="controls"><input id="fEnd[]" name="fEnd[]" type="date" ng-model="item.end"/></div>
+								
+
+								
+								<label class="control-label" for="degreeT[]">Grau: </label>
+								<div class="controls"><input id="degreeT[]" name="degreeT[]" type="text" ng-model="item.degreeT"/></div>
+								
+								<label class="control-label" for="degree[]">Título: </label>
+								<div class="controls"><input id="degree[]" name="degree[]" type="text" ng-model="item.degree"/></div>
+								
+								<label class="control-label" for="result[]">Resultado: </label>
+								<div class="controls"><input id="result[]" name="result[]" type="text" ng-model="item.result"/></div>
+							</div>
+						<!--</div>-->
+					</div>
+                    <div class="tab-pane" id="tab2" ng-controller="ActivitiesCtrl">
+                        <div class="control-group animations">
+							<div class="controls">
+								<button type="button" ng-click="addActivity()" class="btn">Inserir nova actividade</button>
+								<h2>Actividades</h2>
+							</div>
+							<div class="control-group well" ng-repeat="item in activities" ui-animate>
+								<label class="control-label" for="aBegin[]">Início: </label>
+								<div class="controls"><input id="aBgin[]" name="aBegin[]" type="date" ng-model="item.begin"/></div>
+								
+								<label class="control-label" for="aEnd[]">Fim: </label>
+								<div class="controls"><input id="aEnd[]" name="aEnd[]" type="date" ng-model="item.end"/></div>
+								
+								
+								<span class="controls"><b>Instituição:</b></span>
+								<select ng-change="putIns(item, $index)" ng-model="selectedIns[$index]">
+									<option ng-repeat="(key,inst) in institutions" value="{{key}}">{{inst.text}}</option>
+								</select>
+								<div class="control-group" style="padding:20px;">
+									<label class="control-label" for="insName[]">Nome: </label>
+									<div class="controls"><input id="insName[]" name="aInsName[]" type="text" ng-model="item.inst.name"/></div>
+									
+									<label class="control-label" for="insAddress[]">Morada: </label>
+									<div class="controls"><input id="insAddress[]" name="aInsAddress[]" type="text" ng-model="item.inst.address"/></div>
+									
+									<label class="control-label" for="insCountry[]">País: </label>
+									<div class="controls"><input id="insCountry[]" name="aInsCountry[]" type="text" ng-model="item.inst.country"/></div>
+									
+									<label class="control-label" for="insType[]">Tipo: </label>
+									<div class="controls"><input id="insType[]" name="aInsType[]" type="text" ng-model="item.inst.type"/></div>
+									
+								</div>
+								
+								<label class="control-label" for="description[]">Descrição: </label>
+								<div class="controls"><textarea id="description[]" name="description[]" ng-model="item.desc"></textarea></div>
+								
+								
+								<label class="control-label" for="partners[]">Parceiros: </label>
+								<div class="controls">
+									<input id="partners[]" type="text" name="partners[]" ng-model="item.partners" ng-list>
+									&nbsp;&nbsp;(lista separada por vírgulas)
+								</div>
+								
+								<label class="control-label" for="aType[]">Tipo: </label>
+								<div class="controls">
+									<select id="aType[]" name="aType[]" ng-model="item.activity.type">
+										<option ng-repeat="t in types" value="{{t.name}}">{{t.text}}</option>
+									</select>
+								</div>
+								
+								<div ng-switch="item.activity.type">
+									<div ng-switch-when="conference">
+										<label class="control-label" for="isOrganizator[]">Organizador: </label>
+										<div class="controls">
+											<div class="btn-group" data-toggle="buttons-radio">
+												<input type="hidden" id="isOrganizator[]" name="isOrganizator[]" ng-model="item.activity.isorg"/>
+												<button type="button" ng-click="item.activity.isorg='true'" class="btn">Sim</button>
+												<button type="button" ng-click="item.activity.isorg='false'" class="btn active">Não</button>
+											</div>
+										</div>	
+										<label class="control-label" for="aConfName[]">Nome: </label>
+										<div class="controls"><input id="aConfName[]" name="aConfName[]" type="text" ng-model="item.activity.name"/></div>
+										
+										<label class="control-label" for="aConfPlace[]">Local: </label>
+										<div class="controls"><input id="aConfPlace[]" name="aConfPlace[]" type="text" ng-model="item.activity.place"/></div>
+										
+										<label ng-show="item.activity.isorg" class="control-label" for="aConfWork[]">Nome do trabalho: </label>
+										<div ng-show="item.activity.isorg" class="controls"><input id="aConfWork[]" name="aConfWork[]" type="text" ng-model="item.activity.work"/></div>
+										
+									</div>
+									<div ng-switch-when="internship">
+										<label class="control-label" for="insName[]">Nome da empresa: </label>
+										<div class="controls"><input id="insName[]" name="aCompanyName[]" type="text" ng-model="item.activity.name"/></div>
+									
+										<label class="control-label" for="insAddress[]">Morada da empresa: </label>
+										<div class="controls"><input id="insAddress[]" name="aCompanyAddress[]" type="text" ng-model="item.activity.address"/></div>
+									
+										<label class="control-label" for="insCountry[]">País do estágio: </label>
+										<div class="controls"><input id="insCountry[]" name="aCompanyCountry[]" type="text" ng-model="item.activity.country"/></div>
+										
+										<label class="control-label" for="insCountry[]">Cargo desempenhado: </label>
+										<div class="controls"><input id="insCountry[]" name="aCompanyRole[]" type="text" ng-model="item.activity.role"/></div>
+									</div>
+									<div ng-switch-when="phd_monitoring">
+										<label class="control-label" for="student[]">Estudante de PhD: </label>
+										<div class="controls"><input id="student[]" name="student[]" type="text" ng-model="item.activity.student"/></div>
+										
+										<label class="control-label" for="phdTitle[]">Titulo da Tese: </label>
+										<div class="controls"><input id="phdTitle[]" name="phdTitle[]" type="text" ng-model="item.activity.title"/></div>
+										
+									</div>
+									<div ng-switch-when="msc_monitoring">
+										<label class="control-label" for="student[]">Estudante de MSc: </label>
+										<div class="controls"><input id="student[]" name="student[]" type="text" ng-model="item.activity.student"/></div>
+										
+										<label class="control-label" for="mscTitle[]">Titulo da Tese: </label>
+										<div class="controls"><input id="mscTitle[]" name="mscTitle[]" type="text" ng-model="item.activity.title"/></div>
+										
+									</div>
+									<div ng-switch-when="other">
+										<label class="control-label" for="aInfo[]">Descrição: </label>
+										<div class="controls"><textarea id="aInfo[]" name="aInfo[]" ng-model="item.activity.info"></textarea></div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+                    </div>
+                    <div class="tab-pane" id="tab3" ng-controller="PublicationsCtrl">
+                        <p>Howdy, I'm in Section 3.</p>
+                    </div>
+                </div>
+            </div>
+			<div class="form-actions">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+                <button type="reset" class="btn">Cancelar</button>
+            </div>
+        </form>
+        <!--
+		<table id="tblUtilizacao" width="100%" height="100%">
+			<tr style="height:50%"><td colspan="2">
+				<section id="utilizacao" class="animations">
+					<ul>
+						<li ng-repeat="(key,item) in items" ng-class="canim[key]"  ui-animate>{{key}}: {{item}}</li>
+					</ul>
+				</section>
+			</tr></td>
+			<tr style="height:50%"><td class="span6">
+			<section id="protocolos">
+				<ul>
+					<li ng-repeat="(key,item) in protocolos">
+						<a class="btn" ng-disabled="ProdutosIndisp(key)" ng-click="AddProtocolo(key)">{{key}}</a>
+					</li>
+				</ul>
+			</section>
+			</td><td class="span6">
+			<section id="produtos">
+				<ul>
+					<li ng-repeat="(key,item) in produtos">
+						<a class="btn" ng-disabled="produtos[key].valor <= 0" ng-click="AddProduto(key,1)">{{key}}: {{item.valor}}</a>
+					</li>
+				</ul>
+			</section>
+			</td></tr>
+		</table>-->
+	</body>
+</html>
