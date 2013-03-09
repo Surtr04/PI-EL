@@ -1,0 +1,6 @@
+Revision history for Perl extension BibTeX::toDB.
+
+0.01  Tue Feb 26 15:16:01 2013
+	- original version; created by h2xs 1.23 with options
+		-AX -n BibTeX::toDB
+
