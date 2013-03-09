@@ -4,6 +4,8 @@ use 5.016002;
 use strict;
 use warnings;
 use DBI;
+use File::Slurp;
+use Data::Dumper;
 use encoding "iso 8859-1";
 
 require Exporter;
@@ -17,20 +19,14 @@ our $VERSION = '0.01';
 sub new {
 
 	my ($class,$bibfile,$database,$user,$pass) = @_;
-
-	open FILE, "<", $bibfile;
-	my @str;
-	while (<FILE>) {
-		chomp $_;
-		push @str,$_ ;
-	}
+	
 
 	my $self = {
 		entries => 0,
-		bibfile => \@str,
+		bibfile => read_file($bibfile, array_ref => 1),
 		database => DBI->connect($database,$user,$pass,{RaiseError => 1, AutoCommit => 0}),				
-		parsedInfo => {},
-	};
+		parsedInfo => {},		
+	};	
 
 	bless $self,$class;
 
@@ -42,7 +38,7 @@ sub parse {
 
 	my ($self,$bibtype) = @_;		
 	if ($bibtype eq "article") {
-		parseArticle($self);
+		parseArticle($self);		
 	}
 
 				
@@ -64,67 +60,76 @@ sub parseArticle {
 	
 	my ($self) = @_;	
 	my @bib = @{$self->{bibfile}};	
-	my $found = 0;
+	my $found = 0;	
 			
+		my @authors;		
+		my @values;
 		my $title;
 		my $journal;
 		my $year;
-
-	for my $line (@bib) {				
-		my @authors;
-		for my $i (0 .. $#authors) {
-			delete $authors[$i];
-		}		
+	
+	foreach (@bib) {										
 		
-		$found = 1 if $line =~ /\@article.*/;
+		$found = 1 if $_ =~ /\@article.*/;
 		
 		if($found) {
 
-			if ($line =~ m/^\}$/) {
+			if ($_ =~ m/^\}$/) {
 				$found = 0;
-			}						
-			if ($line =~ /author\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {																				
+
+				foreach (@authors) {
+					if (!defined $self->{parsedInfo}->{$_}) {
+						$self->{parsedInfo}->{$_} = [];
+						push $self->{parsedInfo}->{$_}, [$title, $journal,$year];
+					}
+					else {
+						push $self->{parsedInfo}->{$_}, [$title, $journal,$year];	
+					}
+				}
+
+				for my $i (0 .. $#authors) {
+					delete $authors[$i];
+				}	
+				for my $i (0 .. $#values) {
+					delete $values[$i];
+				}	
+
+			}				
+
+			if ($_ =~ /author\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {																				
 				my @tmp = split /and/, $1;
 
 				for my $name (@tmp) {
 					push @authors, trim($name);				
-				}				
-				
+				}								
 			}
 
-			if ($line =~ /title\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {
+			if ($_ =~ /title\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {
+				push (@values, $1) if !($1 ~~ @values);
 				$title = $1;
 			}
 
-			if ($line =~ /journal\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {
-				$journal = $1;			
+			if ($_ =~ /journal\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {
+				push (@values, $1) if !($1 ~~ @values);
+				$journal = $1;
 			}
 
 			#year = {num}
-			if ($line =~ /year\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {
-				$year = $1;				
-				print $year."\n";
+			if ($_ =~ /year\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {
+				push (@values, $1) if !($1 ~~ @values);
+				$year = $1;
 			}
 
 			#year = num
-			if ($line =~ /year\s*=\s*(\d+)/) {
-				$year = $1;				
-				print $year."\n";
-			}
-
-			for my $aut (@authors) {				
-
-				if (!defined $self->{parsedInfo}->{$aut}) {
-					$self->{parsedInfo}->{$aut} = [];
-					push $self->{parsedInfo}->{$aut},[$title,$journal,$year];
-				}
-				else {
-					push $self->{parsedInfo}->{$aut} , [$title,$journal,$year];	
-				}
-			}
+			if ($_ =~ /year\s*=\s*(\d+)/) {
+				push (@values, $1) if !($1 ~~ @values);	
+				$year = $1;
+			}									 						 				 		
 			
 		}		
 	}
+
+
 
 }
 
