@@ -40,6 +40,13 @@ sub parse {
 	if ($bibtype eq "article") {
 		parseArticle($self);		
 	}
+	if ($bibtype eq "techreport") {
+		parseReport($self);		
+	}
+
+	if ($bibtype eq "inproceedings") {
+		parseInproceedings($self);		
+	}
 
 				
 			
@@ -62,8 +69,7 @@ sub parseArticle {
 	my @bib = @{$self->{bibfile}};	
 	my $found = 0;	
 			
-		my @authors;		
-		my @values;
+		my @authors;				
 		my $title;
 		my $journal;
 		my $year;
@@ -76,7 +82,7 @@ sub parseArticle {
 
 			if ($_ =~ m/^\}$/) {
 				$found = 0;
-
+				$self->{entries} += 1;
 				foreach (@authors) {
 					if (!defined $self->{parsedInfo}->{$_}) {
 						$self->{parsedInfo}->{$_} = [];
@@ -89,11 +95,7 @@ sub parseArticle {
 
 				for my $i (0 .. $#authors) {
 					delete $authors[$i];
-				}	
-				for my $i (0 .. $#values) {
-					delete $values[$i];
-				}	
-
+				}					
 			}				
 
 			if ($_ =~ /author\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {																				
@@ -104,25 +106,92 @@ sub parseArticle {
 				}								
 			}
 
-			if ($_ =~ /title\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {
-				push (@values, $1) if !($1 ~~ @values);
+			if ($_ =~ /title\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {				
 				$title = $1;
 			}
 
-			if ($_ =~ /journal\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {
-				push (@values, $1) if !($1 ~~ @values);
+			if ($_ =~ /journal\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {				
 				$journal = $1;
 			}
 
 			#year = {num}
-			if ($_ =~ /year\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {
-				push (@values, $1) if !($1 ~~ @values);
+			if ($_ =~ /year\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {				
 				$year = $1;
 			}
 
 			#year = num
-			if ($_ =~ /year\s*=\s*(\d+)/) {
-				push (@values, $1) if !($1 ~~ @values);	
+			if ($_ =~ /year\s*=\s*(\d+)/) {				
+				$year = $1;
+			}									 						 				 		
+			
+		}		
+	}
+
+}
+
+
+
+
+
+
+sub parseReport {
+	
+	my ($self) = @_;	
+	my @bib = @{$self->{bibfile}};	
+	my $found = 0;	
+			
+		my @authors;				
+		my $title;
+		my $institution;
+		my $year;
+	
+	foreach (@bib) {										
+		
+		$found = 1 if $_ =~ /\@techreport.*/;
+		
+		if($found) {
+
+			if ($_ =~ m/^\}$/) {
+				$found = 0;
+				$self->{entries} += 1;
+				foreach (@authors) {
+					if (!defined $self->{parsedInfo}->{$_}) {
+						$self->{parsedInfo}->{$_} = [];
+						push $self->{parsedInfo}->{$_}, [$title, $institution,$year];
+					}
+					else {
+						push $self->{parsedInfo}->{$_}, [$title, $institution,$year];	
+					}
+				}
+
+				for my $i (0 .. $#authors) {
+					delete $authors[$i];
+				}					
+			}				
+
+			if ($_ =~ /author\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {																				
+				my @tmp = split /and/, $1;
+
+				for my $name (@tmp) {
+					push @authors, trim($name);				
+				}								
+			}
+
+			if ($_ =~ /title\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {				
+				$title = $1;
+			}
+
+			if ($_ =~ /institution\s*=\s*(?:\{|\")?(.*)(?:\}|\")?\,/) {				
+				$institution = $1;
+			}
+
+			#year = {num}
+			if ($_ =~ /year\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {				
+				$year = $1;
+			}
+
+			#year = num
+			if ($_ =~ /year\s*=\s*(\d+)/) {				
 				$year = $1;
 			}									 						 				 		
 			
@@ -132,6 +201,82 @@ sub parseArticle {
 
 
 }
+
+
+
+sub parseInproceedings {
+	
+	my ($self) = @_;	
+	my @bib = @{$self->{bibfile}};	
+	my $found = 0;	
+			
+		my @authors;				
+		my $title;
+		my $booktitle;
+		my $year;
+		my $url;
+	
+	foreach (@bib) {										
+		
+		$found = 1 if $_ =~ /\@inproceedings.*/;
+		
+		if($found) {
+
+			if ($_ =~ m/^\}$/) {
+				$found = 0;
+				$self->{entries} += 1;
+				foreach (@authors) {
+					if (!defined $self->{parsedInfo}->{$_}) {
+						$self->{parsedInfo}->{$_} = [];
+						push $self->{parsedInfo}->{$_}, [$title, $booktitle,$year,$url];
+					}
+					else {
+						push $self->{parsedInfo}->{$_}, [$title, $booktitle,$year,$url];	
+					}
+				}
+
+				for my $i (0 .. $#authors) {
+					delete $authors[$i];
+				}					
+			}				
+
+			if ($_ =~ /author\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {																				
+				my @tmp = split /and/, $1;
+
+				for my $name (@tmp) {
+					push @authors, trim($name);				
+				}								
+			}
+
+			if ($_ =~ /title\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {				
+				$title = $1;
+			}
+
+			if ($_ =~ /booktitle\s*=\s*(?:\{|\")?(.*)(?:\}|\")?\,/) {				
+				$booktitle = $1;
+			}
+
+			#year = {num}
+			if ($_ =~ /year\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {				
+				$year = $1;
+			}
+
+			#year = num
+			if ($_ =~ /year\s*=\s*(\d+)/) {				
+				$year = $1;
+			}
+
+			if ($_ =~ /url\s*=\s*(?:\"|\{)(.*)(?:\"|\})/) {
+				$url = $1;
+			}								 						 				 		
+			
+		}		
+	}
+
+
+
+}
+
 
 
 
