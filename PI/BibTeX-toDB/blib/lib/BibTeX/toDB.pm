@@ -65,17 +65,17 @@ sub parseArticle {
 	my ($self) = @_;	
 	my @bib = @{$self->{bibfile}};	
 	my $found = 0;
-	
-		
-		my $journal;
-		my $year;	
-
-
-	for my $line (@bib) {
-		
-		my @authors;	
+			
 		my $title;
+		my $journal;
+		my $year;
 
+	for my $line (@bib) {				
+		my @authors;
+		for my $i (0 .. $#authors) {
+			delete $authors[$i];
+		}		
+		
 		$found = 1 if $line =~ /\@article.*/;
 		
 		if($found) {
@@ -87,7 +87,7 @@ sub parseArticle {
 				my @tmp = split /and/, $1;
 
 				for my $name (@tmp) {
-					push @authors, trim($name);
+					push @authors, trim($name);				
 				}				
 				
 			}
@@ -97,15 +97,30 @@ sub parseArticle {
 			}
 
 			if ($line =~ /journal\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {
-				$journal = $1;
+				$journal = $1;			
 			}
 
+			#year = {num}
 			if ($line =~ /year\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {
-				$year = $1;
+				$year = $1;				
+				print $year."\n";
+			}
+
+			#year = num
+			if ($line =~ /year\s*=\s*(\d+)/) {
+				$year = $1;				
+				print $year."\n";
 			}
 
 			for my $aut (@authors) {				
-				$self->{parsedInfo}->{$aut} = $title;
+
+				if (!defined $self->{parsedInfo}->{$aut}) {
+					$self->{parsedInfo}->{$aut} = [];
+					push $self->{parsedInfo}->{$aut},[$title,$journal,$year];
+				}
+				else {
+					push $self->{parsedInfo}->{$aut} , [$title,$journal,$year];	
+				}
 			}
 			
 		}		
