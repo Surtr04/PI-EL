@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="activities">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded">
+                <xs:element name="activity">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="begin_date" type="xs:date"/>
+                            <xs:element name="end_date" type="xs:date"/>
+                            <xs:element name="description" type="xs:string"/>
+                            <xs:element name="institution">
+                                <xs:complexType>
+                                    <xs:sequence maxOccurs="unbounded">
+                                        <xs:element ref="org"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="partners">
+                                <xs:complexType>
+                                    <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                                        <xs:element name="partner" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:choice>
+                                <xs:element name="conference">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="name" type="xs:string"/>
+                                            <xs:element name="place" type="xs:string"/>
+                                            <xs:element name="work" type="xs:string"/>
+                                        </xs:sequence>
+                                        <xs:attribute default="false" name="is_organizator"
+                                            type="xs:boolean" use="optional"/>
+                                    </xs:complexType>
+                                </xs:element>
+                                <xs:element name="internship">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element ref="org"/>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                                <xs:element name="phd_monitoring">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="student" type="xs:string"/>
+                                            <xs:element name="phd_title" type="xs:string"/>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                                <xs:element name="msc_monitoring">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="student" type="xs:string"/>
+                                            <xs:element name="msc_title" type="xs:string"/>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                                <xs:element name="other">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="description" type="xs:string"/>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:choice>
+                        </xs:sequence>
+                        <xs:attribute name="key" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="org">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="address" type="xs:string"/>
+                <xs:element name="country" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="type" form="unqualified" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Public University"/>
+                        <xs:enumeration value="Private University"/>
+                        <xs:enumeration value="Public Company"/>
+                        <xs:enumeration value="Private Company"/>
+                        <xs:enumeration value="Other"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

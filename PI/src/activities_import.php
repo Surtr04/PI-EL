@@ -22,7 +22,6 @@
             if ($res === false || $res->length <= 0) return false;
             foreach($res as $chave => $valor) {
                 $aux = $this->recQueryToArray($query, $valor);
-                //var_dump($valor); echo "<br/>\n";
                 if ($aux === false)
                     $arr[$valor->localName]['__text'] = $valor->textContent;
                 else 
@@ -34,7 +33,6 @@
                         $atr = $valor->attributes->item($i);
                         $arr[$valor->localName]['__atributes'][$atr->name] = $atr->value;  
                     }
-                    //$arr[$valor->localName]['__atributes'] = $this->queryValue('')
                 }
             }
             return $arr;
@@ -74,10 +72,10 @@
         $xml->loadXML($tmpxml);
         
         libxml_use_internal_errors(true);
-        /*if (!$xml->schemaValidate('activities.xsd')){
+        if (!$xml->schemaValidate('activities.xsd')){
             $error = Arr::get(libxml_get_errors(), 0, new libXMLError());
             return array(':erro' => "ERR_SIP_SCHEMA", ':msg' => $error->message, ':code' => $error->code, ':line' => $error->line);
-        }*/
+        }
         $info = array();
         
         $xpath = new myXPath($xml);
@@ -85,7 +83,6 @@
         foreach($aux as $node){
             $activity = array();
             $activity['key'] = $xpath->queryValue('@key', $node);
-            //$activity['type'] = $xpath->queryValue('type', $node);
             $activity['institution'] = trataOrganismo($xpath, 'institution', $node);
             $activity['begin_date'] = $xpath->queryValue('begin_date', $node);
             $activity['end_date'] = $xpath->queryValue('end_date', $node);
@@ -106,8 +103,7 @@
                     $activity['activity'] = $xpath->recQueryToArray('*', $nn);
                     $activity['activity']['__type'] = $nn->localName;
                     $activity['activity']['__xml'] = $xml->saveXML($nn);
-                } /*else
-                    $activity[$chave] = null;*/
+                } 
             }
                 
             
@@ -126,6 +122,7 @@
         $aux['type'] = $xpath->queryValue( $root.'@type', $node);
         $aux['name'] = $xpath->queryValue( $root.'name', $node);
         $aux['address'] = $xpath->queryValue( $root.'address', $node);
+        $aux['country'] = $xpath->queryValue( $root.'country', $node);
         return $aux;
     }
     
@@ -145,14 +142,37 @@
         return $ret;
     }
     
+    function getInst($db, $info){
+        $query = $db->prepare("SELECT id FROM institutions WHERE name = :name LIMIT 1");
+        $query->bindValue(':name', $info['name']);
+        $query->execute();
+        $arr = $query->fetchAll();
+        if (count($arr) > 0)
+            return (int) $arr[0]['id'];
+        else {
+            $query = $db->prepare("INSERT INTO institutions VALUES (null, :name, :address, :country, :type)");
+            $query->bindValue(':key', $info['name'], PDO::PARAM_STR);
+            $query->bindValue(':address', $info['address'], PDO::PARAM_STR);
+            $query->bindValue(':country', $info['country'], PDO::PARAM_STR);
+            $query->bindValue(':type', $info['type'], PDO::PARAM_INT);
+            $query->execute();
+            
+            return $db->lastInsertId();
+            
+        }
+    }
+    
     function insereDB($info){
         $db = new myDB();    
+        
+        $inst = getInst($db, $info['institution']);
         
         $db->beginTransaction();
         $query = $db->prepare("INSERT INTO activities VALUES(null, :key, :begin, :end, :inst, :description, :type, :info)");
         $query->bindValue(':key', $info['key'], PDO::PARAM_STR);
         $query->bindValue(':begin', $info['begin_date'], PDO::PARAM_STR);
         $query->bindValue(':end', $info['end_date'], PDO::PARAM_STR);
+        $query->bindValue(':inst', $inst, PDO::PARAM_INT);
         $query->bindValue(':description', $info['description'], PDO::PARAM_STR);
         $query->bindValue(':type', $info['activity']['__type'], PDO::PARAM_STR);
         $query->bindValue(':info', $info['activity']['__xml'], PDO::PARAM_STR);
@@ -162,7 +182,7 @@
         
         $aux = trataNomes($info['partners']);
         
-        $query = $db->prepare("INSERT INTO activities_upartners VALUES(:act, (SELECT id FROM info WHERE name = :name))");
+        $query = $db->prepare("INSERT INTO users_activities VALUES(:act, (SELECT id FROM info WHERE name = :name))");
         foreach($aux['upartenrs'] as $valor){
             $query->bindValue(':act', $act, PDO::PARAM_INT);
             $query->bindValue(':name', $valor, PDO::PARAM_STR);
@@ -171,7 +191,7 @@
         }
         
         
-        $query = $db->prepare("INSERT INTO activities_npartners VALUES(:act, :name)");
+        $query = $db->prepare("INSERT INTO nonusers_activities VALUES(:act, :name)");
         foreach($aux['npartenrs'] as $valor){
             $query->bindValue(':act', $act, PDO::PARAM_INT);
             $query->bindValue(':name', $valor, PDO::PARAM_STR);

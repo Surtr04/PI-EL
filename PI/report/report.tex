@@ -28,7 +28,7 @@
 	\large{Mestrado em Engenharia Informática}  \\
 	\large{Engenharia de Linguagens}  \\
 	\large{Projecto Integrado - Grupo 1}  \\	
-	\large{\textbf{1ª Avaliação Intermédia}} \\
+	\large{\textbf{2ª Avaliação Intermédia}} \\
 	\large{Ano Letivo de 2012/2013} \\
 	\date{\today}
 }
@@ -53,30 +53,18 @@
 \newpage
 
 \section{Introdução}
-O projecto consiste no desenvolvimento de um sistema de informação que permita gerir a informação curriculares de um docente universitário.\\
+O projecto consiste no desenvolvimento de um sistema de informação que permita gerir os dados curriculares de um docente universitário.\\
 Essa informação a recolher, armazenar e publicar inclui, além da identificação completa do docente, dados sobre a formação, as várias actividades académicas desenvolvidas e resultados atingidos.\\
-Nesta primeira fase foram-nos pedidos o planeamento das actividades a desenvolver, a modelação do problema em mãos (Diagrama de classes, Esquema de Base de Dados, Use Cases...), uma gramática e respectivo processador para uma linguagem de informação e formação
-Adicionalmente, foi pedido ainda um esquema de uma linguagem de anotação para as actividades desenvolvidas.
+Numa primeira fase foram pedidos o planeamento, a modelação (Diagrama de classes, Esquema de Base de Dados, Use Cases...), uma gramática e respectivo processador para uma linguagem de informação e formação, e ainda uma esquema de uma linguagem de anotação para as actividades desenvolvidas.
+Numa segunda fase foram pedidos um processador para a linguagens de anotação de actividades desenvolvidas, um formato standard para descrição de publicações e ainda uma interface única para carregamento dos vários dados relativos ao CV do docente.
+
 
 \section{Planeamento}
-
-A figura abaixo apresenta o planeamento do projecto.\\
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\linewidth]{timeline_net_plan.png}
-\caption{Planeamento do projecto}
-\label{fig:timelinenetplan}
-\end{figure}
-
-\scriptsize 
-Nota: a figura apresenta um "net plan"  pois não era possível por motivos de espaço inserir uma organização por semanas
-\normalsize
-\newpage
 
 \section{Modelação}
 
 \subsection{Diagrama de Classes}
-\begin{figure}[!htb]
+\begin{figure}[!ht]
 \centering
 \includegraphics[scale=.4]{Diagrama_Classes.jpg}
 \caption{Diagrama de Classes}
@@ -109,26 +97,31 @@ Cada \emph{Use Case} possui uma descrição textual que nos permitiu já pondera
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=1]{bd.eps}
-\caption{Base de Dados}
+\caption{1ª versão da Base de Dados}
 \label{fig:basededados}
 \end{figure}
-A estrutura da base de dados (figura \ref{fig:basededados}) foi pensada de forma a permitir armazenar, como é óbvio, os dados que foram analisados por exemplo no diagrama de classes. Os seus relacionamentos foram facilmente idealizados.
-
-
+A estrutura da base de dados (figura \ref{fig:basededados}) foi pensada de forma a permitir armazenar, como é óbvio, os dados que foram analisados por exemplo no diagrama de classes. Os seus relacionamentos foram facilmente idealizados.\\
+Contudo no decorrer do projecto foi necessário proceder a algumas alterações na estrutura de Base de Dados de modo a corrigir alguns problemas detectados na fase da implementação dos vários importadores, como podemos ver na figura \ref{fig:basededados2}
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=1]{bd.eps}
+\caption{2ª versão da Base de Dados}
+\label{fig:basededados2}
+\end{figure}
 \section{Linguagem formal para Identificação e Formação}
 \subsection{Gramática}
 A Gramática para a linguagem de identificação e formação foi facilmente criada, recorrendo ao que já tínhamos analisado para o diagrama de classes. No entanto, permitiu-nos também enriquecer mais o diagrama de classes, pois ao irmos escrevendo a gramática lembramo-nos de coisas que nos poderiam fazer falta.\\
-Apesar de tudo não refinámos ainda muito certos campos como o email e o url porque são coisas definidas por normas externas, que queríamos tentar seguir e adaptar à gramática desenvolvida no \emph{AntLR}.\\
-Também aqui decidimos fazer algo que permita futuras actualizações sem implicar uma completa reestruturação da gramática. Uma delas foi aquilo a que nos chamamos \emph{Special ID} (SPID), por exemplo para valores como o País. Isto porque o País é um campo cujos valores podem ser normalizados de modo a que não existam dois países iguais com nomes diferentes, e poderá permitir mais para a frente se acharmos conveniente criar mais uma relação na Base de Dados, de modo a reduzir o espaço ocupado, por exemplo pelas nacionalidades.
+Apesar de tudo não refinámos ainda muito certos campos como o email e o web porque são coisas definidas por normas externas, que queríamos tentar seguir e adaptar à gramática desenvolvida no AntLR.\\
+Também aqui decidimos fazer, que permita futuras actualizações em implicar uma completa reestruturação da gramática. Uma delas foi aquilo a que nos chamamos \emph{Special ID} (SPID), por exemplo para valores como o País. Isto porque o País é um cujo os valores podem ser normalizados de modo a que não existam dois países iguais com nomes diferentes, e poderá permitir mais para a frente se acharmos conveniente criar mais uma relação na Base de Dados, de modo a reduzir o espaço ocupado, por exemplo pelas nacionalidades.
 \begin{verbatim}
 SPID
 	:	('A'..'Z')('a'..'z')* (' '('A'..'Z')('a'..'z')*)*
 	;
 \end{verbatim}
 \subsection{Processador}
-Quando discutimos o nosso processador, decidimos desde uma fase embrionária que queríamos evitar a repetição de código. Assim sendo tentamos passar grande parte da responsabilidade para o ficheiro \emph{info\_import.php}, que seria um \emph{template}. Assim grande parte das coisas geradas pelo Parser seriam simplesmente valores etiquetados que ele saberia onde colocar.\\
-Apesar de parcialmente implementada, a detecção de erros semânticos não está completa por falta de tempo. Erros como a data de início ser superior à de fim são apanhados,mas apenas é mostrada uma mensagem e o processamento continua.\\
-Também neste momento o formulário para importação do documento é bastante reduzido e serve unicamente para indicar o ficheiro em questão.
+Quando discutimos o nosso processador, foi ponto assente, que queríamos evitar a repetição de código, assim sendo tentamos passar grande parte da responsabilidade para o ficheiro \emph{info\_import.php}, que seria um \emph{template}. Assim grande parte das coisas geradas pelo Parser seriam simplesmente valores etiquetados que ele saberia onde colocar.\\
+Infelizmente não tivemos muito tempo para implementar a detecção de erros semânticos e assim, apesar de ele já detectar erros, como a data de início ser superior às de fim, apenas mostra essa mensagem mas continua o processamento.\\
+Também neste momento o formulário para importação do documento é bastante reduzido, e serve simplesmente para indicar o ficheiro em questão.
 \begin{verbatim}
 <html>
 	<head></head>
@@ -143,7 +136,7 @@ Também neste momento o formulário para importação do documento é bastante r
 	</body>
 </html>
 \end{verbatim}
-O código de execução do \emph{parser} e leitura dos resultados também não é muito complexo. No entanto permite que estejam vários utilizadores simultâneos a executar a aplicação web, sem existir nenhum tipo de conflitos já que o \emph{stdout} é redireccionado para a leitura do php através de um \emph{handler}.
+O código de execução do \emph{parser} e leitura dos resultados também não é muito complexa. No entanto permite que estejam vários utilizadores simultâneos a executar a aplicação web, sem existir nenhum tipo de conflitos já que o \emph{stdout} é redireccionado para a leitura do php através de um \emph{handler}.
 \begin{verbatim}
 $f = (popen('java -jar AntLRParser.jar "'.$_FILES['ficheiro']['tmp_name'].'"', "r"));
 
@@ -155,39 +148,186 @@ Depois as inserções são feitas na Base de Dados MySQL recorrendo à classe PD
 Aqui está um exemplo de \emph{input} válido para a gramática desenvolvida.
 \begin{verbatim}
 @info {
-	Name: "xpto"
-	Nationalities: [Portuguese,Canadian]
+	Name: "Nelson José Costa Luís"
+	Nationalities: [Portuguese, Canadian]
 	PersonalContacts: [
-					Phone: "252000000" , 
-					Email: xpto@st.pt
-					]
-	Birthdate: 13/05/2001
+					Email: nelson@di.uminho.pt,
+					Phone: "259225225"
+				  ]
+	Birthdate: 03/05/1980
 	Gender: M
-	NativeLang: [Portuguese,English]
-	Web: http://xpto.com
+	NativeLang: [Portuguese, English]
+	Web: http://di.uminho.pt/~nelson
 }
 @form {
-	Begin: 01/01/2008
-	End: 01/02/2012
-	Institution: 
+	Begin: 15/09/1995
+	End: 15/07/1998
+	Institution:
 		Name: "Universidade do Minho"
-		Address: "Gualtar Braga"
+		Address: "Gualtar"
 		Country: Portugal
 		Type: Public University
-	Degree: BSc "Engenharia Informática"
-	Result: 20
+	Degree: BSc "Engharia Informática"
+	Result: 16
+}
+@form {
+	Begin: 15/09/1998
+	End: 15/07/2000
+	Institution: 
+		Name: "Universidade do Minho"
+		Address: "Gualtar"
+		Country: Portugal
+		Type: Public University
+	Degree: MSc "Engharia Informática"
+	Result: 17
 }
 \end{verbatim}
 \section{Linguagem de anotação para descrição das Actividades}
 O \emph{Schema} (na figura \ref{fig:cv_activities}) desenvolvido para a descrição de actividades, teve também por modelo o que já tínhamos definido para a Base de Dados, para tentar equilibrar os dados que poderiam ser guardados e os que seriam enviados.\\
-Um facto bastante relevante é permitir que uma actividade esteja relacionada com mais que um utilizador, podendo descrevê-lo como utilizador do sistema, ou não utilizador (e indicando somente o seu nome).
+Um facto bastante relevante é permitir que uma actividade esteja relacionada com mais que um utilizador, podendo descrevê-lo como utilizador do sistema, ou não utilizador. No entanto o utilizador que está a submeter a informação sobre actividades não necessita de indicar directamente se o utilizador é ou não utilizador da plataforma. A própria plataforma, recorrendo a um script perl irá determinar com base na similaridade do nome apresentado, com os nomes totais dos utilizadores na plataforma, o utilizador a que se refere. No caso de conseguir um grau de probabilidade superior a 80\% no nome obtido, será considerado esse utilizador. Caso contrário será acrescentado como não utilizador da plataforma. Mas o utilizador que submeter terá sempre a possibilidade de alterar a referências a actividades suas. Também os outros utilizadores considerados parceiros nessa actividade podem optar por remover-se dessa mesma actividade.
 \begin{figure}[!ht]
 \centering
-\includegraphics[scale=0.75]{cv_activities_schema.png}
+\includegraphics[scale=0.75]{cv_activities_schema.eps}
 \caption{Schema da linguagem}
 \label{fig:cv_activities}
 \end{figure}
 
+\subsection{Processador}
+O processador para esta linguagem descrita pelo \emph{Schema} anterior foi desenvolvido em \emph{PHP} tendo em vista uma maior facilidade de manutenção e de criação. Poderíamos ter optado por algo como um \emph{XSL} mas isso obrigaria sempre a que a mesma gerasse ou código SQL, que seria depois utilizado por um script \emph{PHP}, ou então à geração do próprio código \emph{PHP}. Neste último caso o processamento seria mais extensivo porque primeiro teria que ser processado o \emph{XSL} e depois executado o \emph{PHP} por ele gerado. Por estes, resolvemos utilizar as ferramentas disponíveis na linguagem de programação, como o \emph{DOMDocument} e o \emph{DOMXpath}. Inclusivamente para ser mais fácil o processamento estendemos ligeiramente a classe \emph{DOMXpath} como podemos ver no excerto de código a seguir:
+\begin{verbatim}
+   class myXPath extends DOMXPath{
+        const RES = 'RETURNRES';
+        public function queryValue($query, $node = null, $default = null){
+            $res = $this->query($query, $node);
+            if ($default === self::RES) return $res;
+            if ($res === false || $res->length < 1){
+                $aux = $default;
+            }else if ($res->length > 1){
+                $aux = array();
+                foreach($res as $valor)
+                    $aux[] = $valor->textContent;
+            }else{
+                $aux = $res->item(0)->textContent;
+            }
+            return $aux;
+        }
+        public function recQueryToArray($query, $node){
+            $arr = array();
+            $res = $this->query($query, $node);
+            if ($res === false || $res->length <= 0) return false;
+            foreach($res as $chave => $valor) {
+                $aux = $this->recQueryToArray($query, $valor);
+                if ($aux === false)
+                    $arr[$valor->localName]['__text'] = $valor->textContent;
+                else 
+                    $arr[$valor->localName] = $aux;
+                if ($valor->hasAttributes()){
+                    $arr[$valor->localName]['__atributes'] = array();
+                    $length = $valor->attributes->length;
+                    for ($i = 0; $i < $length; ++$i) {
+                        $atr = $valor->attributes->item($i);
+                        $arr[$valor->localName]['__atributes'][$atr->name] = $atr->value;  
+                    }
+                }
+            }
+            return $arr;
+        }
+    }
+\end{verbatim}
+\subsection{Exemplo de Input}
+\begin{verbatim}
+<?xml version="1.0" encoding="UTF-8"?>
+<activities>
+  <activities key="ex1">
+    <begin_date>01/01/2012</begin_date>
+    <end_date>31/12/2012</end_date>
+    <description>Exemplo de uma actividade</description>
+    <institution>
+      <org type="Public University">
+        <name>Universidade do Minho</name>
+        <address>Gualtar</address>
+        <country>Portugal</country>
+      </org>
+    </institution>
+    <partners>
+      <partner>J. J. Almeida</partner>
+      <partner>Bruno Fernandes</partner>
+    </partners>
+    <conference is_organizator="false">
+      <name>JOIN - Jornadas de Informática da Universidade do Minho</name>
+      <place>Universidade do Minho - Gualtar</place>
+    </conference>
+  </activities>
+  <activities key="ex2">
+    <begin_date>01/05/2011</begin_date>
+    <end_date>31/06/2011</end_date>
+    <description>Actividade de 2 meses</description>
+    <institution>
+      <org type="Private University">
+        <name>Universidade Lusíada</name>
+        <address>Famalicão</address>
+        <country>Portugal</country>
+      </org>
+    </institution>
+    <partners/>
+    <other>
+      <description>Exemplo de uma actividade mais específica que deve ser descrita pelo utilizador</description>
+    </other>
+  </activities>
+</activities>
+\end{verbatim}
+
+\section{Formato standard para descrição de publicações}
+\subsection{Processador}
+\subsection{Exemplo de Input}
+
+\section{Interface única para carregamento dos vários dados relativos ao CV}
+A nossa interface para o carregamento dos dados, permite de forma bastante interactiva introduzir os dados referentes à informação básica, formação e actividades desenvolvidas. Atendendo a que o ficheiro de publicações é um simples ficheiro BibTeX, e já existem uma quantidade razoável de ferramentas que permite criar esses mesmos ficheiros, apenas temos o local de colocação de um ficheiro. No entanto a interface possui algumas simplificações, mas que podem ser limitativas para alguns CVs. Por isso mesmo é permitida a introdução de um ficheiro único, com todas as informações. Esse ficheiro, mais não é que um zip, contendo um manifesto (\emph{pr.xml}) que indica quais os ficheiros dentro do pacote que se referem à informação e formação, às actividades e às publicações. Para melhor comodidade podem haver mais que um ficheiro para cada uma das categorias (sendo que todos serão processados). Podemos ver um exemplo de um manifesto de um pacote:
+\begin{verbatim}
+<?xml version="1.0" encoding="UTF-8"?>
+<cv>
+  <info>
+    <file>info.txt</file>
+    <file>formation.txt</file>
+  </info>
+  <activities>
+    <file>act.xml</file>
+    <file>act2.xml</file>
+  </activities>
+  <publications>
+    <file>pub.bib</file>
+  </publications>
+</cv>
+\end{verbatim}
+No caso da primeira e terceiras partes o conteúdo dos vários será concatenado e depois processado pelo processador respectivo. No caso da segunda parte, das actividades, cada xml será tratado de forma independente (lido e verificado um a um, sem nenhum tipo de concatenação).\\
+\subsection{Imagens da interface}
+Podemos observar três imagens referentes aos campos disponíveis para cada secção, relativamente à informação recolhida. A figura \ref{fig:bypacote} dá a possibilidade de ser submetido directamente um ficheiro zip com todas as informações directamente lá contidas, ao mesmo tempo que garante uma maior flexibilidade.\\
+Podemos ver como no entanto é possível a interface adequar-se, por exemplo a cada tipo de actividade, garantindo uma maior capacidade ao utilizador de saber que campos serão realmente necessários.
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.6]{iInfo.png}
+\caption{Formulário para introdução da informação básica e formação}
+\label{fig:iinfo}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.6]{iActivities.png}
+\caption{Formulário para introdução das actividades desenvolvidas}
+\label{fig:iActivities}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.6]{iPublications.png}
+\caption{Formulário para introdução das publicações}
+\label{fig:iPublications}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.6]{bypacote.png}
+\caption{Formulário para introdução do pacote em formato zip}
+\label{fig:bypacote}
+\end{figure}
+
 \section{Conclusão}
-O objectivo desta primeira avaliação do Projecto Integrado, é garantir que o mesmo segue já a um bom ritmo, servindo também já como um suporte para o desenvolvimento futuro, na medida em que será uma base sobre a qual podemos continuar a construir já mais cientes dos caminhos correctos que escolhemos e daqueles que não estavam assim tão correctos, ao ser mostrado à equipa docente os resultados obtidos até à data.
+O objectivo desta segunda avaliação do Projecto Integrado, é garantir que o mesmo segue já a um bom ritmo, servindo também já como um suporte para o desenvolvimento futuro, na medida em que será uma base sobre a qual podemos continuar a construir já mais cientes dos caminhos correctos que escolhemos e daqueles que não estavam assim tão correctos, ao ser mostrado à equipa docente os resultados obtidos até à data. Ao mesmo tempo confrontámos também as alterações que fizemos fruto da primeira avaliação, e das opiniões dos docentes.
 \end{document}
