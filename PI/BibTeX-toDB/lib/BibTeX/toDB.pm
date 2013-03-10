@@ -86,10 +86,10 @@ sub parseArticle {
 				foreach (@authors) {
 					if (!defined $self->{parsedInfo}->{$_}) {
 						$self->{parsedInfo}->{$_} = [];
-						push $self->{parsedInfo}->{$_}, [$title, $journal,$year];
+						push $self->{parsedInfo}->{$_}, ["article",$title, $journal,$year];
 					}
 					else {
-						push $self->{parsedInfo}->{$_}, [$title, $journal,$year];	
+						push $self->{parsedInfo}->{$_}, ["article",$title, $journal,$year];	
 					}
 				}
 
@@ -157,10 +157,10 @@ sub parseReport {
 				foreach (@authors) {
 					if (!defined $self->{parsedInfo}->{$_}) {
 						$self->{parsedInfo}->{$_} = [];
-						push $self->{parsedInfo}->{$_}, [$title, $institution,$year];
+						push $self->{parsedInfo}->{$_}, ["report",$title, $institution,$year];
 					}
 					else {
-						push $self->{parsedInfo}->{$_}, [$title, $institution,$year];	
+						push $self->{parsedInfo}->{$_}, ["report",$title, $institution,$year];	
 					}
 				}
 
@@ -228,10 +228,10 @@ sub parseInproceedings {
 				foreach (@authors) {
 					if (!defined $self->{parsedInfo}->{$_}) {
 						$self->{parsedInfo}->{$_} = [];
-						push $self->{parsedInfo}->{$_}, [$title, $booktitle,$year,$url];
+						push $self->{parsedInfo}->{$_}, ["inproceedings",$title, $booktitle,$year,$url];
 					}
 					else {
-						push $self->{parsedInfo}->{$_}, [$title, $booktitle,$year,$url];	
+						push $self->{parsedInfo}->{$_}, ["inproceedings",$title, $booktitle,$year,$url];	
 					}
 				}
 

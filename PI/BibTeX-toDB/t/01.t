@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Data::Dumper;
 
-use Test::More tests => 4;
+use Test::More tests => 5;
 #use BibTeX::toDB;
 BEGIN { use_ok('BibTeX::toDB') };
 
@@ -18,4 +18,6 @@ $f->parse("techreport");
 is($f->{entries},28,"entries techreport");
 
 $f->parse("inproceedings");
+is($f->{entries},70,"entries inproceedings");
+
 print Dumper $f->{parsedInfo};
