@@ -7,9 +7,7 @@
 		<form method=\"post\" action=\"info_import.php\" enctype=\"multipart/form-data\">
             <fieldset>
                 <legend>Info e Form:</legend> 
-                <table>
-					<input type='file' name='ficheiro'/>
-				</table>
+                <input type='file' name='ficheiro'/>
 			</fieldset>
 			<input type=\"submit\" name=\"Enviar\"/>
 		</form>
@@ -20,7 +18,7 @@
 	$f = (popen('java -jar AntLRParser.jar "'.$_FILES['ficheiro']['tmp_name'].'"', "r"));
 
 	$valor = "";
-	while (!feof($f)) {$valor .= fread($f, 20);}
+	while (!feof($f)) {$valor .= fread($f, 60);}
 	
 	
 	$db = new myDB();
