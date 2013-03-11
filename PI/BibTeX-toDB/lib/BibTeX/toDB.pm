@@ -10,6 +10,11 @@ use encoding "iso 8859-1";
 
 require Exporter;
 
+use constant {
+	NO_USER => 0,
+	SUCCESS => 1,
+};
+
 our @ISA = qw(Exporter);
 our %EXPORT_TAGS = ( 'all' => [ qw() ] );
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
@@ -24,7 +29,7 @@ sub new {
 	my $self = {
 		entries => 0,
 		bibfile => read_file($bibfile, array_ref => 1),
-		database => DBI->connect($database,$user,$pass,{RaiseError => 1, AutoCommit => 0}),				
+		database => DBI->connect($database,$user,$pass,{RaiseError => 1, AutoCommit => 1, mysql_auto_reconnect => 1}),				
 		parsedInfo => {},		
 	};	
 
@@ -274,6 +279,73 @@ sub parseInproceedings {
 	}
 
 
+
+}
+
+sub insertDB {
+
+	my ($self,$user) = @_;
+	my $res = $self->{parsedInfo};
+	my $dbh = $self->{database};
+	my $found = 0;
+	my $usr_id;
+
+
+	for my $aut (keys $res) {
+		if ($aut eq $user) {
+			$found = 1;
+			last;
+		}
+	}
+	return NO_USER if not $found;
+
+
+	my $sth = $dbh->prepare("select * from info where name = ?");
+	$sth->bind_param(1,$user);
+	$sth->execute;
+
+	while (my @tmp = $sth->fetchrow_array()) {
+		$usr_id = $tmp[0]; #fetch user id
+	}
+	$res = $res->{$user};
+	my $id;
+
+	foreach (@$res) {		
+		my @arr = @$_;			
+		if ($arr[0] eq 'article') {
+			$sth = $dbh->prepare("insert into publications  (`type`, `title`, `journal`, `year`) values (?,?,?,?)");
+			$sth->bind_param(1,$arr[0]);
+			$sth->bind_param(2,$arr[1]);
+			$sth->bind_param(3,$arr[2]);
+			$sth->bind_param(4,$arr[3]);						
+			$sth->execute;
+			$id = $dbh->{ q{mysql_insertid}};
+
+			$sth = $dbh->prepare("insert into users_publications values ($usr_id,$id)");
+			$sth->execute;
+		}
+
+
+		if ($arr[0] eq 'inproceedings') {
+			$sth = $dbh->prepare("insert into publications  (`type`, `title`, `year`, `booktitle`,`url`) values (?,?,?,?,?)");
+			$sth->bind_param(1,$arr[0]);
+			$sth->bind_param(2,$arr[1]);
+			$sth->bind_param(3,$arr[3]);
+			$sth->bind_param(4,$arr[2]);		
+			$sth->bind_param(5,$arr[4]);						
+			$sth->execute;
+			$id = $dbh->{ q{mysql_insertid}};
+
+			$sth = $dbh->prepare("insert into users_publications values ($usr_id,$id)");
+			$sth->execute;
+		}	
+
+	}
+	
+
+	$dbh->disconnect;
+
+	return SUCCESS;
 
 }
 
