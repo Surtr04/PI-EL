@@ -157,14 +157,14 @@
 				foreach($list as $chave => $valor){
 					$txt .= $zip->getFromName($valor->textContent)." ";
 				}
-				$_FILES['ficheiro']['tmp_name'] = tmpnam("tmp", "01i");
+				$_FILES['ficheiro']['tmp_name'] = tempnam("tmp", "01i");
 				file_put_contents($_FILES['ficheiro']['tmp_name'], $txt);
 				require('info_import.php');
 				
 				//2ª Parte
 				$list = $xml->getElementsByTagName('activities');
 				foreach($list as $chave => $valor){
-					$_FILES['ficheiro']['tmp_name'] = tmpnam("tmp", "02a");
+					$_FILES['ficheiro']['tmp_name'] = tempnam("tmp", "02a");
 					file_put_contents($_FILES['ficheiro']['tmp_name'], $zip->getFromName($valor->textContent));
 					require('activities_import.php');
 				}
