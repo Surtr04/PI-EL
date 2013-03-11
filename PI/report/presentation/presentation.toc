@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.20pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Modifica\IeC {\c c}\IeC {\~o}es}{3}{0}{1}
+\beamer@sectionintoc {2}{Linguagem de Actividades}{4}{0}{2}
+\beamer@sectionintoc {3}{Descri\IeC {\c c}\IeC {\~a}o de Publica\IeC {\c c}\IeC {\~o}es}{6}{0}{3}
+\beamer@sectionintoc {4}{Interface \IeC {\'U}nica}{8}{0}{4}
+\beamer@sectionintoc {5}{Quest\IeC {\~o}es}{10}{0}{5}

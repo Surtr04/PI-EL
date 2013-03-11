@@ -1,0 +1,16 @@
+\frametitle{Manifesto de um pacote gerado}
+\begin{verbatim}
+<cv>
+  <info>
+    <file>info.txt</file>
+    <file>formation.txt</file>
+  </info>
+  <activities>
+    <file>act.xml</file>
+    <file>act2.xml</file>
+  </activities>
+  <publications>
+    <file>pub.bib</file>
+  </publications>
+</cv>
+\end{verbatim}
