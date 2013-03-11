@@ -33,6 +33,8 @@
 		insertForm($db, $pid, $aux->form);
 	}
 	
+	$_SESSION['pid'] = $pid;
+	
 	function insertForm($db, $person_id, $txt){
 		$db->beginTransaction();
 		

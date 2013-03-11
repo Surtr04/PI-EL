@@ -1,23 +1,34 @@
-Ôªø@info {
-	Name: "xpto"
-	Nationalities: [Portuguese,Canadian]
+@info {
+	Name: "Nelson Jose Costa Luis"
+	Nationalities: [Portuguese, Canadian]
 	PersonalContacts: [
-					Phone: "252000000" , 
-					Email: xpto@st.pt
-					]
-	Birthdate: 13/05/2001
+					Email: nelson@uminho.pt,
+					Phone: "259225225"
+				  ]
+	Birthdate: 03/05/1980
 	Gender: M
-	NativeLang: [Portuguese,English]
-	Web: http://xpto.com
+	NativeLang: [Portuguese, English]
+	Web: http://di.uminho.pt
 }
 @form {
-	Begin: 01/01/2008
-	End: 01/02/2012
+	Begin: 15/09/1995
+	End: 15/07/1998
+	Institution:
+		Name: "Universidade do Minho"
+		Address: "Gualtar"
+		Country: Portugal
+		Type: Public University
+	Degree: BSc "Engharia Inform·tica"
+	Result: 16
+}
+@form {
+	Begin: 15/09/1998
+	End: 15/07/2000
 	Institution: 
 		Name: "Universidade do Minho"
-		Address: "Gualtar xpto"
-		Country: Portugal Europeu
-		Type: University
-	Degree: BSc "Engenharia Inform√°tica"
-	Result: 20
+		Address: "Gualtar"
+		Country: Portugal
+		Type: Public University
+	Degree: MSc "Engharia Inform·tica"
+	Result: 17
 }

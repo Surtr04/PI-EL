@@ -94,11 +94,11 @@ form returns [String valor]
 	;
 	
 begin returns [String valor, GregorianCalendar data]
-	:	'Begin: ' data {$begin.valor = $data.valor;}
+	:	'Begin: ' data {$begin.valor = $data.valor; $begin.data = $data.data;}
 	;
 	
 end	returns [String valor, GregorianCalendar data]
-	:	'End: ' data {$end.valor = $data.valor;}
+	:	'End: ' data {$end.valor = $data.valor; $end.data = $data.data;}
 	;
 
 degree returns [String valor]

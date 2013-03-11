@@ -104,7 +104,7 @@ A estrutura da base de dados (figura \ref{fig:basededados}) foi pensada de forma
 Contudo no decorrer do projecto foi necessário proceder a algumas alterações na estrutura de Base de Dados de modo a corrigir alguns problemas detectados na fase da implementação dos vários importadores, como podemos ver na figura \ref{fig:basededados2}
 \begin{figure}[!ht]
 \centering
-\includegraphics[scale=1]{bd.eps}
+\includegraphics[scale=1]{bd2.eps}
 \caption{2ª versão da Base de Dados}
 \label{fig:basededados2}
 \end{figure}
@@ -121,21 +121,7 @@ SPID
 \subsection{Processador}
 Quando discutimos o nosso processador, foi ponto assente, que queríamos evitar a repetição de código, assim sendo tentamos passar grande parte da responsabilidade para o ficheiro \emph{info\_import.php}, que seria um \emph{template}. Assim grande parte das coisas geradas pelo Parser seriam simplesmente valores etiquetados que ele saberia onde colocar.\\
 Infelizmente não tivemos muito tempo para implementar a detecção de erros semânticos e assim, apesar de ele já detectar erros, como a data de início ser superior às de fim, apenas mostra essa mensagem mas continua o processamento.\\
-Também neste momento o formulário para importação do documento é bastante reduzido, e serve simplesmente para indicar o ficheiro em questão.
-\begin{verbatim}
-<html>
-	<head></head>
-	<body>
-	<form method=\"post\" action=\"info_import.php\" enctype=\"multipart/form-data\">
-            <fieldset>
-                <legend>Info e Form:</legend> 
-			<input type='file' name='ficheiro'/>
-	    </fieldset>
-	    <input type=\"submit\" name=\"Enviar\"/>
-	</form>
-	</body>
-</html>
-\end{verbatim}
+
 O código de execução do \emph{parser} e leitura dos resultados também não é muito complexa. No entanto permite que estejam vários utilizadores simultâneos a executar a aplicação web, sem existir nenhum tipo de conflitos já que o \emph{stdout} é redireccionado para a leitura do php através de um \emph{handler}.
 \begin{verbatim}
 $f = (popen('java -jar AntLRParser.jar "'.$_FILES['ficheiro']['tmp_name'].'"', "r"));
@@ -151,13 +137,13 @@ Aqui está um exemplo de \emph{input} válido para a gramática desenvolvida.
 	Name: "Nelson José Costa Luís"
 	Nationalities: [Portuguese, Canadian]
 	PersonalContacts: [
-					Email: nelson@di.uminho.pt,
+					Email: nelson@uminho.pt,
 					Phone: "259225225"
 				  ]
 	Birthdate: 03/05/1980
 	Gender: M
 	NativeLang: [Portuguese, English]
-	Web: http://di.uminho.pt/~nelson
+	Web: http://di.uminho.pt
 }
 @form {
 	Begin: 15/09/1995
@@ -187,7 +173,7 @@ O \emph{Schema} (na figura \ref{fig:cv_activities}) desenvolvido para a descriç
 Um facto bastante relevante é permitir que uma actividade esteja relacionada com mais que um utilizador, podendo descrevê-lo como utilizador do sistema, ou não utilizador. No entanto o utilizador que está a submeter a informação sobre actividades não necessita de indicar directamente se o utilizador é ou não utilizador da plataforma. A própria plataforma, recorrendo a um script perl irá determinar com base na similaridade do nome apresentado, com os nomes totais dos utilizadores na plataforma, o utilizador a que se refere. No caso de conseguir um grau de probabilidade superior a 80\% no nome obtido, será considerado esse utilizador. Caso contrário será acrescentado como não utilizador da plataforma. Mas o utilizador que submeter terá sempre a possibilidade de alterar a referências a actividades suas. Também os outros utilizadores considerados parceiros nessa actividade podem optar por remover-se dessa mesma actividade.
 \begin{figure}[!ht]
 \centering
-\includegraphics[scale=0.75]{cv_activities_schema.eps}
+\includegraphics[scale=0.70]{cv_activities_schema.eps}
 \caption{Schema da linguagem}
 \label{fig:cv_activities}
 \end{figure}
@@ -234,6 +220,7 @@ O processador para esta linguagem descrita pelo \emph{Schema} anterior foi desen
         }
     }
 \end{verbatim}
+Questões como os partners, foram alteradas, de modo a que o utilizador não se preocupe se é ou não utilizador da plataforma, já que a mesma recorre a uma ferramenta criada maioritariamente nas aulas de \emph{SPLN}, com o intuito de desambiguar nomes
 \subsection{Exemplo de Input}
 \begin{verbatim}
 <?xml version="1.0" encoding="UTF-8"?>

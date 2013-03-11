@@ -59,9 +59,9 @@
         exit(0);
     }
     
-    var_dump($aux);
+    //var_dump($aux);
     
-    die();
+    
     insereDB($aux);
     
     
@@ -128,6 +128,9 @@
     
     function trataNomes($lista){
         $ret = array();
+        $ret['upartners'] = array();
+        $ret['npartners'] = $lista;
+        return $ret;
         foreach($lista as $valor){
             $f = (popen('perl fnames.pl -s "'.$valor.'" -p', "r"));
             $valor = "";
@@ -199,13 +202,7 @@
             $query->closeCursor();
         }
         
-        $query = $db->prepare("INSERT INTO activities_info VALUES(:act, :key, :value)");
-        foreach($aux['npartenrs'] as $valor){
-            $query->bindValue(':act', $act, PDO::PARAM_INT);
-            $query->bindValue(':key', $valor, PDO::PARAM_STR);
-            $query->bindValue(':value', $valor, PDO::PARAM_STR);
-        }
-        
+      
         $db->commit();
         
     }
