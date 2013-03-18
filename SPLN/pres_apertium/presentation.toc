@@ -1,0 +1,6 @@
+\beamer@endinputifotherversion {3.20pt}
+\select@language {english}
+\beamer@sectionintoc {1}{What it it}{3}{0}{1}
+\beamer@sectionintoc {2}{Installation}{4}{0}{2}
+\beamer@sectionintoc {3}{Dictionary sample}{6}{0}{3}
+\beamer@sectionintoc {4}{Usage}{7}{0}{4}

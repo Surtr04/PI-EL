@@ -1,0 +1,248 @@
+\documentclass{beamer}
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[retainorgcmds]{IEEEtrantools}%	IEEEeqnarray
+\usepackage{mathabx}%	convolution symbol
+\usepackage{multi row}
+\usepackage{epstopdf}
+\usepackage{listings}
+
+
+%	presentation info
+\title{Apertium - An Open-Source Platform for Automatic Translation}
+
+\author{António Silva, Rui Brito}
+
+\institute[pg22820, pg22781]{
+	Universidade do Minho
+}
+
+\date{Braga, Março 2013}
+
+
+%	beamer options
+\usetheme{Frankfurt}
+
+
+\begin{document}%	begin presentation
+
+\maketitle%	title slide
+
+\begin{frame}
+	\frametitle{Index}
+	\tableofcontents
+\end{frame}
+
+\section{What it it}
+\begin{frame}
+	\begin{block}{What it is}
+		\begin{itemize}
+			\item Machine Translation Engine from the OpenTrad project			
+			\item Designed to translate closely related languages
+			\begin{itemize}
+				\item Recently expanded to support more divergent languages (e.g. es-en)
+			\end{itemize}
+			\item Dictionaries come in language pairs
+			\begin{itemize}
+				\item Well defined XML format
+			\end{itemize}
+			\item Works with lttoolbox
+				\begin{itemize}
+					\item Toolbox for lexical processing, morphological analysis and word generation
+			\end{itemize}
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\section{Installation}
+\subsection{}
+\begin{frame}[fragile]
+
+	\begin{block}{Install dependencies}
+		autoconf automake expat flex
+		gettext gperf help2man libiconv libtool 
+		libxml2 libxslt m4 ncurses p5-locale-gettext 
+		pcre perl5 pkgconfig zlib gawk subversion
+	\end{block}
+	\begin{block}{Get sources}
+		\lstset{
+    		language=bash,
+    		basicstyle=\ttfamily\small,
+    		breaklines=true
+		}
+		\begin{lstlisting}
+			$ svn co http://apertium.svn.sourceforge.net/svnroot/apertium/trunk/lttoolbox
+			$ svn co http://apertium.svn.sourceforge.net/svnroot/apertium/trunk/apertium
+		\end{lstlisting}
+	\end{block}
+	\begin{block}{Get Dictionary Pairs}
+		\lstset{
+    		language=bash,
+    		basicstyle=\ttfamily\small,
+    		breaklines=true
+		}
+		\begin{lstlisting}
+			$ svn co http://apertium.svn.sourceforge.net/svnroot/apertium/trunk/apertium-es-pt
+		\end{lstlisting}
+		\tiny
+		Full list of dictionary pairs available at: \url{http://wiki.apertium.org/wiki/List_of_dictionaries}
+	\end{block}
+
+\end{frame}
+
+\subsection{}
+\begin{frame}[fragile]	
+			\begin{block}{Setting the environment}
+				\lstset{
+		    		language=bash,
+		    		basicstyle=\ttfamily\small,
+		    		breaklines=true
+				}
+				\begin{lstlisting}
+					$ PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+					$ export PKG_CONFIG_PATH			
+				\end{lstlisting}
+			\end{block}	
+			For each downloaded package do:
+			\begin{block}{Compilation}
+				\lstset{
+		    		language=bash,
+		    		basicstyle=\ttfamily\small,
+		    		breaklines=true
+				}
+				\begin{lstlisting}
+					$ ./autogen.sh
+					$ make
+					$ sudo make install			
+				\end{lstlisting}
+			\end{block}			
+\end{frame}
+
+\section{Dictionary sample}
+\begin{frame}[fragile]
+	\scriptsize
+	\begin{columns}[t]	
+	\column{.5\textwidth}
+	{\bf Sample XML:}
+	\lstset{
+		    		language=XML,
+		    		basicstyle=\ttfamily\scriptsize,
+		    		breaklines=true
+				}
+	\begin{lstlisting}
+		<pardefs>
+    <pardef n="numerals">
+      <e>
+        <p>
+          <l>uno<s n="num"/></l>
+          <r>um<s n="num"/></r>
+        </p>
+      </e>
+      <e>
+        <p>
+          <l>uno<s n="det"/></l>
+          <r>um<s n="det"/></r>
+        </p>
+      </e>
+	\end{lstlisting}
+
+	\column{.5\textwidth}
+	{\bf With lt-expand:}
+	\begin{center}
+	\begin{verbatim}
+	estar<vblex>:estar<vblex>
+	decir<vblex>:dizer<vblex>
+	tener<vblex>:ter<vblex>
+	año<n>:ano<n>
+	país<n>:país<n>
+	obrar<vblex>:>:fazer<vblex>
+	\end{verbatim}
+	\vdots
+	\begin{verbatim}
+	primero<adj>:primeiro<adj>
+	benéfico<adj>:benéfico<adj>
+	primer<adj>:>:primeiro<adj>
+	Irak<np>:Iraque<np>
+	
+	\end{verbatim}
+	\end{center}
+	\end{columns}
+\end{frame}
+
+\section{Usage}
+\subsection{}
+\begin{frame}[fragile]
+	
+	\begin{block}{Basic Usage}	
+	\lstset{
+		    		language=bash,
+		    		basicstyle=\ttfamily\small,
+		    		breaklines=true
+				}
+	\begin{lstlisting}
+		$ apertium language-pair file
+	\end{lstlisting}
+	e.g.
+	\lstset{
+		    		language=bash,
+		    		basicstyle=\ttfamily\small,
+		    		breaklines=true
+				}
+	\begin{lstlisting}
+		$ echo "Buenas tardes" apertium es-pt
+	\end{lstlisting}
+	Will produce the output:\\
+	Boas Tardes
+	\end{block}
+
+\end{frame}
+
+\subsection{}
+\begin{frame}[fragile]
+	After compilation of the dictionary we can analyse possible lexical forms.
+	\begin{block}{Lexical Analysis}
+	
+	\lstset{
+		    		language=bash,
+		    		basicstyle=\ttfamily\small,
+		    		breaklines=true
+				}
+	\begin{lstlisting}
+		$ lt-proc morf-file file|word
+	\end{lstlisting}
+	\end{block}
+	\begin{block}{Example}
+	
+	\lstset{
+		    		language=bash,
+		    		basicstyle=\ttfamily\small,
+		    		breaklines=true
+				}
+	\begin{lstlisting}
+		$ echo "prova" | lt-proc pt-es.automorf.bin
+	\end{lstlisting}
+	Will produce the following output:
+	\lstset{
+		    		language=xml,
+		    		basicstyle=\ttfamily\small,
+		    		breaklines=true
+				}
+	\begin{lstlisting}
+		^prova/prova<n><f><sg>/provar<vblex><imp><p2><sg>/provar<vblex><pri><p3><sg>/provir<vblex><imp><p3><sg>/provir<vblex><prs><p1><sg>/provir<vblex><prs><p3><sg>$
+	\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+\titlepage
+	\begin{center}
+		\Huge\bfseries
+		- ? -
+	\end{center}
+\end{frame}
+
+
+\end{document}%	end presentation

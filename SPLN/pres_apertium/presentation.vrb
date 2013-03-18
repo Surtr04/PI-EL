@@ -1,0 +1,32 @@
+After compilation of the dictionary we can analyse possible lexical forms.
+\begin{block}{Lexical Analysis}
+
+\lstset{
+     language=bash,
+     basicstyle=\ttfamily\small,
+     breaklines=true
+}
+\begin{lstlisting}
+$ lt-proc morf-file file|word
+\end{lstlisting}
+\end{block}
+\begin{block}{Example}
+
+\lstset{
+     language=bash,
+     basicstyle=\ttfamily\small,
+     breaklines=true
+}
+\begin{lstlisting}
+$ echo "prova" | lt-proc pt-es.automorf.bin
+\end{lstlisting}
+Will produce the following output:
+\lstset{
+     language=xml,
+     basicstyle=\ttfamily\small,
+     breaklines=true
+}
+\begin{lstlisting}
+^prova/prova<n><f><sg>/provar<vblex><imp><p2><sg>/provar<vblex><pri><p3><sg>/provir<vblex><imp><p3><sg>/provir<vblex><prs><p1><sg>/provir<vblex><prs><p3><sg>$
+\end{lstlisting}
+\end{block}
