@@ -20,7 +20,7 @@
 	Universidade do Minho
 }
 
-\date{Braga, March 2013}
+\date{Braga, Março 2013}
 
 
 %	beamer options
@@ -206,7 +206,7 @@
 
 \subsection{}
 \begin{frame}[fragile]
-	After compilation of the dictionary we can analyze possible lexical forms.
+	After compilation of the dictionary we can analyse possible lexical forms.
 	\begin{block}{Lexical Analysis}
 	
 	\lstset{
