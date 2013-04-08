@@ -47,10 +47,11 @@
 \end{multicols}
 
 \begin{abstract}
+As métricas de software são um instrumento bastante útil no processo de conferir algum valor empirico a algo que \emph{a priori}, não seria mensurável. Este relatório apresenta e discute algumas das métricas mais comuns em utilização hoje em dia, bem como a forma como algumas delas são calculadas. 
 \end{abstract}
 
 \section{Introdução} 
-O processo de validação e certificação de softtware é cada vez mais importante, assim como necessário para a construção do mesmo.
+O processo de validação e certificação de software é cada vez mais importante, assim como necessário para a construção do mesmo.
 Mas como podemos afirmar se um programa  é bom ou mau? Só existem bons programas se existirem maus programas, e são os conhecimentos, a experincia da interpretação e leitura de vários programas, que nos fornece da noção de um bom ou mau programa.
 No entanto  é importante saber quais as caracteristicas que podem ser utilizadas, e que ao mesmo tempo têm uma posição relevante na decisão de um bom ou mau software.
 \section{Métricas de Software}
@@ -141,9 +142,13 @@ Destes números, várias métricas podem ser derivadas, por exemplo:
 	\item Tempo necessário para programar: $T = \frac{E}{18}$;
 	\item Número de bugs entregues: $B = \frac{E^{\frac{2}{3}}}{3000}$;
 \end{itemize}
+
 \section{Tempo de Execução}
 Esta é uma metrica que indirectamente se encontra relacionada com a complexidade do problema, no entanto é uma métrica bastante importante na avaliação da qualidade de um software. O que é importante? O que devemos medir? \\
 Num produto de software podemos não estar interessados no tempo de execução da sua totalidade mas sim de apenas uma pequena zona critica, identificar esta zona critica é, então, algo importante. Ainda mais, um bom conhecimento do comportamento de um produto de software podemos levar a encontrar bugs de run-time muito mais facilmente (erros lógicos ou limites de arrays, por exemplo). 
+
+\subsection{Como é medida}
+No caso de ser necessário identificar uma zona critica, primeiro usam-se ferramentas de profiling de código, como o \emph{Valgrind/Callgrind}, o \emph{Intel\textregistered VTune} ou o \emph{Instruments}. Ferramentas deste tipo, não só nos dão informação importante sobre a função/método que está a gastar mais tempo na execução, como também da linhas de código que são mais pesadas. São então uma ferramenta indispensável na optimização de código. Poupando, assim, várias horas de trabalho e, portanto, reduzindo os custos. 
 
 \section{Número de erros}
 A existência de erros em qualquer programa é um indicador por si só de má qualidade, ou melhor, de que no exacto momento a que se submeteu à avaliação é um software inválido. Os erros podem ter várias origens, mesmo que o programa seja de qualidade. Erros podem ser induzidos pelo SO, por versões divergentes de um compilador, por falta de uma biblioteca, etc...

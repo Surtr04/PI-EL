@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2013.2.6)  7 APR 2013 01:37
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2013.2.6)  8 APR 2013 11:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -702,63 +702,61 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 47.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 47.
-
-Underfull \vbox (badness 2529) has occurred while \output is active []
-
-
 (/usr/local/texlive/2012/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 )
 (/usr/local/texlive/2012/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 )
-LaTeX Font Info:    Try loading font information for T1+aett on input line 75.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 76.
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
 
 LaTeX Font Warning: Font shape `T1/aett/bx/n' undefined
-(Font)              using `T1/aett/m/n' instead on input line 76.
+(Font)              using `T1/aett/m/n' instead on input line 77.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 78.
+(Font)              <7> on input line 79.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 78.
-LaTeX Font Info:    Try loading font information for OMS+aer on input line 81.
+(Font)              <5> on input line 79.
+LaTeX Font Info:    Try loading font information for OMS+aer on input line 82.
 (/usr/local/texlive/2012/texmf-dist/tex/latex/ae/omsaer.fd
 File: omsaer.fd 1999/12/27
 )
 LaTeX Font Info:    Font shape `OMS/aer/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 81.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 82.
  [1{/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-Underfull \hbox (badness 3039) in paragraph at lines 137--138
+Underfull \hbox (badness 3039) in paragraph at lines 138--139
 []\T1/aer/m/n/10 Comprimento do pro-grama cal-cu-lado: $[] \OT1/cmr/m/n/10 =
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 152.
+LaTeX Font Info:    Font shape `OMS/aer/m/it' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 151.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 157.
 [2]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 152.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 157.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 152.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 152.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 157.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 157.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 3C68B59FB8B6A11C11E54CD4CAC4B81F;615.
+(rerunfilecheck)             Checksum: 7352ADB6967641D3ACC5F86FEAF939AF;667.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 152.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 157.
  ) 
 Here is how much of TeX's memory you used:
- 10782 strings out of 493488
- 168080 string characters out of 3141327
+ 10791 strings out of 493488
+ 168178 string characters out of 3141327
  332732 words of memory out of 3000000
- 13912 multiletter control sequences out of 15000+200000
- 31068 words of font info for 66 fonts, out of 3000000 for 9000
+ 13917 multiletter control sequences out of 15000+200000
+ 33552 words of font info for 69 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  37i,9n,49p,721b,1305s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
@@ -774,11 +772,12 @@ texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/tex
 live/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texliv
 e/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2
 012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/20
-12/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on report.pdf (2 pages, 147948 bytes).
+12/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/201
+2/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
+Output written on report.pdf (2 pages, 161841 bytes).
 PDF statistics:
- 130 PDF objects out of 1000 (max. 8388607)
- 110 compressed objects within 2 object streams
- 23 named destinations out of 1000 (max. 500000)
- 81 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 138 PDF objects out of 1000 (max. 8388607)
+ 117 compressed objects within 2 object streams
+ 24 named destinations out of 1000 (max. 500000)
+ 89 words of extra memory for PDF output out of 10000 (max. 10000000)
 
