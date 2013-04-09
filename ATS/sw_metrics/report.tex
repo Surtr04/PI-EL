@@ -20,6 +20,7 @@
 \usepackage{multicol}
 \usepackage{appendix}
 \usepackage{listings}
+\usepackage{array}
 
 
 
@@ -40,7 +41,7 @@
     Silva, António\\
     PG22820\\
     Universidade do Minho\\
-    anolsi@live.com
+    pg22820@alunos.uminho.pt
 }
 \date{}
 \maketitle
@@ -57,11 +58,11 @@ No entanto  é importante saber quais as caracteristicas que podem ser utilizada
 \section{Métricas de Software}
 \label{sec:swmetrics}
 Métricas de software são um conjunto de medidas de alguma propriedade do software ou da sua especificação. São, no fundo, um tentativa de munir a Engenharia de Software de ferramentas de medição, transversais a todas as ciências e engenharias. Estas métricas podem ser uteis na planificação de um projecto, na estimativa de custo, em debugging, optimização de performance e também garantias de qualidade.\\
-Existem, então, diversas métricas capazes de contribuir com feedback quanto à qualidade de um software, no entanto, nem todas são objectivas ou podem ser usadas sem conhecimento humano. Estamos então a falar de métricas que devem ser calculáveis, facilmente compreensiveis, que possam ser testadas, que sejam passiveis de estudos estatisticos e que consequemente se expressem em alguma unidade, por ultimo, deverão ser repetiveis e independentes do observador.
+Existem, então, diversas métricas capazes de contribuir com feedback quanto à qualidade de um software, no entanto, nem todas são objectivas ou podem ser usadas sem conhecimento humano. Estamos então a falar de métricas que devem ser calculáveis, facilmente compreensiveis, que possam ser testadas, que sejam passiveis de estudos estatisticos e que consequemente se expressem em alguma unidade, por último, deverão ser repetiveis e independentes do observador.
 
 \section{LOC - Lines of Code}
 
-O numero de linhas de código é provavelmente a métrica mais vulgar e comum entre as diferentes linguagens, assim como a mais evidente. Pretende-se com o número de linhas de código analisar a dimensão do código, pois como é do senso comum da engenharia de software, ”um bom código não  é um código grande”.
+O numero de linhas de código é provavelmente a métrica mais vulgar e comum entre as diferentes linguagens, assim como a mais evidente. Pretende-se com o número de linhas de código analisar a dimensão do código, pois como é do senso comum da engenharia de software, ”um bom código não necessariamente é um código grande”.
 
 \subsection{Como é medida}
 
@@ -148,10 +149,64 @@ Esta é uma metrica que indirectamente se encontra relacionada com a complexidad
 Num produto de software podemos não estar interessados no tempo de execução da sua totalidade mas sim de apenas uma pequena zona critica, identificar esta zona critica é, então, algo importante. Ainda mais, um bom conhecimento do comportamento de um produto de software podemos levar a encontrar bugs de run-time muito mais facilmente (erros lógicos ou limites de arrays, por exemplo). 
 
 \subsection{Como é medida}
-No caso de ser necessário identificar uma zona critica, primeiro usam-se ferramentas de profiling de código, como o \emph{Valgrind/Callgrind}, o \emph{Intel\textregistered VTune} ou o \emph{Instruments}. Ferramentas deste tipo, não só nos dão informação importante sobre a função/método que está a gastar mais tempo na execução, como também da linhas de código que são mais pesadas. São então uma ferramenta indispensável na optimização de código. Poupando, assim, várias horas de trabalho e, portanto, reduzindo os custos. 
+No caso de ser necessário identificar uma zona critica, primeiro usam-se ferramentas de profiling de código, como o \emph{Valgrind/Callgrind}, o \emph{Intel\textregistered VTune} ou o \emph{Instruments}. Ferramentas deste tipo, não só nos dão informação importante sobre a função/método que está a gastar mais tempo na execução, como também da linhas de código que são mais pesadas. São então uma ferramenta indispensável na optimização de código. Poupando, assim, várias horas de trabalho e, portanto, reduzindo os custos. Obviamente, para obter dados consistentes, será conviniente que estes testes sejam uniformes, ou seja, corridos na mesma máquina ou numa máquina equivalente. 
 
 \section{Número de erros}
 A existência de erros em qualquer programa é um indicador por si só de má qualidade, ou melhor, de que no exacto momento a que se submeteu à avaliação é um software inválido. Os erros podem ter várias origens, mesmo que o programa seja de qualidade. Erros podem ser induzidos pelo SO, por versões divergentes de um compilador, por falta de uma biblioteca, etc...
 É, portanto, algo a ter em conta no desenho de uma peça de software. 
+
+\section{ISO-9126}
+Esta métrica é uma norma internacional para a avaliação de qualidade de software. O objectivo é formalizar o processo e tentar evitar algumas tendência que um observador humano eventualmente terá. Tendências que incluem, alterações de prioridades ou falta de um objectivo claro. Assim, prioridades abstractas são convertidas em quantidades mensuráveis, validades por um schema. Tudo isto sem intervenção humana. 
+A tabela abaixo apresenta o modelo de qualidade desta norma, bem como os testes usados.
+
+\tabcolsep=0.11cm
+\begin{table}[!hc]
+	\footnotesize
+		\begin{tabular}{c|p{2.5cm}|p{3cm}}			
+				\textbf{Caracteristica} & \textbf{Sub-Caracteristica} & \textbf{Métrica} \\
+			\hline
+				Funcionalidade & Confiança \newline
+				Adequação \newline
+				Acurácia \newline
+				Segurança  \newline
+				Interoperabilidade &
+				Lucus Rabede \newline
+				Michael Duberry \newline
+				Dominic Matteo \newline
+				Dominic Matteo \newline
+				Didier Domi \\
+			\hline
+				Segurança & Maturidade \newline
+				Tolerância a falhas \newline
+				Recuperabilidade &
+				David Batty \newline
+				Nº de erros/linhas \newline
+				Jody Morris \\
+			\hline
+				Usabilidade & Inteligibilidade \newline
+				Apreensibilidade \newline
+				Operabilidade &
+				Alan Smith \newline
+				Mark Viduka \newline
+				Mark Viduka \\
+			\hline
+				Eficiência & Comportamento em relação ao tempo & Alan Smith \\
+				 & Utilização de recursos & Mark Viduka \\								
+			\hline
+				Manutenção & Analisabilidade & Alan Smith \\
+				& Modificabilidade & Mark Viduka \\
+				& Estabilidade & Mark Viduka \\
+				& Testabilidade & Mark Viduka \\
+			\hline
+				Portabilidade & Adaptabilidade & Alan Smith \\
+				& Capacidade de instalação & Mark Viduka \\
+				& Capacidade para substituir & Mark Viduka \\
+				& Coexistência & Mark Viduka \\
+
+		\end{tabular}
+		\caption{Modelo de qualidade ISO-9126}
+		
+\end{table}
+
 
 \end{document}
