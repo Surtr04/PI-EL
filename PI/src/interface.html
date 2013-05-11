@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="cv_form">
 	<head>
-        <meta charset="utf-8">
+        <meta charset="utf-8"/>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
 		<script src="js/angular-ui.min.js"></script>
-		<script src="js/ui-bootstrap-tpls-0.1.0.min.js"></script>
+		<script src="js/ui-bootstrap-tpls-0.3.0.min.js"></script>
+		<script src="js/ng-grid-2.0.5.min.js"></script>
 		<link href="css/bootstrap.min.css" rel="stylesheet"/>
 		<link href="css/angular-ui.min.css" rel="stylesheet"/>
+		<link href="css/ng-grid.css" rel="stylesheet"/>
+		
 		<style type="text/css">
 			html, body{
 				height: 100%;
@@ -53,79 +56,10 @@
 				margin: 9px 9px;
 			}
 		</style>
-		<script type="text/javascript">
-			angular.module("cv_form", ['ui']);
-			function InfoCtrl($scope){
-                $scope.order = 'pos';
-                $scope.fields =  [{name: "name", label : "Nome", value: "Nelson José Costa Luís", type: "text"},
-								  {name: "nacionalities", label : "Nacionalidades", value: ["Portuguese","Canadian"], type: "list", max:2},
-                                  {name: "contacts", label : "Contactos Pessoais", values: [{type:"email", value:"nelson@di.uminho.pt"},{type:"phone", value:"259225225"}], type: "contacts"},
-								  {name: "birthdate", label : "Data de Nascimento", value: "05/03/1980", type: "date"},
-                                  {name: "gender", label : "Gender", value: "M", values: [{name:"M", value:"Masculino"},{name:"F", value:"Feminino"}], type:"check"},
-								  {name: "nativelang", label : "Linguagens Nativas", value: ["Portuguese", "English"], type: "list", max:0},
-                                  {name: "web", label : "Endereço Web", value: "http://di.uminho.pt/~nelson", type: "url"},
-                                ];
-                $scope.formation = [
-									{begin:'15/09/1995', end:'15/07/1998', degreeT:'BSc', degree:'Engharia Informática', result: '16', inst: {text: "Universidade do Minho", name: "Universidade do Minho", address: "Gualtar", country: "Portugal", type: "Public University"}},
-									{begin:'15/09/1998', end:'15/07/2000', degreeT:'MSc', degree:'Engharia Informática', result: '17', inst: {text: "Universidade do Minho", name: "Universidade do Minho", address: "Gualtar", country: "Portugal", type: "Public University"}}
-									];
-				$scope.institutions = { __new__ : {text: "--Nova--", name: "", address: "", country: "", type: ""},
-										id2: {text: "Universidade do Minho", name: "Universidade do Minho", address: "Gualtar", country: "Portugal", type: "Public University"}};
-				$scope.selectedIns = [];
-                $scope.errors = {};
-                $scope.getType = function(txt){ return (txt == 'email' ? 'email' : 'text');}
-                $scope.validateList = function(name, list, max){if (max > 0 && list.length > max) $scope.errors[name] = true; else $scope.errors[name] = false;}
-				$scope.putIns = function(item, index){ 
-					var inst = $scope.institutions[$scope.selectedIns[index]];
-					item.inst.name = inst.name;
-					item.inst.address = inst.address;
-					item.inst.country = inst.country;
-					item.inst.type = inst.type;
-				}
-				$scope.addFormation = function(){
-					$scope.formation.push({begin:'', end:'', degreeT:'', degree:'', result: '', inst: {}}); 
-					$scope.selectedIns.push('__new__');
-				}
-				
-			}
-			function PublicationsCtrl($scope){
-				//Well Nothing
-			}
-			function ActivitiesCtrl($scope){
-				$scope.activities = [
-										{key: 'ex1', begin: '01/01/2012', end: '31/12/2012', desc: 'Exemplo de uma actividade', inst: {text: "Universidade do Minho", name: "Universidade do Minho", address: "Gualtar", country: "Portugal", type: "Public University"},  org : {type: '', name: '', address: ''}, partners: ["J. J. Almeida", "Bruno Fernandes"], activity: { type: "conference", isorg: false, name: 'JOIN - Jornadas de Informática da Universidade do Minho', place: 'Universidade do Minho - Gualtar', work: 'Mobile Applications & Cloud Computing'}},
-										{key: 'ex2', begin: '01/05/2011', end: '31/06/2011', desc: 'Actividade de 2 meses', inst: {text: "Universidade Lusíada", name: "Universidade Lusíada", address: "Famalicão", country: "Portugal", type: "Private University"},  org : {type: '', name: '', address: ''}, partners: [], activity: { type: "other", isorg: false, info: 'Exemplo de uma actividade mais específica que deve ser descrita pelo utilizador'}}
-									];
-				$scope.types = [{name: "conference", text:"Conferência"}, 
-								{name: "internship", text:"Estágio"},
-								{name: "phd_monitoring", text:"Acompahnamento de PhD"},
-								{name: "msc_monitoring", text:"Acompanhamento de MSc"},
-								{name: "other", text:"Outro"},
-							   ]
-				
-				$scope.selectedIns = [];
-				$scope.institutions = { __new__ : {text: "--Nova--", name: "", address: "", country: "", type: ""},
-										id2: {text: "Universidade do Minho", name: "Universidade do Minho", address: "Gualtar", country: "Portugal", type: "Public University"}};
-				$scope.putIns = function(item, index){ 
-					var inst = $scope.institutions[$scope.selectedIns[index]];
-					item.inst.name = inst.name;
-					item.inst.address = inst.address;
-					item.inst.country = inst.country;
-					item.inst.type = inst.type;
-				}
-				
-				
-				
-				$scope.addActivity = function(){
-					$scope.activities.push({key: '', begin: '', end: '', desc: '', inst: {},  org : {type: '', name: '', address: ''}, partners: [], activity: { type: "other", isorg: false}});
-				}
-				
-			}
-			function BtnsForm($scope){
-				$scope.save = 1;
-				$scope.turn = function(val){$scope.save = val;}
-			}
-		</script>
+		<script type="text/javascript">angular.module("cv_form", ['ui', 'ui.bootstrap', 'ngGrid']);</script>
+		<script type="text/javascript" src="interface.js"></script>
+		<script type="text/javascript" src="dPublicationDialog.js"></script>
+
 	</head>
 	<body>
 		<div class="row-fluid">
@@ -148,35 +82,7 @@
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane active animations" id="tab1" ng-controller="InfoCtrl">
-								<div class="control-group" ng-repeat="item in fields">
-									<label class="control-label" for="{{item.name}}">{{item.label}}: </label>
-									<div class="controls" ng-switch="item.type">
-										<div ng-switch-when="check" class="btn-group" data-toggle="buttons-radio">
-											<input type="hidden" id="{{item.name}}" name="{{item.name}}" value="{{item.value}}"/>
-											<button type="button" ng-click="item.value=vl.name" ng-repeat="vl in item.values" id="{{vl.name}}" class="btn">{{vl.value}}</button>
-										</div>
-										<table ng-switch-when="contacts">
-											<tr><th>Tipo</th><th>Valor</th></tr>
-											<tr ng-repeat="vl in item.values">
-												<td>
-													<select id="{{item.name}}T[]" name="{{item.name}}T[]" ng-model="vl.type">
-														<option value="email">Email</option>
-														<option value="phone">Telefone</option>
-														<option value="fax">Fax</option>
-													</select>
-												</td>
-												<td><input id="{{item.name}}V[]" name="{{item.name}}V[]" type="{{getType(vl.type)}}" ng-model="vl.value"/></td>
-											</tr>
-											<tr><td colspan="2"><button type="button" ng-click="item.values.push({type: 'email', value:''})" class="btn">Inserir novo contacto</button></td></tr>
-										</table>
-										<div ng-switch-when="list">
-											<input id="{{item.name}}" type="text" ng-change="validateList(item.name, item.value, item.max)" name="{{item.name}}" ng-model="item.value" ng-list required>
-											&nbsp;&nbsp;<div class="alert alert-error inline" style="display: inline;" ng-show="errors[item.name]"><strong>Erro!</strong> Mais valores inseridos do que os permitidos (max: {{item.max}}).</div>
-											&nbsp;&nbsp;(lista separada por vírgulas)
-										</div>
-										<input ng-switch-default id="{{item.name}}" name="{{item.name}}" type="{{item.type}}" ng-model="item.value"/>
-									</div>
-								</div>
+								<div ng-include="'fields_list.php'"></div>
 								<div class="control-group">
 									<div class="controls">
 										<button type="button" ng-click="addFormation()" class="btn">Inserir nova formação</button>
@@ -337,8 +243,27 @@
 								</div>
 							</div>
 							<div class="tab-pane" id="tab3" ng-controller="PublicationsCtrl">
-								<label class="control-label" for="bibtex">Ficheiro de BibTeX: </label>
-								<input type='file' id='bibtex' name='bibtex'/>
+								<div>
+								  <alert ng-repeat="del in deletes" type="'error'">
+									Tem a certeza que pretende eliminar a publicação com a chave '{{del}}'? 
+									<a href="#" ng-click="removeKey(del, $index)" class="btn btn-primary btn-mini">Sim</a>
+									&nbsp;<a href="#" ng-click="closeAlert($index)" class="btn btn-mini">Cancelar</a>
+								  </alert>
+								</div>
+								<div ng-repeat="(key,item) in publications" ui-animate>
+									<p>
+										<a ng-click="editKey(key)">{{item.title}} - ({{key}})</a>&nbsp;
+										<span class="label">{{item.__type}}</span>
+										<a href="#" ng-click="tryRemoveKey(key)" class="btn btn-danger btn-mini"><i class="icon-white icon-remove"></i></a>
+									</p>
+									<!-- Hidden values to all publications, with its fields-->
+									<input type="hidden" id="pKey[]" name="pKey[]" value="{{key}}"/>
+									<input ng-repeat="(nkey, val) in item" type="hidden" id="#pub${{key}}${{nkey}}" name="#pub${{key}}${{nkey}}" value="{{val}}"/>
+								</div>
+								<button type="button" ng-click="uiAddPublication()" class="btn">Adicionar Publicação</button>
+								
+								<!--<label class="control-label" for="bibtex">Ficheiro de BibTeX: </label>
+								<input type='file' id='bibtex' name='bibtex'/>-->
 							</div>
 						</div>
 					</div>

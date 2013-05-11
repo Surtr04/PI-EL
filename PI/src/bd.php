@@ -4,9 +4,11 @@
 			parent::__construct('mysql:host=localhost;dbname=elcvs', 'root', 'root');
 		}
         public function executeOrDie($query){
-            if(!$query->execute()){
+			$query->execute();
+            if($this->errorCode() > 0){
                 $this->rollBack();
-                die($this->errorInfo());
+				print_r($this->errorInfo());
+                die();
             }
         }
 	}

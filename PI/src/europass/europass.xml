@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SkillsPassport xmlns="http://europass.cedefop.europa.eu/Europass" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://europass.cedefop.europa.eu/Europass http://europass.cedefop.europa.eu/xml/EuropassSchema_V3.0.xsd" locale="pt">
+  <DocumentInfo>
+    <DocumentType>ECV</DocumentType>
+    <CreationDate>2013-05-11T12:12:56+00:00</CreationDate>
+    <LastUpdateDate>2013-05-11T12:12:56+00:00</LastUpdateDate>
+    <XSDVersion>3.0</XSDVersion>
+    <Generator>GereCVs</Generator>
+    <Comment>Europass CV</Comment>
+  </DocumentInfo>
+  <PrintingPreferences>
+    <Document type="ECV">
+      <Field name="LearnerInfo" show="true" order="Identification Headline Education Skills WorkExperience Achievement ReferenceTo"/>
+      <Field name="LearnerInfo.Identification" show="true"/>
+      <Field name="LearnerInfo.Identification.PersonName" show="true" order="FirstName Surname"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Address" show="false" format="s, z m (c)"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Email" show="true"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Email[0]" show="true"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Telephone" show="true"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Telephone[0]" show="true"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Telephone[1]" show="true"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Website" show="true"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Website[0]" show="true"/>
+      <Field name="LearnerInfo.Identification.Demographics.Birthdate" show="true" format="text/long"/>
+      <Field name="LearnerInfo.Identification.Demographics.Gender" show="true"/>
+      <Field name="LearnerInfo.Identification.Demographics.Nationality" show="true"/>
+      <Field name="LearnerInfo.Identification.Demographics.Nationality[0]" show="true"/>
+      <Field name="LearnerInfo.Identification.Demographics.Nationality[1]" show="true"/>
+      <Field name="LearnerInfo.Identification.Photo" show="true"/>
+      <Field name="LearnerInfo.Headline" show="false"/>
+      <Field name="LearnerInfo.Education" show="true"/>
+      <Field name="LearnerInfo.Education[0]" show="true"/>
+      <Field name="LearnerInfo.Education[0].Period" show="true" format="text/long"/>
+      <Field name="LearnerInfo.Education[0].ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.Education[0].Title" show="true" format="text/long"/>
+      <Field name="LearnerInfo.Education[0].Activities" show="true"/>
+      <Field name="LearnerInfo.Education[0].Organisation" show="true"/>
+      <Field name="LearnerInfo.Education[0].Organisation.ContactInfo.Address" show="true" format="s,m z c"/>
+      <Field name="LearnerInfo.Education[0].Level" show="true"/>
+      <Field name="LearnerInfo.Education[0].Field" show="false"/>
+      <Field name="LearnerInfo.Skills" show="true"/>
+      <Field name="LearnerInfo.Skills.Linguistic.MotherTongue" show="true"/>
+      <Field name="LearnerInfo.Skills.Linguistic.ForeignLanguage" show="false"/>
+      <Field name="LearnerInfo.Skills.Communication" show="false"/>
+      <Field name="LearnerInfo.Skills.Organisational" show="false"/>
+      <Field name="LearnerInfo.Skills.JobRelated" show="false"/>
+      <Field name="LearnerInfo.Skills.Computer" show="false"/>
+      <Field name="LearnerInfo.Skills.Driving" show="false"/>
+      <Field name="LearnerInfo.Skills.Other" show="false"/>
+      <Field name="LearnerInfo.WorkExperience" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[0]" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[0].Period" show="true" format="text/long"/>
+      <Field name="LearnerInfo.WorkExperience[0].ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.WorkExperience[0].Position" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[0].Activities" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[0].Employer" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[0].Employer.ContactInfo.Address" show="true" format="s, z m (c)"/>
+      <Field name="LearnerInfo.WorkExperience[0].Employer.Sector" show="true"/>
+      <Field name="LearnerInfo.Achievement" show="true"/>
+      <Field name="LearnerInfo.Achievement[0]" show="true"/>
+      <Field name="LearnerInfo.Achievement[0].ReferenceTo" show="false"/>
+    </Document>
+  </PrintingPreferences>
+  <LearnerInfo>
+    <Identification>
+      <PersonName>
+        <FirstName>Antonio Oliveira da</FirstName>
+        <Surname>Silva</Surname>
+      </PersonName>
+      <ContactInfo>
+        <Email>
+          <Contact>meuemail@xpto.pt</Contact>
+        </Email>
+        <WebsiteList>
+          <Website>
+            <Contact>http://xpto.com</Contact>
+          </Website>
+        </WebsiteList>
+        <TelephoneList>
+          <Telephone>
+            <Contact>252928322</Contact>
+          </Telephone>
+          <Telephone>
+            <Contact>9135937779</Contact>
+          </Telephone>
+        </TelephoneList>
+      </ContactInfo>
+      <Demographics>
+        <Birthdate year="2006" month="--9" day="---13"/>
+        <Gender>
+          <Code>M</Code>
+          <Label>Masculino</Label>
+        </Gender>
+        <NationalityList>
+          <Nationality>
+            <Code>PO</Code>
+            <Label>Portugal</Label>
+          </Nationality>
+          <Nationality>
+            <Code>AN</Code>
+            <Label>Andorra</Label>
+          </Nationality>
+        </NationalityList>
+      </Demographics>
+    </Identification>
+    <EducationList>
+      <Education>
+        <Period>
+          <From year="1997"/>
+          <To year="2001"/>
+          <Current>false</Current>
+        </Period>
+        <Title>PhD - Thesis Title: 'Young People in the Construction of the Virtual University', Empirical research on e-learning</Title>
+        <Organisation>
+          <Name>Brunel University</Name>
+          <ContactInfo>
+            <Address>
+              <Contact>
+                <Municipality>London</Municipality>
+                <Country>
+                  <Code>RU</Code>
+                  <Label>Reino Unido</Label>
+                </Country>
+              </Contact>
+            </Address>
+          </ContactInfo>
+        </Organisation>
+        <Level>
+          <Label>18,3 (180 ECTS)</Label>
+        </Level>
+      </Education>
+    </EducationList>
+    <WorkExperienceList>
+      <WorkExperience>
+        <Period>
+          <From year="2001" month="--10"/>
+          <To year="2002" month="--2"/>
+          <Current>false</Current>
+        </Period>
+        <Position>
+          <Label>Researcher / Independent Consultant</Label>
+        </Position>
+        <Activities>Working in a research team carrying out in-depth qualitative evaluation of the 2 year Advanced Training of Trainers in Europe using participant observations, in-depth interviews and focus groups. Work carried out in training courses in Strasbourg, Slovenia and Budapest.</Activities>
+        <Employer>
+          <Name>Council of Europe</Name>
+          <ContactInfo>
+            <Address>
+              <Contact>
+                <Municipality>Budapest</Municipality>
+                <Country>
+                  <Code>HU</Code>
+                  <Label>Hungria</Label>
+                </Country>
+              </Contact>
+            </Address>
+          </ContactInfo>
+        </Employer>
+      </WorkExperience>
+    </WorkExperienceList>
+    <AchievementList>
+      <Achievement>
+        <Title>
+          <Code>publications</Code>
+          <Label>Publicacoes</Label>
+        </Title>
+        <Description>'How to do Observations: Borrowing techniques from the Social Sciences to help Participants do Observations in Simulation Exercises' Coyote EU/CoE Partnership Publication, (2002).</Description>
+      </Achievement>
+    </AchievementList>
+  </LearnerInfo>
+</SkillsPassport>

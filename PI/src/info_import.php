@@ -15,20 +15,28 @@
 		return;
 	}
 	
-	$f = (popen('java -jar AntLRParser.jar "'.$_FILES['ficheiro']['tmp_name'].'"', "r"));
 
+
+	/*$valor = exec('/usr/bin/java -cp lib/antlr-3.4-complete.jar -jar AntLRParser.jar "'.$_FILES['ficheiro']['tmp_name'].'"', $var);*/
+
+	$f = (popen('java -cp lib/antlr-3.4-complete.jar -jar AntLRParser.jar '.$_FILES['ficheiro']['tmp_name'], "r"));
+	
 	$valor = "";
 	while (!feof($f)) {$valor .= fread($f, 60);}
 	
 	
 	$db = new myDB();
+	//var_dump($valor);
+	
 	$valor = explode("\n",$valor);
 	
 	$aux = json_decode($valor[0]);
+
 	$pid = insertInfo($db, $aux->info);
 	$i = 0;
 	foreach($valor as $value){
-		if ($i == 0) continue; else $i++;
+		if ($i++ == 0){} continue;
+		var_dump($value);
 		$aux = json_decode($value);
 		insertForm($db, $pid, $aux->form);
 	}
@@ -44,7 +52,7 @@
 		$query->bindValue(':end', $txt->end, PDO::PARAM_STR);
 		$query->bindValue(':degreet', $txt->degree->type, PDO::PARAM_STR);
 		$query->bindValue(':degree', $txt->degree->value, PDO::PARAM_STR);
-		$query->execute() or die($db->errorInfo());
+		$query->execute(); // or die($db->errorInfo());
 		
 		$form = $db->lastInsertId();
 		
@@ -61,7 +69,7 @@
 			$query = $db->prepare("INSERT INTO forms_institutions VALUES(:form, :inst)");
 			$query->bindValue(':form', $form, PDO::PARAM_STR);			
 			$query->bindValue(':inst', $inst, PDO::PARAM_STR);			
-			$query->execute() or die($db->errorInfo());
+			$query->execute(); // or die($db->errorInfo());
 		}
 		
 		
@@ -73,10 +81,10 @@
 		$db->beginTransaction();
 		$query = $db->prepare("INSERT INTO info VALUES(null, :name, :birthdate, :gender, :web)");
 		$query->bindValue(':name', $txt->name, PDO::PARAM_STR);
-		$query->bindValue(':birthdate', $txt->birthdate, PDO::PARAM_STR);
+		$query->bindValue(':birthdate', date('Y/m/d',strtotime($txt->birthdate)), PDO::PARAM_STR);
 		$query->bindValue(':gender', $txt->gender, PDO::PARAM_STR);
 		$query->bindValue(':web', $txt->web, PDO::PARAM_STR);
-		$query->execute() or die($db->errorInfo());
+		$query->execute();
 		
 		
 		$person_id = $db->lastInsertId();
@@ -85,7 +93,7 @@
 		foreach($txt->nationalities as $value){
 			$query->bindValue(':id', $person_id, PDO::PARAM_STR);
 			$query->bindValue(':nat', $value, PDO::PARAM_STR);
-			$query->execute() or die($db->errorInfo());
+			$query->execute(); //or die($db->errorInfo());
 			$query->closeCursor();
 		}
 		
@@ -94,7 +102,7 @@
 			$query->bindValue(':id', $person_id, PDO::PARAM_STR);
 			$query->bindValue(':type', $value->type, PDO::PARAM_STR);
 			$query->bindValue(':contact', $value->value, PDO::PARAM_STR);
-			$query->execute() or die($db->errorInfo());
+			$query->execute();// or die($db->errorInfo());
 			$query->closeCursor();
 		}
 		
@@ -102,7 +110,7 @@
 		foreach($txt->natlang as $value){
 			$query->bindValue(':id', $person_id, PDO::PARAM_STR);
 			$query->bindValue(':nat', $value, PDO::PARAM_STR);
-			$query->execute() or die($db->errorInfo());
+			$query->execute(); // or die($db->errorInfo());
 			$query->closeCursor();
 		}
 		$db->commit();

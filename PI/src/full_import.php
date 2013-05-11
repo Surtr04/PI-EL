@@ -18,8 +18,10 @@
 		$info->addChild("file", "01.txt");
 		$activities = $xml->addChild("activities");
 		$activities->addChild("file", "02.xml");
-		$publications = $xml->addChild("publications");
-		$publications->addChild("file", "03.bib");
+		//if (isset($_FILES['bibtex']) && $_FILES['bibtex']['error'] == UPLOAD_ERR_OK){
+			$publications = $xml->addChild("publications");
+			$publications->addChild("file", "03.bib");
+		//}
 		
 		$tmpxml = tempnam("tmp","man");
         $xml->asXml($tmpxml);
@@ -31,10 +33,10 @@
 		
 		//1º Ficheiro
 		$txt = "";
-		$txt = '@info {';
-		$txt .= 'Name: "'.$nvs['name'].'" ';
-		$txt .= 'Nationalities: ['.$nvs['nacionalities'].'] ';
-		$txt .= 'PersonalContacts: [';
+		$txt = '@info {'."\n";
+		$txt .= 'Name: "'.$nvs['name'].'" '."\n";
+		$txt .= 'Nationalities: ['.$nvs['nacionalities'].'] '."\n";
+		$txt .= 'PersonalContacts: ['."\n";
 		$entra = false;
 		foreach($nvs['contactsT'] as $chave => $valor){
 			$entra = true;
@@ -45,22 +47,22 @@
 			}
 		}
 		if ($entra) $txt = substr($txt, 0, -1);
-		$txt .= '] ';
+		$txt .= '] '."\n";
 		$data = new DateTime($nvs['birthdate']);
-		$txt .= 'Birthdate: '.$data->format('d/m/Y').' ';
-		$txt .= 'Gender: '.($nvs['gender'] == 'F' ? 'F' : 'M').' ';
-		$txt .= 'NativeLang: ['.$nvs['nativelang'].'] ';
-		$txt .= 'Web: '.$nvs['web'];
-		$txt .= '} ';
+		$txt .= 'Birthdate: '.$data->format('d/m/Y')."\n";
+		$txt .= 'Gender: '.($nvs['gender'] == 'F' ? 'F' : 'M')."\n";
+		$txt .= 'NativeLang: ['.$nvs['nativelang'].'] '."\n";
+		$txt .= 'Web: '.$nvs['web']."\n";
+		$txt .= '} '."\n";
 		
 		foreach($nvs['fBegin'] as $chave => $valor){
-			$txt .= '@form {';
-			$txt .= 'Begin: '.$nvs['fBegin'][$chave].' ';
-			$txt .= 'End: '.$nvs['fEnd'][$chave].' ';
-			$txt .= 'Institution: Name: "'.$nvs['insName'][$chave].'" Address: "'.$nvs['insAddress'][$chave].'" Country: '.$nvs['insCountry'][$chave].' Type: '.$nvs['insType'][$chave].' ';
-			$txt .= 'Degree: '.$nvs['degreeT'][$chave] . ' "'.$nvs['degree'][$chave].'" ';
-			$txt .= 'Result: '.(is_numeric($nvs['result'][$chave]) ? $nvs['result'][$chave] : '"'.$nvs['result'][$chave].'"');
-			$txt .= '} ';
+			$txt .= '@form {'."\n";
+			$txt .= 'Begin: '.$nvs['fBegin'][$chave]."\n";
+			$txt .= 'End: '.$nvs['fEnd'][$chave]."\n";
+			$txt .= 'Institution: '."\n".'Name: "'.$nvs['insName'][$chave]."\"\n".' Address: "'.$nvs['insAddress'][$chave]."\"\n".' Country: '.$nvs['insCountry'][$chave]."\n".' Type: '.$nvs['insType'][$chave]."\n";
+			$txt .= 'Degree: '.$nvs['degreeT'][$chave] . ' "'.$nvs['degree'][$chave].'"'."\n";
+			$txt .= 'Result: '.(is_numeric($nvs['result'][$chave]) ? $nvs['result'][$chave] : '"'.$nvs['result'][$chave].'"')."\n";
+			$txt .= '} '."\n";
 		}
 		
 		$info = tempnam("tmp","01i");
@@ -69,10 +71,10 @@
 		//2º Ficheiro
 		$xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><activities></activities>');
 		foreach($nvs['aKey'] as $chave => $valor){
-			$act = $xml->addChild('activities');
+			$act = $xml->addChild('activity');
 			$act->addAttribute('key', $valor);
-			$act->addChild('begin_date', $nvs['aBegin'][$chave]);
-			$act->addChild('end_date', $nvs['aEnd'][$chave]);
+			$act->addChild('begin_date', date('Y-m-d',strtotime($nvs['aBegin'][$chave])));
+			$act->addChild('end_date',  date('Y-m-d',strtotime($nvs['aEnd'][$chave])));
 			$act->addChild('description', $nvs['description'][$chave]);
 			$org = $act->addChild('institution')->addChild('org');
 			$org->addAttribute('type', $nvs['aInsType'][$chave]);
@@ -91,7 +93,7 @@
 					$type->addAttribute('is_organizator', $nvs['isOrganizator'][$conf1]);
 					$type->addChild('name', $nvs['aConfName'][$conf1]);
 					$type->addChild('place', $nvs['aConfPlace'][$conf1]);
-					if ($nvs['isOrganizator'][$conf1] == 'true') $type->addChild('work', $nvs['aConfWork'][$conf2++]);
+					if ($nvs['isOrganizator'][$conf1] == 'false') $type->addChild('work', $nvs['aConfWork'][$conf2++]);
 					$conf1++;
 					break;
 				case 'internship':
@@ -123,13 +125,51 @@
 		$activities = tempnam("tmp","02a");
 		$xml->asXml($activities);
 		
+		
 		//3º Ficheiro
+		$txt = "";
+		$match = '#pub$';
+		$slen = strlen($match);
+		$bibfields = array();
+		foreach($nvs as $chave => $valor){
+			if (substr($chave, 0, $slen) == $match){
+				$aux = explode("$", $chave);
+				if ($aux[2] == 'author')
+					$bibfields[$aux[1]][$aux[2]] = json_decode($valor);
+				else
+					$bibfields[$aux[1]][$aux[2]] = $valor;
+			}
+		}
+
+		$txt = "";
+		foreach($bibfields as $chave => $valor){
+			$txt .= "@" . $valor['__type'] . "{" . $chave . ",\n";
+			unset($valor['__type']); 
+			foreach($valor as $c => $v){
+				$txt .= $c . ' = "';
+				if ($c == 'author'){
+					foreach($v as $autor)
+						$txt .= $autor . " and ";
+					$txt = substr($txt, 0, -5);
+				}else
+					$txt .= $v;
+				$txt .= "\",\n";
+			}
+			$txt = substr($txt, 0, -2) . "\n}\n\n";
+		}
 		
 		
-        //Termina a geração do ficheiro zipado
+		$pubs = tempnam("tmp","03p");
+		file_put_contents($pubs, $txt);
+		
+		
+		
+		//Termina a geração do ficheiro zipado
         $zip->addFile($tmpxml, "pr.xml");
 		$zip->addFile($info, "01.txt");
 		$zip->addFile($activities, "02.xml");
+		//if (isset($_FILES['bibtex']) && $_FILES['bibtex']['error'] == UPLOAD_ERR_OK) $zip->addFile($_FILES['bibtex']['tmp_name'], "03.bib");
+		$zip->addFile($pubs, "03.bib");
         $zip->close();
 
 
@@ -143,13 +183,13 @@
 	function processaZip($file){
 		if (DEBUG){
 			var_dump($_POST);
+			var_dump($_FILES);
 		} else {
 			if ((int)$_POST['toSave']){
 				$zip = new ZipArchive();
 				$zip->open($file);
 				$aux = $zip->getFromName('pr.xml');
 				$xml = new DOMDocument();
-				echo htmlentities($aux);
 				$xml->loadXML($aux);
 				//1ª Parte
 				$list = $xml->getElementsByTagName('info');
@@ -158,6 +198,7 @@
 					$txt .= $zip->getFromName($valor->textContent)." ";
 				}
 				$_FILES['ficheiro']['tmp_name'] = tempnam("tmp", "01i");
+				chmod($_FILES['ficheiro']['tmp_name'], 0777);
 				file_put_contents($_FILES['ficheiro']['tmp_name'], $txt);
 				require('info_import.php');
 				
@@ -168,6 +209,11 @@
 					file_put_contents($_FILES['ficheiro']['tmp_name'], $zip->getFromName($valor->textContent));
 					require('activities_import.php');
 				}
+				
+				//3ª Parte
+				
+				header('Location: interface.html');
+
 			} else {
 				header("Content-type: application/zip");
 				header("Content-Transfer-Encoding: binary");

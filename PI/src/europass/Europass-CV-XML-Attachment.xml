@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SkillsPassport xmlns="http://europass.cedefop.europa.eu/Europass" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://europass.cedefop.europa.eu/Europass http://europass.cedefop.europa.eu/xml/EuropassSchema_V3.0.xsd" locale="pt">
+  <DocumentInfo>
+    <DocumentType>ECV</DocumentType>
+    <CreationDate>2013-05-09T09:05:20.218Z</CreationDate>
+    <LastUpdateDate>2013-05-09T15:35:17.703Z</LastUpdateDate>
+    <XSDVersion>V3.0</XSDVersion>
+    <Generator>EWA</Generator>
+    <Comment>Europass CV</Comment>
+  </DocumentInfo>
+  <PrintingPreferences>
+    <Document type="ECV">
+      <Field name="LearnerInfo" show="true" order="Identification Headline WorkExperience Education Skills Achievement ReferenceTo"/>
+      <Field name="LearnerInfo.Identification" show="true"/>
+      <Field name="LearnerInfo.Identification.PersonName" show="true" order="FirstName Surname"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Address" show="false" format="s, z m (c)"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Email" show="true"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Telephone" show="true"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Telephone[0]" show="true"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Telephone[1]" show="true"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Website" show="true"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.Website[0]" show="true"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.InstantMessaging" show="false"/>
+      <Field name="LearnerInfo.Identification.ContactInfo.InstantMessaging[0]" show="false"/>
+      <Field name="LearnerInfo.Identification.Demographics.Birthdate" show="true" format="text/long"/>
+      <Field name="LearnerInfo.Identification.Demographics.Gender" show="true"/>
+      <Field name="LearnerInfo.Identification.Demographics.Nationality" show="true"/>
+      <Field name="LearnerInfo.Identification.Demographics.Nationality[0]" show="false"/>
+      <Field name="LearnerInfo.Identification.Photo" show="true"/>
+      <Field name="LearnerInfo.Headline" show="false"/>
+      <Field name="LearnerInfo.WorkExperience" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[0]" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[0].Period" show="true" format="text/long"/>
+      <Field name="LearnerInfo.WorkExperience[0].ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.WorkExperience[0].ReferenceTo[0]" show="false"/>
+      <Field name="LearnerInfo.WorkExperience[0].Position" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[0].Activities" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[0].Employer" show="false"/>
+      <Field name="LearnerInfo.WorkExperience[0].Employer.ContactInfo.Address" show="false" format="s, z m (c)"/>
+      <Field name="LearnerInfo.WorkExperience[0].Employer.ContactInfo.Website" show="false"/>
+      <Field name="LearnerInfo.WorkExperience[0].Employer.Sector" show="false"/>
+      <Field name="LearnerInfo.Education" show="true"/>
+      <Field name="LearnerInfo.Education[0]" show="true"/>
+      <Field name="LearnerInfo.Education[0].Period" show="true" format="text/long"/>
+      <Field name="LearnerInfo.Education[0].ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.Education[0].ReferenceTo[0]" show="false"/>
+      <Field name="LearnerInfo.Education[0].Title" show="true"/>
+      <Field name="LearnerInfo.Education[0].Activities" show="true"/>
+      <Field name="LearnerInfo.Education[0].Organisation" show="false"/>
+      <Field name="LearnerInfo.Education[0].Organisation.ContactInfo.Address" show="false" format="s, z m (c)"/>
+      <Field name="LearnerInfo.Education[0].Level" show="false"/>
+      <Field name="LearnerInfo.Education[0].Field" show="false"/>
+      <Field name="LearnerInfo.Skills" show="true"/>
+      <Field name="LearnerInfo.Skills.Linguistic.MotherTongue" show="true"/>
+      <Field name="LearnerInfo.Skills.Linguistic.MotherTongue[0]" show="true"/>
+      <Field name="LearnerInfo.Skills.Linguistic.ForeignLanguage" show="true"/>
+      <Field name="LearnerInfo.Skills.Linguistic.ForeignLanguage[0]" show="true"/>
+      <Field name="LearnerInfo.Skills.Linguistic.ForeignLanguage[0].ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.Skills.Linguistic.ForeignLanguage[0].ReferenceTo[0]" show="false"/>
+      <Field name="LearnerInfo.Skills.Linguistic.ForeignLanguage[0].Certificate" show="false"/>
+      <Field name="LearnerInfo.Skills.Linguistic.ForeignLanguage[0].Certificate[0]" show="false"/>
+      <Field name="LearnerInfo.Skills.Communication" show="true"/>
+      <Field name="LearnerInfo.Skills.Communication.ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.Skills.Communication.ReferenceTo[0]" show="false"/>
+      <Field name="LearnerInfo.Skills.Organisational" show="true"/>
+      <Field name="LearnerInfo.Skills.Organisational.ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.Skills.Organisational.ReferenceTo[0]" show="false"/>
+      <Field name="LearnerInfo.Skills.JobRelated" show="true"/>
+      <Field name="LearnerInfo.Skills.JobRelated.ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.Skills.JobRelated.ReferenceTo[0]" show="false"/>
+      <Field name="LearnerInfo.Skills.Computer" show="true"/>
+      <Field name="LearnerInfo.Skills.Computer.ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.Skills.Computer.ReferenceTo[0]" show="false"/>
+      <Field name="LearnerInfo.Skills.Driving" show="false"/>
+      <Field name="LearnerInfo.Skills.Driving.ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.Skills.Driving.ReferenceTo[0]" show="false"/>
+      <Field name="LearnerInfo.Skills.Other" show="false"/>
+      <Field name="LearnerInfo.Skills.Other.ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.Skills.Other.ReferenceTo[0]" show="false"/>
+      <Field name="LearnerInfo.Achievement" show="true"/>
+      <Field name="LearnerInfo.Achievement[0]" show="false"/>
+      <Field name="LearnerInfo.Achievement[0].ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.Achievement[0].ReferenceTo[0]" show="false"/>
+      <Field name="LearnerInfo.ReferenceTo" show="true"/>
+      <Field name="LearnerInfo.ReferenceTo[0]" show="false"/>
+    </Document>
+  </PrintingPreferences>
+  <LearnerInfo>
+    <Identification>
+      <PersonName>
+        <FirstName>fdgwer</FirstName>
+        <Surname>sffdsdfs</Surname>
+      </PersonName>
+      <ContactInfo>
+        <Address>
+          <Contact>
+            <AddressLine>sfsdf</AddressLine>
+            <PostalCode>487112</PostalCode>
+            <Municipality>sdfsd</Municipality>
+            <Country>
+              <Code>AL</Code>
+              <Label>Albânia</Label>
+            </Country>
+          </Contact>
+        </Address>
+        <Email>
+          <Contact>sdfsdfsdf@asdsdfsdf</Contact>
+        </Email>
+        <TelephoneList>
+          <Telephone>
+            <Contact>236532</Contact>
+            <Use>
+              <Code>home</Code>
+              <Label>Casa</Label>
+            </Use>
+          </Telephone>
+          <Telephone>
+            <Contact>213454354876</Contact>
+            <Use>
+              <Code>mobile</Code>
+              <Label>Telemóvel</Label>
+            </Use>
+          </Telephone>
+        </TelephoneList>
+        <WebsiteList>
+          <Website>
+            <Contact>sdfsffsdfsdfdsf</Contact>
+          </Website>
+        </WebsiteList>
+      </ContactInfo>
+    </Identification>
+  </LearnerInfo>
+</SkillsPassport>

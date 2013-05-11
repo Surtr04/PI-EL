@@ -1,0 +1,60 @@
+<?xml  version="1.0"  encoding="UTF-8"?>
+<SkillsPassport  xmlns="http://europass.cedefop.europa.eu/Europass"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://europass.cedefop.europa.eu/Europass  http://europass.cedefop.europa.eu/xml/EuropassSchema_V3.0.xsd"  locale="en">
+    <DocumentInfo>
+        <DocumentType>ECV</DocumentType>
+        <CreationDate>2013-05-10T09:27:23+00:00</CreationDate>
+        <LastUpdateDate>2013-05-10T09:27:23+00:00</LastUpdateDate>
+        <XSDVersion>3.0</XSDVersion>
+        <Generator>GereCVs</Generator>
+        <Comment>Europass  CV</Comment>
+    </DocumentInfo>
+    <PrintingPreferences>
+        <Document  type="ECV">
+            <Field  name="LearnerInfo"  show="true"  order="Identification  Headline  WorkExperience  Education  Skills  Achievement  ReferenceTo"/>
+            <Field  name="LearnerInfo.Identification"  show="true"/>
+            <Field  name="LearnerInfo.Identification.PersonName"  show="true"  order="FirstName Surname"/>
+            <Field  name="LearnerInfo.Identification.ContactInfo.Address"  show="false"  format="s, z m (c)"/>
+            <Field  name="LearnerInfo.Identification.ContactInfo.Email"  show="true"/>
+            <Field  name="LearnerInfo.Identification.ContactInfo.Email[0]"  show="true"/>
+            <Field  name="LearnerInfo.Identification.ContactInfo.Telephone"  show="true"/>
+            <Field  name="LearnerInfo.Identification.ContactInfo.Telephone[0]"  show="true"/>
+            <Field  name="LearnerInfo.Identification.ContactInfo.Telephone[1]"  show="true"/>
+            <Field  name="LearnerInfo.Identification.ContactInfo.Website"  show="true"/>
+            <Field  name="LearnerInfo.Identification.ContactInfo.Website[0]"  show="true"/>
+            <Field  name="LearnerInfo.Identification.Demographics.Birthdate"  show="true"  format="text/long"/>
+            <Field  name="LearnerInfo.Identification.Demographics.Gender"  show="true"/>
+            <Field  name="LearnerInfo.Identification.Demographics.Nationality[0]"  show="true"/>
+            <Field  name="LearnerInfo.Identification.Demographics.Nationality[1]"  show="true"/>
+            <Field  name="LearnerInfo.Identification.Photo"  show="true"/>
+        </Document>
+    </PrintingPreferences>
+    <LearnerInfo>
+        <Identification>
+            <PersonName>
+                <FirstName>Antonio  Oliveira  da</FirstName>
+                <Surname>Silva</Surname>
+            </PersonName>
+            <ContactInfo>
+                <Email>
+                    <Contact>meuemail@xpto.pt</Contact>
+                </Email>
+                <WebsiteList>
+                    <Website>
+                        <Contact>http://xpto.com</Contact>
+                    </Website>
+                </WebsiteList>
+                <TelephoneList>
+                    <Telephone>
+                        <Contact>252928322</Contact>
+                    </Telephone>
+                    <Telephone>
+                        <Contact>9135937779</Contact>
+                    </Telephone>
+                </TelephoneList>
+            </ContactInfo>
+            <Demographics>
+                <Birthdate  year="2006"  month="--9"  day="---13"/>
+            </Demographics>
+        </Identification>
+    </LearnerInfo>
+</SkillsPassport>

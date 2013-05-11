@@ -1,0 +1,1 @@
+java -jar europass-soapws-client.jar -F example.xml -O ../europass/ -L en_GB -T exml -M to-pdf-exml-cv

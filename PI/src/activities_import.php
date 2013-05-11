@@ -1,43 +1,7 @@
 <?php
+	session_start();	
 	require_once('bd.php');
-    class myXPath extends DOMXPath{
-        const RES = 'RETURNRES';
-        public function queryValue($query, $node = null, $default = null){
-            $res = $this->query($query, $node);
-            if ($default === self::RES) return $res;
-            if ($res === false || $res->length < 1){
-                $aux = $default;
-            }else if ($res->length > 1){
-                $aux = array();
-                foreach($res as $valor)
-                    $aux[] = $valor->textContent;
-            }else{
-                $aux = $res->item(0)->textContent;
-            }
-            return $aux;
-        }
-        public function recQueryToArray($query, $node){
-            $arr = array();
-            $res = $this->query($query, $node);
-            if ($res === false || $res->length <= 0) return false;
-            foreach($res as $chave => $valor) {
-                $aux = $this->recQueryToArray($query, $valor);
-                if ($aux === false)
-                    $arr[$valor->localName]['__text'] = $valor->textContent;
-                else 
-                    $arr[$valor->localName] = $aux;
-                if ($valor->hasAttributes()){
-                    $arr[$valor->localName]['__atributes'] = array();
-                    $length = $valor->attributes->length;
-                    for ($i = 0; $i < $length; ++$i) {
-                        $atr = $valor->attributes->item($i);
-                        $arr[$valor->localName]['__atributes'][$atr->name] = $atr->value;  
-                    }
-                }
-            }
-            return $arr;
-        }
-    }
+    require_once('myXPath.php');
 	if (!isset($_FILES['ficheiro'])){
 		echo "<html><head></head>
 		<body>
@@ -73,7 +37,8 @@
         
         libxml_use_internal_errors(true);
         if (!$xml->schemaValidate('activities.xsd')){
-            $error = Arr::get(libxml_get_errors(), 0, new libXMLError());
+			$arr = libxml_get_errors();
+            $error = (isset($arr[0]) ? $arr[0] : new libXMLError());
             return array(':erro' => "ERR_SIP_SCHEMA", ':msg' => $error->message, ':code' => $error->code, ':line' => $error->line);
         }
         $info = array();
@@ -154,7 +119,7 @@
             return (int) $arr[0]['id'];
         else {
             $query = $db->prepare("INSERT INTO institutions VALUES (null, :name, :address, :country, :type)");
-            $query->bindValue(':key', $info['name'], PDO::PARAM_STR);
+            $query->bindValue(':name', $info['name'], PDO::PARAM_STR);
             $query->bindValue(':address', $info['address'], PDO::PARAM_STR);
             $query->bindValue(':country', $info['country'], PDO::PARAM_STR);
             $query->bindValue(':type', $info['type'], PDO::PARAM_INT);
@@ -165,46 +130,48 @@
         }
     }
     
-    function insereDB($info){
+    function insereDB($infos){
         $db = new myDB();    
-        
-        $inst = getInst($db, $info['institution']);
-        
-        $db->beginTransaction();
-        $query = $db->prepare("INSERT INTO activities VALUES(null, :key, :begin, :end, :inst, :description, :type, :info)");
-        $query->bindValue(':key', $info['key'], PDO::PARAM_STR);
-        $query->bindValue(':begin', $info['begin_date'], PDO::PARAM_STR);
-        $query->bindValue(':end', $info['end_date'], PDO::PARAM_STR);
-        $query->bindValue(':inst', $inst, PDO::PARAM_INT);
-        $query->bindValue(':description', $info['description'], PDO::PARAM_STR);
-        $query->bindValue(':type', $info['activity']['__type'], PDO::PARAM_STR);
-        $query->bindValue(':info', $info['activity']['__xml'], PDO::PARAM_STR);
-        $db->executeOrDie($query);
-        
-        $act = $db->lastInsertId();
-        
-        $aux = trataNomes($info['partners']);
-        
-        $query = $db->prepare("INSERT INTO users_activities VALUES(:act, (SELECT id FROM info WHERE name = :name))");
-        foreach($aux['upartenrs'] as $valor){
-            $query->bindValue(':act', $act, PDO::PARAM_INT);
-            $query->bindValue(':name', $valor, PDO::PARAM_STR);
-            $db->executeOrDie($query);
-            $query->closeCursor();
+
+		foreach($infos as $chave => $info){
+
+		    $inst = getInst($db, $info['institution']);
+		    
+		    $db->beginTransaction();
+		    $query = $db->prepare("INSERT INTO activities VALUES(null, :key, :begin, :end, :inst, :description, :type, :info)");
+		    $query->bindValue(':key', $info['key'], PDO::PARAM_STR);
+		    $query->bindValue(':begin', $info['begin_date'], PDO::PARAM_STR);
+		    $query->bindValue(':end', $info['end_date'], PDO::PARAM_STR);
+		    $query->bindValue(':inst', $inst, PDO::PARAM_INT);
+		    $query->bindValue(':description', $info['description'], PDO::PARAM_STR);
+		    $query->bindValue(':type', $info['activity']['__type'], PDO::PARAM_STR);
+		    $query->bindValue(':info', $info['activity']['__xml'], PDO::PARAM_STR);
+		    $db->executeOrDie($query);
+		    
+		    $act = $db->lastInsertId();
+		    
+		    $aux = trataNomes($info['partners']);
+		    $aux['upartners'][] = $_SESSION['id'];
+		    $query = $db->prepare("INSERT INTO users_activities VALUES(:act, (SELECT id FROM info WHERE name = :name))");
+		    foreach($aux['upartenrs'] as $valor){
+		        $query->bindValue(':act', $act, PDO::PARAM_INT);
+		        $query->bindValue(':name', $valor, PDO::PARAM_STR);
+		        $db->executeOrDie($query);
+		        $query->closeCursor();
+		    }
+		    
+		    
+		    $query = $db->prepare("INSERT INTO nonusers_activities VALUES(:act, :name)");
+		    foreach($aux['npartenrs'] as $valor){
+		        $query->bindValue(':act', $act, PDO::PARAM_INT);
+		        $query->bindValue(':name', $valor, PDO::PARAM_STR);
+		        $db->executeOrDie($query);
+		        $query->closeCursor();
+		    }
+		    
+		  
+		    $db->commit();
         }
-        
-        
-        $query = $db->prepare("INSERT INTO nonusers_activities VALUES(:act, :name)");
-        foreach($aux['npartenrs'] as $valor){
-            $query->bindValue(':act', $act, PDO::PARAM_INT);
-            $query->bindValue(':name', $valor, PDO::PARAM_STR);
-            $db->executeOrDie($query);
-            $query->closeCursor();
-        }
-        
-      
-        $db->commit();
-        
     }
     
     
