@@ -53,6 +53,9 @@ sub parseBibTeX {
 
 	while (my $entry = $parser->next ) {
 		if ($entry->parse_ok) {
+			
+			$self->{entries}++;
+			
 			$self->{parsedInfo}->{$entry->key} = {};
 			$self->{parsedInfo}->{$entry->key}->{type} = $entry->type;
 			
@@ -63,7 +66,7 @@ sub parseBibTeX {
 			}
 
 						
-			 @{$self->{parsedInfo}->{$entry->key}->{authors}} = @authors;
+			@{$self->{parsedInfo}->{$entry->key}->{authors}} = @authors;
 			
 			$self->{parsedInfo}->{$entry->key}->{year} = $entry->field("year");
 
@@ -75,27 +78,21 @@ sub parseBibTeX {
              	}
 			}
 
-            
-  #           print $entry->key . "\n";
-  #           my @authors = $entry->author;
-  #           print $entry->field("year") . "\n";
-  #           print @authors;
-  #           print "\n";
-
-  #           my @fields = $entry->fieldlist;
-
-  #           foreach(@fields) {
-  #           	if (not $_ eq "author") {
-  #           		print $_ . " - " . $entry->field($_) ."\n";
-  #           	}
-  #           }
 		}
 	}
 
-
-
 }
 
+
+sub insertDB {
+
+	my ($self,$user) = @_;
+	my $res = $self->{parsedInfo};
+	my $dbh = $self->{database};
+
+	print Dumper $res;
+
+}
 
 1;
 __END__
