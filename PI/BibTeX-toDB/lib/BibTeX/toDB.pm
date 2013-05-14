@@ -6,7 +6,9 @@ use warnings;
 use DBI;
 use File::Slurp;
 use Data::Dumper;
-use encoding "iso 8859-1";
+use utf8::all;
+use BibTeX::Parser;
+use IO::File;
 
 require Exporter;
 
@@ -30,12 +32,28 @@ sub new {
 		entries => 0,
 		bibfile => read_file($bibfile, array_ref => 1),
 		database => DBI->connect($database,$user,$pass,{RaiseError => 1, AutoCommit => 1, mysql_auto_reconnect => 1}),				
-		parsedInfo => {},		
+		parsedInfo => {},
+		allInfo => {},		
 	};	
 
 	bless $self,$class;
 
 	return $self;
+}
+
+sub processAll {
+
+	my ($self) = @_;	
+	my @bib = @{$self->{bibfile}};	
+	my $found = 0;	
+			
+	foreach(@bib) {
+
+
+
+	}
+
+
 }
 
 
