@@ -352,7 +352,7 @@ sub insertDB {
 			$sth->bind_param(4,$arr[2]);		
 			$sth->bind_param(5,$arr[4]);						
 			$sth->execute;
-			$id = $dbh->{ q{mysql_insertid}};
+			$id = $dbh->{ q{mysql_insertid} };
 
 			$sth = $dbh->prepare("insert into users_publications values ($usr_id,$id)");
 			$sth->execute;

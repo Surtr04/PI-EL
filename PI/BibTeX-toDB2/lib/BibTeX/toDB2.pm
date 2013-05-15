@@ -73,7 +73,7 @@ sub parseBibTeX {
 			my @fields = $entry->fieldlist;
 
 			foreach(@fields) {
-				if (not $_ eq "author") {
+				if (not $_ eq "authors") {
              		$self->{parsedInfo}->{$entry->key}->{$_} = $entry->field($_);
              	}
 			}
@@ -92,25 +92,47 @@ sub insertDB {
 
 	my $sth;
 	my $id;
+	my $field_id;
+	my $records;
 
 	for my $key (keys $res) {
 		
 		my $entry = $res->{$key};
 
-		$sth = $dbh->prepare("insert into publications  (`type`, `key`, `title`, `year`) values (?,?,?,?)");
+		($records) = $dbh->selectrow_array("SELECT count(*) FROM publications as p where p.key=\'$key\';");
+
+		if(not $records) {
+			$sth = $dbh->prepare("insert into publications  (`type`, `key`, `title`, `year`) values (?,?,?,?)");
+			
+			
+			$sth->bind_param(1,$entry->{"entryType"});
+			$sth->bind_param(2,$key);
+			$sth->bind_param(3,$entry->{"title"});
+			$sth->bind_param(4,$entry->{"year"});
+
+			$sth->execute;
+			$id = $dbh->{ q{mysql_insertid} };
+		}
 		
-		
-		$sth->bind_param(1,$entry->{"entryType"});
-		$sth->bind_param(2,$key);
-		$sth->bind_param(3,$entry->{"title"});
-		$sth->bind_param(4,$entry->{"year"});
+		foreach my $field (keys $entry) {
+			($records) = $dbh->selectrow_array("SELECT count(*) FROM bibfields as b where b.key=\'$key\' and b.name=\'$field\';");
+			if(not $records) {
+				$sth = $dbh->prepare("insert into bibfields  (`key`, `name`) values (?,?)");
+				$sth->bind_param(1,$key);
+				$sth->bind_param(2,$field);	
+				$sth->execute;
 
-		$sth->execute;
+				$field_id = $dbh->{ q{mysql_insertid} };
 
-		$id = $dbh->{ q{mysql_insertid}};
-
-		# $sth = $dbh->prepare("insert into bibfields  (`key`) values (?");
-		# $sth	
+				if(defined $id) {
+					$sth = $dbh->prepare("insert into publications_fields  (`publications_id`, `fields_id`,`value`) values (?,?,?)");
+					$sth->bind_param(1,$id);
+					$sth->bind_param(2,$field_id);
+					$sth->bind_param(3,$entry->{$field});
+					$sth->execute;
+				}
+			}
+		}
 
 	}
 
