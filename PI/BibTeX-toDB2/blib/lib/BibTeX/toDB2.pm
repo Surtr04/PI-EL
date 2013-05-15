@@ -57,7 +57,7 @@ sub parseBibTeX {
 			$self->{entries}++;
 			
 			$self->{parsedInfo}->{$entry->key} = {};
-			$self->{parsedInfo}->{$entry->key}->{type} = $entry->type;
+			$self->{parsedInfo}->{$entry->key}->{entryType} = $entry->type;
 			
 			my @authors =$entry->author;			
 
@@ -90,7 +90,31 @@ sub insertDB {
 	my $res = $self->{parsedInfo};
 	my $dbh = $self->{database};
 
-	print Dumper $res;
+	my $sth;
+	my $id;
+
+	for my $key (keys $res) {
+		
+		my $entry = $res->{$key};
+
+		$sth = $dbh->prepare("insert into publications  (`type`, `key`, `title`, `year`) values (?,?,?,?)");
+		
+		
+		$sth->bind_param(1,$entry->{"entryType"});
+		$sth->bind_param(2,$key);
+		$sth->bind_param(3,$entry->{"title"});
+		$sth->bind_param(4,$entry->{"year"});
+
+		$sth->execute;
+
+		$id = $dbh->{ q{mysql_insertid}};
+
+		# $sth = $dbh->prepare("insert into bibfields  (`key`) values (?");
+		# $sth	
+
+	}
+
+	
 
 }
 
