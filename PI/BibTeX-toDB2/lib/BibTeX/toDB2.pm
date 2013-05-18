@@ -34,13 +34,23 @@ sub new {
 	my $self = {
 		entries => 0,
 		bibfile => $bibfile,
-		database => DBI->connect($database,$user,$pass,{RaiseError => 1, AutoCommit => 1, mysql_auto_reconnect => 1}),				
+		database => DBI->connect($database,$user,$pass,{RaiseError => 1, AutoCommit => 1, mysql_auto_reconnect => 1, mysql_enable_utf8 => 1}),				
 		parsedInfo => {},		
 	};	
 
 	bless $self,$class;
 
 	return $self;
+}
+
+sub trim {
+
+	my $str = shift;
+
+	$str =~ s/^\s+//;
+	$str =~ s/\s+$//;
+
+	return $str;
 }
 
 
@@ -59,7 +69,7 @@ sub parseBibTeX {
 			$self->{parsedInfo}->{$entry->key} = {};
 			$self->{parsedInfo}->{$entry->key}->{entryType} = $entry->type;
 			
-			my @authors =$entry->author;			
+			my @authors = $entry->author;			
 
 			foreach(@authors) {
 				$_ = $_->to_string;				
@@ -99,7 +109,7 @@ sub insertDB {
 		
 		my $entry = $res->{$key};
 
-		($records) = $dbh->selectrow_array("SELECT count(*) FROM publications as p where p.key=\'$key\';");
+		($records) = $dbh->selectrow_array("SELECT id FROM publications as p where p.key=\'$key\';");
 
 		if(not $records) {
 			$sth = $dbh->prepare("insert into publications  (`type`, `key`, `title`, `year`) values (?,?,?,?)");
@@ -112,10 +122,34 @@ sub insertDB {
 
 			$sth->execute;
 			$id = $dbh->{ q{mysql_insertid} };
+
+			my $aut = $entry->{author};			
+			my @authors = split /\band\b/, $aut;					
+			
+			foreach my $author (@authors) {
+				$sth = $dbh->prepare("insert into nonusers_publications (`publications_id`, `name`) values (?,?)");		
+				$sth->bind_param(1,$id);
+				$sth->bind_param(2,trim $author);
+				$sth->execute;
+			}
+
+		}
+		else {
+			$sth = $dbh->prepare("update publications as p set p.type=?, p.key=?, p.title=?, p.year=? where p.id=?;");
+			
+			$sth->bind_param(1,$entry->{"entryType"});		
+			$sth->bind_param(2,$key);
+			$sth->bind_param(3,$entry->{"title"});
+			$sth->bind_param(4,$entry->{"year"});
+			$sth->bind_param(5,$records);
+
+			$sth->execute;
+			$id = $dbh->{ q{mysql_insertid} };	
+			
 		}
 		
 		foreach my $field (keys $entry) {
-			($records) = $dbh->selectrow_array("SELECT count(*) FROM bibfields as b where b.key=\'$key\' and b.name=\'$field\';");
+			($records) = $dbh->selectrow_array("SELECT id FROM bibfields as b where b.key=\'$key\' and b.name=\'$field\';");
 			if(not $records) {
 				$sth = $dbh->prepare("insert into bibfields  (`key`, `name`) values (?,?)");
 				$sth->bind_param(1,$key);
@@ -123,14 +157,30 @@ sub insertDB {
 				$sth->execute;
 
 				$field_id = $dbh->{ q{mysql_insertid} };
+				
+				$sth = $dbh->prepare("insert into publications_fields  (`publications_id`, `fields_id`,`value`) values (?,?,?)");
+				$sth->bind_param(1,$id);
+				$sth->bind_param(2,$field_id);
+				$sth->bind_param(3,$entry->{$field});
+				$sth->execute;
+				
+			}
+			else {
+				$sth = $dbh->prepare("update bibfields as b set b.key=?, b.name=? where b.id=?");
+				$sth->bind_param(1,$key);
+				$sth->bind_param(2,$field);	
+				$sth->bind_param(3,$records);	
+				$sth->execute;
 
-				if(defined $id) {
-					$sth = $dbh->prepare("insert into publications_fields  (`publications_id`, `fields_id`,`value`) values (?,?,?)");
-					$sth->bind_param(1,$id);
-					$sth->bind_param(2,$field_id);
-					$sth->bind_param(3,$entry->{$field});
-					$sth->execute;
-				}
+				$field_id = $dbh->{ q{mysql_insertid} };
+				
+				my ($id_pf) = $dbh->selectrow_array("SELECT id FROM publications_fields as p where p.publications_id=\'$id\' and p.fields_id=\'$field_id\';");
+				
+				$sth = $dbh->prepare("update publications_fields as p set p.value=? where p.id = ?");			
+				$sth->bind_param(1,$entry->{$field});
+				$sth->bind_param(2,$id_pf);
+				$sth->execute;
+
 			}
 		}
 
