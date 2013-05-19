@@ -154,15 +154,19 @@ sub insertDB {
 		}
 		
 		foreach my $field (keys $entry) {
-			($records) = $dbh->selectrow_array("SELECT id FROM bibfields as b where b.key=\'$field\';");
-			if(not $records) {
+			($field_id) = $dbh->selectrow_array("SELECT id FROM bibfields as b where b.key=\'$field\';");
+			if(not $field_id) {
 				$sth = $dbh->prepare("insert into bibfields  (`key`) values (?)");
 				$sth->bind_param(1,$field);	
-				$sth->execute;
+				$sth->execute;			
 
-				$field_id = $dbh->{ q{mysql_insertid} };
-				
+				$field_id = $dbh->{ q{mysql_insertid} };	
+			}		
+			print $id;
+			($records) = $dbh->selectrow_array("SELECT id FROM publications_fields as b where b.publications_id=\'$id\' and b.fields_id=\'$field_id\';");	
+			if(not $records) {
 				$sth = $dbh->prepare("insert into publications_fields  (`publications_id`, `fields_id`,`value`) values (?,?,?)");
+				print $id;
 				$sth->bind_param(1,$id);
 				$sth->bind_param(2,$field_id);
 				$sth->bind_param(3,$entry->{$field});
