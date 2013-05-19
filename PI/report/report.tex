@@ -272,114 +272,106 @@ Questões como os partners, foram alteradas, de modo a que o utilizador não se 
 \end{verbatim}
 
 \section{Formato standard para descrição de publicações}
-Para a leitura dos ficheiros \textsc{Bib}\negthinspace\TeX optamos por uma script em perl. Na verdade, esta script está implementada como um módulo, usando, portanto, as capacidades OO do perl. A nível de implementação e para facilitar o desenvolvimento inicial, módulos alternativos como o Moose ou o Moo, os quais tentam implementar as \textit{features} OO do perl 6 foram considerados. No entanto, dado o overhead considerável que estes módulos têm, estes foram descartados e optamos por uma via mais convencional. De notar que foi feito algum esforço para que este módulo fosse o mais genérico, de forma a facilitar eventuais alterações futuras.  Esta script aceita como parâmetros de entrada o ficheiro que é suposto processar, bem como as credenciais da Base de Dados à qual se deve ligar. De seguida, o método \textit{parse} recebe o tipo de publicação a ser processado (article, techreport ou inproceedings). O resto acontece internamente e os dados são colocados numa hash organizada por autor. Por fim, basta chamar o método \textit{insertDB} e os dados são inseridos na base de dados. Obviamente que esta é a parte menos genérica do módulo, pois o schema da base de dados não pode ser definido em run-time, a não ser que se criasse uma Base de Dados apenas para este efeito. 
+Nesta fase a leitura dos ficheiros \textsc{Bib}\negthinspace\TeX continua a ser uma script perl. Na verdade, esta script está implementada como um módulo, usando, portanto, as capacidades OO do perl. Ao contrário da fase anterior, agora a script insere todos os dados na base de dados. Para tal, e como não é preciso reinventar a roda, desta feita usamos o módulo BibTeX::Parser do CPAN, podendo assim focar a nossa atenção em algo mais importante, a manutenção adequada da base de dados. O que não mudou desde a fase anterior foi o desejo de manter o módulo o mais genérico possível de forma a ser de fácil extensão. As alterações feitas tornam também o módulo mais pequeno, em termos de linhas de código, e por isso, bem mais legível. Como antigamente, esta módulo recebe as credenciais da base de dados e o ficheiro \textsc{Bib}\negthinspace\TeX a processar. Uma vez que todos os campos são guardados, deixa de ser necessário especificar a entrada a processar, sendo o conteúdo do ficheiro inserido ou actualizado na base de dados em apenas uma travessia. Outra diferença a notar, a hash interna desta vez está organizada pela key da entrada, deixando de ser o autor o centro de foco, isto, obviamente, elimina a necessidade de ter várias entradas repetidas onde muda apenas a chave, ou seja, o autor. Depois de processado o ficheiro, simplesmente chama-se o método \textit{toDB} e os dados são inseridos ou actualizados na base de dados.
 
 \subsection{Processador}
-Dada a extensão do módulo, segue, apenas, o processamento de um article bem como a sua inserção na base de dados.
+Abaixo segue o código para processar o ficheiro passado e inserir todos os dados numa estrutura adequada.
 
-\begin{verbatim}
-foreach (@bib) {                    
-    
-    $found = 1 if $_ =~ /\@article.*/;
-    
-    if($found) {
+\lstset{language=Perl}
+\lstset{basicstyle=\ttfamily\footnotesize}
+\lstset{commentstyle=\textit}
+\lstset{breaklines=true}
+\begin{lstlisting}[numbers=left]
+sub parseBibTeX {
 
-      if ($_ =~ m/^\}$/) {
-        $found = 0;
-        $self->{entries} += 1;
-        foreach (@authors) {
-          if (!defined $self->{parsedInfo}->{$_}) {
-            $self->{parsedInfo}->{$_} = [];
-            push $self->{parsedInfo}->{$_}, ["article",$title, $journal,$year];
-          }
-          else {
-            push $self->{parsedInfo}->{$_}, ["article",$title, $journal,$year]; 
-          }
-        }
+  my ($self) = @_;
 
-        for my $i (0 .. $#authors) {
-          delete $authors[$i];
-        }         
-      }       
+  my $fh = IO::File->new($self->{bibfile});
+  my $parser = BibTeX::Parser->new($fh);
 
-      if ($_ =~ /author\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {                                        
-        my @tmp = split /and/, $1;
-
-        for my $name (@tmp) {
-          push @authors, trim($name);       
-        }               
-      }
-
-      if ($_ =~ /title\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {       
-        $title = $1;
-      }
-
-      if ($_ =~ /journal\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {       
-        $journal = $1;
-      }
-
-      #year = {num}
-      if ($_ =~ /year\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {        
-        $year = $1;
-      }
-
-      #year = num
-      if ($_ =~ /year\s*=\s*(\d+)/) {       
-        $year = $1;
-      }                                         
+  while (my $entry = $parser->next ) {
+    if ($entry->parse_ok) {
       
-    }   
-  }
-\end{verbatim}
-Inserção na BD:\\
-\begin{verbatim}
-  for my $aut (keys $res) {
-    if ($aut eq $user) {
-      $found = 1;
-      last;
+      $self->{entries}++;
+      
+      $self->{parsedInfo}->{$entry->key} = {};
+      $self->{parsedInfo}->{$entry->key}->{entryType} = $entry->type;
+      
+      my @authors = $entry->author;     
+
+      foreach(@authors) {
+        $_ = $_->to_string;       
+      }
+            
+      @{$self->{parsedInfo}->{$entry->key}->{authors}} = @authors;
+      
+      $self->{parsedInfo}->{$entry->key}->{year} = $entry->field("year");
+
+      my @fields = $entry->fieldlist;
+
+      foreach(@fields) {
+        if (not $_ eq "authors") {
+                $self->{parsedInfo}->{$entry->key}->{$_} = $entry->field($_);
+              }
+      }
     }
   }
-  return NO_USER if not $found;
+}
+\end{lstlisting}
+Inserção na BD\footnote{Dada a extensão do método de inserção na base de dados, fica um exemplo ilustrativo do código usado}:\\
+\lstset{language=Perl}
+\lstset{basicstyle=\ttfamily\footnotesize}
+\lstset{commentstyle=\textit}
+\lstset{breaklines=true}
+\begin{lstlisting}[numbers=left]
+for my $key (keys $res) {
+    
+    my $entry = $res->{$key};
 
+    ($records) = $dbh->selectrow_array("SELECT id FROM publications as p where p.key=\'$key\';");
 
-  my $sth = $dbh->prepare("select * from info where name = ?");
-  $sth->bind_param(1,$user);
-  $sth->execute;
+    if(not $records) {
+      $sth = $dbh->prepare("insert into publications  (`type`, `key`, `title`, `year`) values (?,?,?,?)");
+      
+      
+      $sth->bind_param(1,$entry->{"entryType"});
+      $sth->bind_param(2,$key);
+      $sth->bind_param(3,$entry->{"title"});
+      $sth->bind_param(4,$entry->{"year"});
 
-  while (my @tmp = $sth->fetchrow_array()) {
-    $usr_id = $tmp[0]; #fetch user id
-  }
-  $res = $res->{$user};
-  my $id;
-
-  foreach (@$res) {   
-    my @arr = @$_;      
-    if ($arr[0] eq 'article') {
-      $sth = $dbh->prepare("insert into publications  (`type`, `title`, 
-            `journal`, `year`) values (?,?,?,?)");
-      $sth->bind_param(1,$arr[0]);
-      $sth->bind_param(2,$arr[1]);
-      $sth->bind_param(3,$arr[2]);
-      $sth->bind_param(4,$arr[3]);            
       $sth->execute;
-      $id = $dbh->{ q{mysql_insertid}};
+      $id = $dbh->{ q{mysql_insertid} };
 
-      $sth = $dbh->prepare("insert into users_publications values ($usr_id,$id)");
-      $sth->execute;
+      my $aut = $entry->{author};     
+      my @authors = split /\band\b/, $aut;          
+      
+      foreach my $author (@authors) {
+        $sth = $dbh->prepare("insert into nonusers_publications (`publications_id`, `name`) values (?,?)");   
+        $sth->bind_param(1,$id);
+        $sth->bind_param(2,trim $author);
+        print $author."\n";
+        print $id."\n";
+        $sth->execute;
+      }
+
     }
-\end{verbatim}
+    ...
+}
+\end{lstlisting}
   
 
 \subsection{Exemplo de Utilização}
 
-\begin{verbatim}
-  my $f = BibTeX::toDB->new('bibtex.bib','DBI:mysql:database','user','pass');
+\lstset{language=Perl}
+\lstset{basicstyle=\ttfamily\footnotesize}
+\lstset{commentstyle=\textit}
+\lstset{breaklines=true}
+\begin{lstlisting}[numbers=left]
+my $f = BibTeX::toDB2->new('file.bib','DBI:mysql:database','user','pass');
 
-  $f->parse("article");
-  $f->parse("techreport");
-  $f->parse("inproceedings");
-  $f->insertDB("J.J. Almeida");
-\end{verbatim}
+$f->parseBibTeX;
+$f->insertDB;
+\end{lstlisting}
 
 \section{Interface única para carregamento dos vários dados relativos ao CV}
 A nossa interface para o carregamento dos dados, permite de forma bastante interactiva introduzir os dados referentes à informação básica, formação e actividades desenvolvidas. Atendendo a que o ficheiro de publicações é um simples ficheiro BibTeX, e já existem uma quantidade razoável de ferramentas que permite criar esses mesmos ficheiros, até à 2ª Avaliação Intermédia, apenas tínhamos o local de colocação de um ficheiro. No entanto a interface possui algumas simplificações, mas que podem ser limitativas para alguns CVs. Por isso mesmo é permitida a introdução de um ficheiro único, com todas as informações. Esse ficheiro, mais não é que um zip, contendo um manifesto (\emph{pr.xml}) que indica quais os ficheiros dentro do pacote que se referem à informação e formação, às actividades e às publicações. Para melhor comodidade podem haver mais que um ficheiro para cada uma das categorias (sendo que todos serão processados). Podemos ver um exemplo de um manifesto de um pacote:
