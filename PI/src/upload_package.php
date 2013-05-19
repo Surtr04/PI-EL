@@ -58,15 +58,7 @@
 	</head>
 	<body>
 		<div class="row-fluid">
-			<div class="span3">
-				<div class="well sidebar-nav">
-					<ul class="nav nav-list">
-						<li class="nav-header">Opções</li>
-						<li><a href="interface.html">Formulário</a></li>
-						<li class="active"><a href="#">Ficheiro (Pacote)</a></li>
-					</ul>
-				</div>
-			</div>
+			<?php include('menu.php'); ?>
 			<div class="span9">
 				<form name="frmPrincipal" method="post" class="form-horizontal" action="full_import.php" enctype="multipart/form-data">
 					<input type="hidden" id="toSave" name="toSave" value="0"/>

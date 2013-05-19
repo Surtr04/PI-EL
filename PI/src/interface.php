@@ -1,3 +1,7 @@
+<?php
+	session_start();
+	$_SESSION['id'] = 1;
+?>
 <!DOCTYPE html>
 <html lang="en" ng-app="cv_form">
 	<head>
@@ -63,15 +67,7 @@
 	</head>
 	<body>
 		<div class="row-fluid">
-			<div class="span3">
-				<div class="well sidebar-nav">
-					<ul class="nav nav-list">
-						<li class="nav-header">Opções</li>
-						<li class="active"><a href="#">Formulário</a></li>
-						<li><a href="upload_package.html">Ficheiro (Pacote)</a></li>
-					</ul>
-				</div>
-			</div>
+			<?php include('menu.php'); ?>
 			<div class="span9">
 				<form name="frmPrincipal" method="post" class="form-horizontal" action="full_import.php" enctype="multipart/form-data">
 					<div class="tabbable"> 

@@ -212,7 +212,7 @@
 				
 				//3ª Parte
 				
-				header('Location: interface.html');
+				header('Location: interface.php');
 
 			} else {
 				header("Content-type: application/zip");

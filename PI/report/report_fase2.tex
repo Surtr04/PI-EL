@@ -28,7 +28,7 @@
 	\large{Mestrado em Engenharia Informática}  \\
 	\large{Engenharia de Linguagens}  \\
 	\large{Projecto Integrado - Grupo 1}  \\	
-	\large{\textbf{3ª Avaliação Intermédia}} \\
+	\large{\textbf{2ª Avaliação Intermédia}} \\
 	\large{Ano Letivo de 2012/2013} \\
 	\date{\today}
 }
@@ -375,7 +375,7 @@ Inserção na BD:\\
 \end{verbatim}
 
 \section{Interface única para carregamento dos vários dados relativos ao CV}
-A nossa interface para o carregamento dos dados, permite de forma bastante interactiva introduzir os dados referentes à informação básica, formação e actividades desenvolvidas. Atendendo a que o ficheiro de publicações é um simples ficheiro BibTeX, e já existem uma quantidade razoável de ferramentas que permite criar esses mesmos ficheiros, até à 2ª Avaliação Intermédia, apenas tínhamos o local de colocação de um ficheiro. No entanto a interface possui algumas simplificações, mas que podem ser limitativas para alguns CVs. Por isso mesmo é permitida a introdução de um ficheiro único, com todas as informações. Esse ficheiro, mais não é que um zip, contendo um manifesto (\emph{pr.xml}) que indica quais os ficheiros dentro do pacote que se referem à informação e formação, às actividades e às publicações. Para melhor comodidade podem haver mais que um ficheiro para cada uma das categorias (sendo que todos serão processados). Podemos ver um exemplo de um manifesto de um pacote:
+A nossa interface para o carregamento dos dados, permite de forma bastante interactiva introduzir os dados referentes à informação básica, formação e actividades desenvolvidas. Atendendo a que o ficheiro de publicações é um simples ficheiro BibTeX, e já existem uma quantidade razoável de ferramentas que permite criar esses mesmos ficheiros, apenas temos o local de colocação de um ficheiro. No entanto a interface possui algumas simplificações, mas que podem ser limitativas para alguns CVs. Por isso mesmo é permitida a introdução de um ficheiro único, com todas as informações. Esse ficheiro, mais não é que um zip, contendo um manifesto (\emph{pr.xml}) que indica quais os ficheiros dentro do pacote que se referem à informação e formação, às actividades e às publicações. Para melhor comodidade podem haver mais que um ficheiro para cada uma das categorias (sendo que todos serão processados). Podemos ver um exemplo de um manifesto de um pacote:
 \begin{verbatim}
 <?xml version="1.0" encoding="UTF-8"?>
 <cv>
@@ -393,9 +393,6 @@ A nossa interface para o carregamento dos dados, permite de forma bastante inter
 </cv>
 \end{verbatim}
 No caso da primeira e terceiras partes o conteúdo dos vários será concatenado e depois processado pelo processador respectivo. No caso da segunda parte, das actividades, cada xml será tratado de forma independente (lido e verificado um a um, sem nenhum tipo de concatenação).\\
-A interface de introdução de publicações foi substancialmente alterada da 2ª para a 3ª Avaliação intermédia, após termos tido em consideração as opiniões dos professores sobre por exemplo universalidade do formato bibtex. Assim, tornou-se possível inserir directamente e ao contrário do que estava desenvolvido até à 2ª Avaliação Intermédia publicações pelo formulário, utilizando os campos do Bibtex(de http://en.wikipedia.org/wiki/BibTeX\#Bibliographic\_information\_file). Utilizando esta informação foi possível construir a aplicação de modo a adaptar-se de acordo com o tipo de publicação que o utilizador escolhe, mostrando e dando destaque aos campos obrigatórios, por exemplo.\\
-Para garantir a conformidade e que não existiam problemas, para além do \emph{tipo} que é obrigatório em qualquer tipo de publicação (como é óbvio pela própria observação do formato Bibtex), a \emph{key} também é obrigatória (algo que pode não parecer tão directo pela análise de um Bibtex). No entanto para utilizadores, cuja função de uma \emph{key} possa ser algo estranho e não pretendam estar com esse tipo de problemas a aplicação vai definindo \emph{keys} com pouco valor semântico, mas preservando o valor da \emph{key}.\\
-Também a estrutura dos campos na página web foi alterada em relação a outro tipo de repetições, como a formação ou as actividades. Introduzimos uma vista mais minimalista no conjunto global, com a possibilidade de a qualquer momento ser analisado em maior pormenor cada um dos seus campos.
 \subsection{Imagens da interface}
 Podemos observar três imagens referentes aos campos disponíveis para cada secção, relativamente à informação recolhida. A figura \ref{fig:bypacote} dá a possibilidade de ser submetido directamente um ficheiro zip com todas as informações directamente lá contidas, ao mesmo tempo que garante uma maior flexibilidade.\\
 Podemos ver como no entanto é possível a interface adequar-se, por exemplo a cada tipo de actividade, garantindo uma maior capacidade ao utilizador de saber que campos serão realmente necessários.
@@ -423,14 +420,7 @@ Podemos ver como no entanto é possível a interface adequar-se, por exemplo a c
 \caption{Formulário para introdução do pacote em formato zip}
 \label{fig:bypacote}
 \end{figure}
-\section{Exportação}
-\subsection{Europass XML}
-Com o objectivo de garantir a interoperabilidade do nosso sistema, o mesmo faz a exportação para o formato XML do Europass, utilizando a v3.0. Inicialmente começamos a desenvolver a exportação para o formato Europass v2.0, uma vez que o 3 ainda era bastante recente. Tinha sido lançado por volta do início do ano de 2013. No entanto, quando começamos a fazer a exportação das publicações detectámos algumas dificuldades, devido aos campos existentes no \emph{Schema} da v2.0. Deste modo reformulámos o nosso código, para gerar um Europass XML v3.0 válido. O mesmo possui várias alterações, principalmente nas definições de apresentação que são passadas aos serviços de criação de um documento de apresentação ao utilizador (pdf, odt...).\\
-Também passam a ser permitidas alguns campos extra nos \emph{Achievements}, mas que são essencialmente reduzidos a título descrição. Permitem-nos no entanto fazer uma exportação de coisas como publicações.\\
-O formato Europass XML suporta também a exportação de uma imagem para ser depois renderizada pelos serviços de criação de documento, sendo que o nosso sistema utiliza esse mesmo método.
-\subsection{Europass PDF}
-Tal como explicado na secção anterior inicialmente começamos por gerar documentos da versão 2.0. Sendo que para tal utilizávamos os Web Services disponibilizados no próprio \emph{site} (http://europass.cedefop.europa.eu/pt/resources/for-developers). Também tal como foi explicado anteriormente, foi necessário passar a utilizar a versão 3.0. Infelizmente ainda não disponibilizam nenhum Web Service que permita converter directamente um Europass XML v3.0 para um Europass PDF. Assim inicialmente começamos por tentar utilizar o próprio editor deles para fazer a geração do PDF, produzindo um JSON através do XML que tínhamos criado e enviando-o como se fossemos o editor web deles.\\
-Ao mesmo tempo tínhamos entrado em contacto com eles por e-mail a questionar se tinham planos para suportar com Web Services os novos documentos versão 3.0 e se sim para quando. Sendo que alguns dias depois recebemos a resposta indicando exactamente que é uma das prioridades deles o lançamento de um Web Service para a versão 3.0, e que o planeiam fazer no decorrer do mês de Junho. Atendendo a que nós tínhamos explicado a nossa situação e o porquê de necessitarmos do serviço, a Srª Anastasia Theodouli respondeu-nos atenciosamente que poderíamos utilizar o serviço que eles já tinham em versão beta no endereço https://europass.cedefop.europa.eu/rest, enviando também documentação de como utilizar o serviço e exemplos utilizando a linha de comandos.
+
 \section{Conclusão}
 O objectivo desta segunda avaliação do Projecto Integrado, é garantir que o mesmo segue já a um bom ritmo, servindo também já como um suporte para o desenvolvimento futuro, na medida em que será uma base sobre a qual podemos continuar a construir já mais cientes dos caminhos correctos que escolhemos e daqueles que não estavam assim tão correctos, ao ser mostrado à equipa docente os resultados obtidos até à data. Ao mesmo tempo confrontámos também as alterações que fizemos fruto da primeira avaliação, e das opiniões dos docentes.
 \end{document}

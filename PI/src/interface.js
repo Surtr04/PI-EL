@@ -7,7 +7,7 @@ Object.size = function(obj) {
     return size;
 };
 
-function InfoCtrl($scope){
+function InfoCtrl($scope, $http){
 	$scope.order = 'pos';
 	$scope.fields =  [{name: "name", label : "Nome", value: "Nelson Jose Costa Luis", type: "text"},
 					  {name: "nacionalities", label : "Nacionalidades", value: ["Portuguese","Canadian"], type: "list", max:2, required: true},
@@ -24,6 +24,18 @@ function InfoCtrl($scope){
 	$scope.institutions = { __new__ : {text: "--Nova--", name: "", address: "", country: "", type: ""},
 							id2: {text: "Universidade do Minho", name: "Universidade do Minho", address: "Gualtar", country: "Portugal", type: "Public University"}};
 	$scope.selectedIns = [];
+	
+	$http.get('getUserInfos.php?t=info').
+		success(function(data, status, headers, config) {
+			$scope.fields = data.fields;
+			$scope.formation = data.formation;
+			$scope.institutions = data.institutions;
+			$scope.selectedIns = data.selectedIns;
+		})/*.
+		error(function(data, status, headers, config) {
+		
+		})*/;
+	
 	$scope.errors = {};
 	$scope.getType = function(txt){ return (txt == 'email' ? 'email' : 'text');}
 	$scope.validateList = function(name, list, max){if (max > 0 && list.length > max) $scope.errors[name] = true; else $scope.errors[name] = false;}
@@ -40,10 +52,20 @@ function InfoCtrl($scope){
 	}
 	
 }
-function PublicationsCtrl($scope, $dialog){
+function PublicationsCtrl($scope, $dialog, $http){
 	$scope.deletes = [];
 	$scope.publast = 0;
 	$scope.publications = { }; //: {title: 'A new demo', __type: 'article'}
+	
+	$http.get('getUserInfos.php?t=pubs').
+		success(function(data, status, headers, config) {
+			$scope.publications = data;
+			$scope.publast = Object.size($scope.publications);
+		})/*.
+		error(function(data, status, headers, config) {
+		
+		})*/;
+	
 	$scope.addPublication = function(vtitle, vtype){
 		if (vtitle == undefined) vtitle = '';
 		if (vtype == undefined) vtype = '';
@@ -94,11 +116,11 @@ function PublicationsCtrl($scope, $dialog){
 	}
 	
 	/*Constructor Code*/
-	$scope.addPublication('A new demo', 'article');
-	$scope.addPublication('Other demo', 'book');
+	/*$scope.addPublication('A new demo', 'article');
+	$scope.addPublication('Other demo', 'book');*/
 	
 }
-function ActivitiesCtrl($scope){
+function ActivitiesCtrl($scope, $http){
 	$scope.activities = [
 							{key: 'ex1', begin: '01/01/2012', end: '31/12/2012', desc: 'Exemplo de uma actividade', inst: {text: "Universidade do Minho", name: "Universidade do Minho", address: "Gualtar", country: "Portugal", type: "Public University"},  org : {type: '', name: '', address: ''}, partners: ["J. J. Almeida", "Bruno Fernandes"], activity: { type: "conference", isorg: false, name: 'JOIN - Jornadas de Informática da Universidade do Minho', place: 'Universidade do Minho - Gualtar', work: 'Mobile Applications And Cloud Computing'}},
 							{key: 'ex2', begin: '01/05/2011', end: '31/06/2011', desc: 'Actividade de 2 meses', inst: {text: "Universidade Lusíada", name: "Universidade Lusíada", address: "Famalicão", country: "Portugal", type: "Private University"},  org : {type: '', name: '', address: ''}, partners: [], activity: { type: "other", isorg: false, info: 'Exemplo de uma actividade mais específica que deve ser descrita pelo utilizador'}}
@@ -113,6 +135,18 @@ function ActivitiesCtrl($scope){
 	$scope.selectedIns = [];
 	$scope.institutions = { __new__ : {text: "--Nova--", name: "", address: "", country: "", type: ""},
 							id2: {text: "Universidade do Minho", name: "Universidade do Minho", address: "Gualtar", country: "Portugal", type: "Public University"}};
+							
+							
+	$http.get('getUserInfos.php?t=acts').
+		success(function(data, status, headers, config) {
+			$scope.activities = data.activities;
+			$scope.institutions = data.institutions;
+			$scope.selectedIns = data.selectedIns;
+		})/*.
+		error(function(data, status, headers, config) {
+		
+		})*/;
+	
 	$scope.putIns = function(item, index){ 
 		var inst = $scope.institutions[$scope.selectedIns[index]];
 		item.inst.name = inst.name;

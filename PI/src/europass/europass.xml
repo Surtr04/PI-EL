@@ -2,8 +2,8 @@
 <SkillsPassport xmlns="http://europass.cedefop.europa.eu/Europass" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://europass.cedefop.europa.eu/Europass http://europass.cedefop.europa.eu/xml/EuropassSchema_V3.0.xsd" locale="pt">
   <DocumentInfo>
     <DocumentType>ECV</DocumentType>
-    <CreationDate>2013-05-11T12:12:56+00:00</CreationDate>
-    <LastUpdateDate>2013-05-11T12:12:56+00:00</LastUpdateDate>
+    <CreationDate>2013-05-19T03:24:34+00:00</CreationDate>
+    <LastUpdateDate>2013-05-19T03:24:34+00:00</LastUpdateDate>
     <XSDVersion>3.0</XSDVersion>
     <Generator>GereCVs</Generator>
     <Comment>Europass CV</Comment>
@@ -28,6 +28,7 @@
       <Field name="LearnerInfo.Identification.Demographics.Nationality[1]" show="true"/>
       <Field name="LearnerInfo.Identification.Photo" show="true"/>
       <Field name="LearnerInfo.Headline" show="false"/>
+      <Field name="LearnerInfo.Headline" show="false"/>
       <Field name="LearnerInfo.Education" show="true"/>
       <Field name="LearnerInfo.Education[0]" show="true"/>
       <Field name="LearnerInfo.Education[0].Period" show="true" format="text/long"/>
@@ -38,8 +39,19 @@
       <Field name="LearnerInfo.Education[0].Organisation.ContactInfo.Address" show="true" format="s,m z c"/>
       <Field name="LearnerInfo.Education[0].Level" show="true"/>
       <Field name="LearnerInfo.Education[0].Field" show="false"/>
+      <Field name="LearnerInfo.Education[1]" show="true"/>
+      <Field name="LearnerInfo.Education[1].Period" show="true" format="text/long"/>
+      <Field name="LearnerInfo.Education[1].ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.Education[1].Title" show="true" format="text/long"/>
+      <Field name="LearnerInfo.Education[1].Activities" show="true"/>
+      <Field name="LearnerInfo.Education[1].Organisation" show="true"/>
+      <Field name="LearnerInfo.Education[1].Organisation.ContactInfo.Address" show="true" format="s,m z c"/>
+      <Field name="LearnerInfo.Education[1].Level" show="true"/>
+      <Field name="LearnerInfo.Education[1].Field" show="false"/>
       <Field name="LearnerInfo.Skills" show="true"/>
       <Field name="LearnerInfo.Skills.Linguistic.MotherTongue" show="true"/>
+      <Field name="LearnerInfo.Skills.Linguistic.MotherTongue[0]" show="true"/>
+      <Field name="LearnerInfo.Skills.Linguistic.MotherTongue[1]" show="true"/>
       <Field name="LearnerInfo.Skills.Linguistic.ForeignLanguage" show="false"/>
       <Field name="LearnerInfo.Skills.Communication" show="false"/>
       <Field name="LearnerInfo.Skills.Organisational" show="false"/>
@@ -56,20 +68,26 @@
       <Field name="LearnerInfo.WorkExperience[0].Employer" show="true"/>
       <Field name="LearnerInfo.WorkExperience[0].Employer.ContactInfo.Address" show="true" format="s, z m (c)"/>
       <Field name="LearnerInfo.WorkExperience[0].Employer.Sector" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[1]" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[1].Period" show="true" format="text/long"/>
+      <Field name="LearnerInfo.WorkExperience[1].ReferenceTo" show="false"/>
+      <Field name="LearnerInfo.WorkExperience[1].Position" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[1].Activities" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[1].Employer" show="true"/>
+      <Field name="LearnerInfo.WorkExperience[1].Employer.ContactInfo.Address" show="true" format="s, z m (c)"/>
+      <Field name="LearnerInfo.WorkExperience[1].Employer.Sector" show="true"/>
       <Field name="LearnerInfo.Achievement" show="true"/>
-      <Field name="LearnerInfo.Achievement[0]" show="true"/>
-      <Field name="LearnerInfo.Achievement[0].ReferenceTo" show="false"/>
     </Document>
   </PrintingPreferences>
   <LearnerInfo>
     <Identification>
       <PersonName>
-        <FirstName>Antonio Oliveira da</FirstName>
-        <Surname>Silva</Surname>
+        <FirstName>José</FirstName>
+        <Surname>João</Surname>
       </PersonName>
       <ContactInfo>
         <Email>
-          <Contact>meuemail@xpto.pt</Contact>
+          <Contact>meu_email@xpto.com</Contact>
         </Email>
         <WebsiteList>
           <Website>
@@ -78,78 +96,146 @@
         </WebsiteList>
         <TelephoneList>
           <Telephone>
-            <Contact>252928322</Contact>
+            <Contact>252000000</Contact>
           </Telephone>
           <Telephone>
-            <Contact>9135937779</Contact>
+            <Contact>901234567</Contact>
           </Telephone>
         </TelephoneList>
       </ContactInfo>
       <Demographics>
-        <Birthdate year="2006" month="--9" day="---13"/>
+        <Birthdate year="2013" month="--05" day="---06"/>
         <Gender>
           <Code>M</Code>
           <Label>Masculino</Label>
         </Gender>
         <NationalityList>
           <Nationality>
-            <Code>PO</Code>
-            <Label>Portugal</Label>
-          </Nationality>
-          <Nationality>
             <Code>AN</Code>
             <Label>Andorra</Label>
           </Nationality>
+          <Nationality>
+            <Code>PO</Code>
+            <Label>Portugal</Label>
+          </Nationality>
         </NationalityList>
       </Demographics>
+      <Photo>
+        <MimeType>image/png</MimeType>
+        <Data>iVBORw0KGgoAAAANSUhEUgAAAF8AAABfCAIAAAABLoyiAAAACXBIWXMAAAsTAAALEwEAmpwYAAAElUlEQVR42u2c6XLaMBRGeYngVZKtxSuYJX3/6aP1c0gXmpBiWbauKGeY5E8yvjr6dCXjhM33J7fZ+C6ANBvfBZBm47sA0mx8F/C9H0xdVyMG336/mrbyXZonO11fjy4ur6r+nKo2ZlQGYPDx7XQ7mGiMvm3klqhq9Ig0Def6Ae20LYIwWcrHNF2ytj+tFKXF7TRNY8bGMs/LhyjVVbM/Lp6jBe3sj5XRY7d1KeZnhsYmbsavQdppu1qragVwleHchGQHs3qZ2HVAQttukRC5t3NZTSuDi9ad+1bt2M46q2m1BLm0o32k5kqQqdyesJ3ZWbPRfJ2gfnAmyI2dfl97aTefgtXt6rjoxo6S2pACCTqXJOzUbaWJyTFjPZqEHaV8u/gMVHV4nduAHtbOBc92KC6rn2jl244mHBxM28y3zWbZ2Z0MdTu7Wa1nlp22N5SbDmauafxlx1RKK00WpXBv6s8ODoHEgSBvdmTpe/T/tCM92dkdKkk/O1L3R+XBTtuPuSUOKuxmbFv2drTxPfT7wNbhwQ794Oj3bcu+9djbkVIFgFR+siNL3yO/DwTomZ2boM5ndm7bKZ926NkJY2kVhfRgpyxlEKBOH9kJBS92ntn5iqIIQ09Z2j/YevDsoEjl6TQYgB7Y0WbFlVWI8ZLDq1GqpE9RFKveZwmOa+Kqvsd9H0IU3e79reW6wR3ptPt1i+z4HvFEO8Nx/KtCMVLgVUqxoJ0ykNT8AjEX/KroJbMTyqK6LWvJ7Mix1QXNktmRWL6+x2cL+o7SS2an6SSWcaDAjjZL2gGchRoe2KmaCYdDOzu+R2kL5nV/nvB4y8YODoMiTBibcNixtGMqiUkIDs5xkC0Wt9P0mjHue7CTQXCadto9l42dw7eK5eHZyXM+daQ2dgAPT45gq9mpWxXW4uKc4xC7kh2QZ4yHA5bV4dvkv5KbY4ezQPxgTRXl5GU1yw6AnTxnxB2NRWbMboCz7ABTl0qPZ3TfEm6oyaEmtx7dXDsXdDfODykQ6izLS2Wvxpmd/iSzNPct5A81GWv39o8iHNsBKSU7mCong3Jmh1Z2css2vJwdKo0HanC+oWUnJwOaMRfEslOUIkNdBECKJz20WsMODj5pSsIOymg6B/8y69KOqji2LQrATt062M5d2jmc2iQhoSdNkB1idkAcJxkBkjjdHSh9lgEYzjUdO+3OwQcZuLQD4oiEnThO9wc3HxTi0g4mzbeZi51kONKzE0VJSgBsDoUkdhrULU9iEnYA4iOEg5sJB3b6QaVZimVFiuRtixDS3/s7RckgBc04oRKavwyNcxZFMU5AVWdzb2Fppz8VuHZMZin9w1KSwJFpJguyscNZtn2JEd2wiLYxXspMeDgxwU47lFzk220MfI90hqNoLL64rx/dZafdKxgJ3cufxFG8fYl4kc+yIxVD04UX38NZ0FGWp81eTLDT9DJnKX5zu43iRyd6cwSYyKpefGVHGQEjLy9b/LTvslfXtI3eNMW8SK7sVK3ABv2fhOUOTTFj7N0O5/zi7Mkv4OTdDjxFT675nZ2nnY9c2XnykWln5f+QH6zlO5kw+HOcAAAAAElFTkSuQmCC</Data>
+        <MetadataList>
+          <Metadata key="dimension" value="95x95"/>
+          <Metadata key="number-of-pages" value="1"/>
+        </MetadataList>
+      </Photo>
     </Identification>
     <EducationList>
       <Education>
         <Period>
-          <From year="1997"/>
-          <To year="2001"/>
+          <From year="2013" month="--09" day="---01"/>
+          <To year="2014" month="--06" day="---30"/>
           <Current>false</Current>
         </Period>
-        <Title>PhD - Thesis Title: 'Young People in the Construction of the Virtual University', Empirical research on e-learning</Title>
+        <Title>MSc Engenharia Informática</Title>
         <Organisation>
-          <Name>Brunel University</Name>
+          <Name>Universidade do Minho</Name>
           <ContactInfo>
             <Address>
               <Contact>
-                <Municipality>London</Municipality>
+                <Municipality>Gualtar - Braga</Municipality>
                 <Country>
-                  <Code>RU</Code>
-                  <Label>Reino Unido</Label>
+                  <Code>PO</Code>
+                  <Label>Portugal</Label>
+                </Country>
+              </Contact>
+            </Address>
+          </ContactInfo>
+        </Organisation>
+        <Level/>
+      </Education>
+      <Education>
+        <Period>
+          <From year="2010" month="--09" day="---01"/>
+          <To year="2012" month="--06" day="---30"/>
+          <Current>false</Current>
+        </Period>
+        <Title>BSc Engenharia Informática</Title>
+        <Organisation>
+          <Name>Universidade Lusófona</Name>
+          <ContactInfo>
+            <Address>
+              <Contact>
+                <Municipality>Famalicão</Municipality>
+                <Country>
+                  <Code>PO</Code>
+                  <Label>Portugal</Label>
                 </Country>
               </Contact>
             </Address>
           </ContactInfo>
         </Organisation>
         <Level>
-          <Label>18,3 (180 ECTS)</Label>
+          <Label>18.5 Valores</Label>
         </Level>
       </Education>
     </EducationList>
+    <Skills>
+      <Linguistic>
+        <MotherTongueList>
+          <MotherTongue>
+            <Description>
+              <Code>po</Code>
+              <Label>Português</Label>
+            </Description>
+          </MotherTongue>
+        </MotherTongueList>
+      </Linguistic>
+    </Skills>
     <WorkExperienceList>
       <WorkExperience>
         <Period>
-          <From year="2001" month="--10"/>
-          <To year="2002" month="--2"/>
+          <From year="2012" month="--01" day="---01"/>
+          <To year="2012" month="--12" day="---31"/>
           <Current>false</Current>
         </Period>
         <Position>
-          <Label>Researcher / Independent Consultant</Label>
+          <Label>Actividade variada</Label>
         </Position>
-        <Activities>Working in a research team carrying out in-depth qualitative evaluation of the 2 year Advanced Training of Trainers in Europe using participant observations, in-depth interviews and focus groups. Work carried out in training courses in Strasbourg, Slovenia and Budapest.</Activities>
+        <Activities>JOIN - Jornadas de Informática da Universidade do Minho</Activities>
         <Employer>
-          <Name>Council of Europe</Name>
+          <Name>Universidade do Minho</Name>
           <ContactInfo>
             <Address>
               <Contact>
-                <Municipality>Budapest</Municipality>
+                <Municipality>Gualtar - Braga</Municipality>
                 <Country>
-                  <Code>HU</Code>
-                  <Label>Hungria</Label>
+                  <Code>PO</Code>
+                  <Label>Portugal</Label>
+                </Country>
+              </Contact>
+            </Address>
+          </ContactInfo>
+        </Employer>
+      </WorkExperience>
+      <WorkExperience>
+        <Period>
+          <From year="2011" month="--05" day="---01"/>
+          <To year="2011" month="--06" day="---30"/>
+          <Current>false</Current>
+        </Period>
+        <Position>
+          <Label>Actividade variada</Label>
+        </Position>
+        <Activities>Exemplo de uma actividade mais específica que deve ser descrita pelo utilizador</Activities>
+        <Employer>
+          <Name>Universidade do Minho</Name>
+          <ContactInfo>
+            <Address>
+              <Contact>
+                <Municipality>Gualtar - Braga</Municipality>
+                <Country>
+                  <Code>PO</Code>
+                  <Label>Portugal</Label>
                 </Country>
               </Contact>
             </Address>
@@ -157,14 +243,6 @@
         </Employer>
       </WorkExperience>
     </WorkExperienceList>
-    <AchievementList>
-      <Achievement>
-        <Title>
-          <Code>publications</Code>
-          <Label>Publicacoes</Label>
-        </Title>
-        <Description>'How to do Observations: Borrowing techniques from the Social Sciences to help Participants do Observations in Simulation Exercises' Coyote EU/CoE Partnership Publication, (2002).</Description>
-      </Achievement>
-    </AchievementList>
+    <AchievementList/>
   </LearnerInfo>
 </SkillsPassport>
