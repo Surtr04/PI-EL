@@ -77,7 +77,6 @@ sub parseBibTeX {
 			foreach(@authors) {
 				$_ = $_->to_string;				
 			}
-
 						
 			@{$self->{parsedInfo}->{$entry->key}->{authors}} = @authors;
 			

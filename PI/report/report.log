@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2013.2.6)  5 APR 2013 22:21
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2013.2.6)  19 MAY 2013 22:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -642,7 +642,7 @@ LaTeX Info: Redefining \nameref on input line 44.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-<../../report-template/UM.jpg, id=80, 48.18pt x 24.09pt>
+<../../report-template/UM.jpg, id=92, 48.18pt x 24.09pt>
 File: ../../report-template/UM.jpg Graphic file (type jpg)
 
 <use ../../report-template/UM.jpg>
@@ -665,14 +665,14 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout4 = `report.toc'.
 
 
-[2] <Diagrama_Classes.jpg, id=116, 999.735pt x 676.5275pt>
+[2] <Diagrama_Classes.jpg, id=131, 999.735pt x 676.5275pt>
 File: Diagrama_Classes.jpg Graphic file (type jpg)
 
 <use Diagrama_Classes.jpg>
 Package pdftex.def Info: Diagrama_Classes.jpg used on input line 69.
 (pdftex.def)             Requested size: 399.88692pt x 270.6062pt.
  [3 <./Diagrama_Classes.jpg>]
-<Use_Cases.jpg, id=123, 764.8575pt x 501.875pt>
+<Use_Cases.jpg, id=138, 764.8575pt x 501.875pt>
 File: Use_Cases.jpg Graphic file (type jpg)
  <use Use_Cases.jpg>
 Package pdftex.def Info: Use_Cases.jpg used on input line 77.
@@ -682,7 +682,7 @@ Overfull \hbox (3.67392pt too wide) in paragraph at lines 77--78
  [][] 
  []
 
-<uc_consult_cv.jpg, id=127, 473.51906pt x 609.77812pt>
+<uc_consult_cv.jpg, id=142, 473.51906pt x 609.77812pt>
 File: uc_consult_cv.jpg Graphic file (type jpg)
  <use uc_consult_cv.jpg>
 Package pdftex.def Info: uc_consult_cv.jpg used on input line 85.
@@ -692,7 +692,7 @@ Overfull \hbox (18.27377pt too wide) in paragraph at lines 85--86
  [][] 
  []
 
-<uc_provide_cv_info.jpg, id=128, 529.22719pt x 381.67593pt>
+<uc_provide_cv_info.jpg, id=143, 529.22719pt x 381.67593pt>
 File: uc_provide_cv_info.jpg Graphic file (type jpg)
 
 <use uc_provide_cv_info.jpg>
@@ -713,7 +713,7 @@ Package epstopdf Info: Source file: <bd.eps>
 .eps>
 (epstopdf)             \includegraphics on input line 99.
 Package epstopdf Info: Output file is already uptodate.
-<bd-eps-converted-to.pdf, id=129, 361.35pt x 556.0775pt>
+<bd-eps-converted-to.pdf, id=144, 361.35pt x 556.0775pt>
 File: bd-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bd-eps-converted-to.pdf>
@@ -734,7 +734,7 @@ d2.eps>
 (epstopdf)             \includegraphics on input line 107.
 Package epstopdf Info: Output file is already uptodate.
 
-<bd2-eps-converted-to.pdf, id=132, 422.57875pt x 597.23125pt>
+<bd2-eps-converted-to.pdf, id=147, 422.57875pt x 597.23125pt>
 File: bd2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bd2-eps-converted-to.pdf>
@@ -770,7 +770,7 @@ onverted-to.pdf cv_activities_schema.eps>
 (epstopdf)             \includegraphics on input line 176.
 Package epstopdf Info: Output file is already uptodate.
 
-<cv_activities_schema-eps-converted-to.pdf, id=149, 684.5575pt x 1006.76125pt>
+<cv_activities_schema-eps-converted-to.pdf, id=165, 684.5575pt x 1006.76125pt>
 File: cv_activities_schema-eps-converted-to.pdf Graphic file (type pdf)
 
 <use cv_activities_schema-eps-converted-to.pdf>
@@ -797,99 +797,107 @@ Overfull \hbox (187.387pt too wide) in paragraph at lines 261--261
 ca que deve ser descrita pelo utilizador</description>[] 
  []
 
-[8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 327--328
+[8] (/usr/local/texlive/2012/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+)
+
+LaTeX Font Warning: Font shape `T1/aett/bx/n' undefined
+(Font)              using `T1/aett/m/n' instead on input line 278.
+
+[9]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9> on input line 314.
+
+Underfull \hbox (badness 10000) in paragraph at lines 314--319
 
  []
 
 [10]
-Overfull \hbox (15.25366pt too wide) in paragraph at lines 360--360
-[]      \T1/aett/m/n/10.95 $sth = $dbh->prepare("insert into users_publications
- values ($usr_id,$id)");[] 
- []
-
-
 Overfull \hbox (25.3814pt too wide) has occurred while \output is active
 \T1/aer/m/sl/10.95 7 INTERFACE ÚNICA PARA CARREGAMENTO DOS VÁRIOS DADOS RELATIV
 OS AO CV \T1/aer/m/n/10.95 11
  []
 
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 395--396
-
- []
-
-<iInfo.png, id=179, 831.105pt x 679.03688pt>
+[11] <iInfo.png, id=276, 831.105pt x 679.03688pt>
 File: iInfo.png Graphic file (type png)
  <use iInfo.png>
-Package pdftex.def Info: iInfo.png used on input line 401.
+Package pdftex.def Info: iInfo.png used on input line 396.
 (pdftex.def)             Requested size: 498.66684pt x 407.42526pt.
 
-Overfull \hbox (43.42273pt too wide) in paragraph at lines 401--402
+Overfull \hbox (43.42273pt too wide) in paragraph at lines 396--397
  [][] 
  []
 
-<iActivities.png, id=181, 836.3747pt x 679.03688pt>
+<iActivities.png, id=278, 836.3747pt x 679.03688pt>
 File: iActivities.png Graphic file (type png)
  <use iActivities.png>
-Package pdftex.def Info: iActivities.png used on input line 407.
+Package pdftex.def Info: iActivities.png used on input line 402.
 (pdftex.def)             Requested size: 501.82869pt x 407.42526pt.
 
-Overfull \hbox (46.58458pt too wide) in paragraph at lines 407--408
+Overfull \hbox (46.58458pt too wide) in paragraph at lines 402--403
  [][] 
  []
 
-<iPublications.png, id=182, 875.52094pt x 161.10187pt>
+<iPublications.png, id=279, 875.52094pt x 161.10187pt>
 File: iPublications.png Graphic file (type png)
  <use iPublications.png>
-Package pdftex.def Info: iPublications.png used on input line 413.
+Package pdftex.def Info: iPublications.png used on input line 408.
 (pdftex.def)             Requested size: 525.31662pt x 96.66187pt.
 
-Overfull \hbox (70.07251pt too wide) in paragraph at lines 413--414
+Overfull \hbox (70.07251pt too wide) in paragraph at lines 408--409
  [][] 
  []
 
-<bypacote.png, id=183, 696.35156pt x 113.67468pt>
+<bypacote.png, id=280, 696.35156pt x 113.67468pt>
 File: bypacote.png Graphic file (type png)
  <use bypacote.png>
-Package pdftex.def Info: bypacote.png used on input line 419.
+Package pdftex.def Info: bypacote.png used on input line 414.
 (pdftex.def)             Requested size: 417.81415pt x 68.20532pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 426.
  [12]
-[13 <./uc_consult_cv.jpg>] [14 <./uc_provide_cv_info.jpg>] [15 <./bd-eps-conver
-ted-to.pdf>] [16 <./bd2-eps-converted-to.pdf>] [17 <./cv_activities_schema-eps-
-converted-to.pdf>] [18 <./iInfo.png>] [19 <./iActivities.png> <./iPublications.
-png>] [20 <./bypacote.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 426.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 428.
+
+[13] [14 <./uc_consult_cv.jpg>] [15 <./uc_provide_cv_info.jpg>] [16 <./bd-eps-c
+onverted-to.pdf>] [17 <./bd2-eps-converted-to.pdf>] [18 <./cv_activities_schema
+-eps-converted-to.pdf>] [19 <./iInfo.png>] [20 <./iActivities.png> <./iPublicat
+ions.png>] [21 <./bypacote.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 428.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 426.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 426.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 428.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 428.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 8EEED7A18AB85F54A489D4CAE4F92643;1300.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 426.
+(rerunfilecheck)             Checksum: EF0D8F0B0E5CBB5DDD5975BEC2A684E9;1476.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 428.
  ) 
 Here is how much of TeX's memory you used:
- 8904 strings out of 493488
- 132577 string characters out of 3141327
- 235676 words of memory out of 3000000
- 11979 multiletter control sequences out of 15000+200000
- 41500 words of font info for 78 fonts, out of 3000000 for 9000
+ 9583 strings out of 493488
+ 139539 string characters out of 3141327
+ 422757 words of memory out of 3000000
+ 12559 multiletter control sequences out of 15000+200000
+ 49709 words of font info for 93 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 43i,14n,38p,1365b,464s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 43i,14n,40p,1524b,2055s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></
 usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></
 usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
 r/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/
-local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/loc
-al/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/loca
-l/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local
-/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on report.pdf (20 pages, 898288 bytes).
+local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/loc
+al/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/
+texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/tex
+live/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texliv
+e/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive
+/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/
+2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2
+012/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
+Output written on report.pdf (21 pages, 955112 bytes).
 PDF statistics:
- 314 PDF objects out of 1000 (max. 8388607)
- 246 compressed objects within 3 object streams
- 52 named destinations out of 1000 (max. 500000)
- 213 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 442 PDF objects out of 1000 (max. 8388607)
+ 368 compressed objects within 4 object streams
+ 132 named destinations out of 1000 (max. 500000)
+ 237 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -14,7 +14,10 @@
 \contentsline {subsection}{\numberline {5.2}Exemplo de Input}{8}{subsection.5.2}
 \contentsline {section}{\numberline {6}Formato standard para descri\IeC {\c c}\IeC {\~a}o de publica\IeC {\c c}\IeC {\~o}es}{9}{section.6}
 \contentsline {subsection}{\numberline {6.1}Processador}{9}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Exemplo de Utiliza\IeC {\c c}\IeC {\~a}o}{11}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.2}Exemplo de Utiliza\IeC {\c c}\IeC {\~a}o}{10}{subsection.6.2}
 \contentsline {section}{\numberline {7}Interface \IeC {\'u}nica para carregamento dos v\IeC {\'a}rios dados relativos ao CV}{11}{section.7}
 \contentsline {subsection}{\numberline {7.1}Imagens da interface}{12}{subsection.7.1}
-\contentsline {section}{\numberline {8}Conclus\IeC {\~a}o}{12}{section.8}
+\contentsline {section}{\numberline {8}Exporta\IeC {\c c}\IeC {\~a}o}{12}{section.8}
+\contentsline {subsection}{\numberline {8.1}Europass XML}{12}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Europass PDF}{12}{subsection.8.2}
+\contentsline {section}{\numberline {9}Conclus\IeC {\~a}o}{13}{section.9}
