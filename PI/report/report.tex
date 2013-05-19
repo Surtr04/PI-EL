@@ -57,7 +57,7 @@ O projecto consiste no desenvolvimento de um sistema de informação que permita
 Essa informação a recolher, armazenar e publicar inclui, além da identificação completa do docente, dados sobre a formação, as várias actividades académicas desenvolvidas e resultados atingidos.\\
 Numa primeira fase foram pedidos o planeamento, a modelação (Diagrama de classes, Esquema de Base de Dados, Use Cases...), uma gramática e respectivo processador para uma linguagem de informação e formação, e ainda uma esquema de uma linguagem de anotação para as actividades desenvolvidas.
 Numa segunda fase foram pedidos um processador para a linguagens de anotação de actividades desenvolvidas, um formato standard para descrição de publicações e ainda uma interface única para carregamento dos vários dados relativos ao CV do docente.
-
+Numa terceira fase foram pedidos a exportação para um formato Europass XML do currículo na BD, de um no formato PDF, da capacidade de actualização de publicações pelo BibTex, e da obtenção de dados do RepositoriUM. Também foi pedido para nos debruçarmos sobre a capacidade de actualização.
 
 \section{Planeamento}
 
@@ -107,6 +107,13 @@ Contudo no decorrer do projecto foi necessário proceder a algumas alterações 
 \includegraphics[scale=1]{bd2.eps}
 \caption{2ª versão da Base de Dados}
 \label{fig:basededados2}
+\end{figure}
+Após a segunda avaliação foram detectados e corrigidos pequenos pormenores na estrutura da BD para melhor se adaptar ao que pretendemos, como por exemplo, a capacidade de guardar um bibtex inteiro e não apenas partes dele. Essencialmente foram alteradas as tabelas relacionadas com as publicações.
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=1]{bd3.eps}
+\caption{3ª versão da Base de Dados}
+\label{fig:basededados3}
 \end{figure}
 \section{Linguagem formal para Identificação e Formação}
 \subsection{Gramática}
@@ -265,106 +272,114 @@ Questões como os partners, foram alteradas, de modo a que o utilizador não se 
 \end{verbatim}
 
 \section{Formato standard para descrição de publicações}
-Nesta fase a leitura dos ficheiros \textsc{Bib}\negthinspace\TeX continua a ser uma script perl. Na verdade, esta script está implementada como um módulo, usando, portanto, as capacidades OO do perl. Ao contrário da fase anterior, agora a script insere todos os dados na base de dados. Para tal, e como não é preciso reinventar a roda, desta feita usamos o módulo BibTeX::Parser do CPAN, podendo assim focar a nossa atenção em algo mais importante, a manutenção adequada da base de dados. O que não mudou desde a fase anterior foi o desejo de manter o módulo o mais genérico possível de forma a ser de fácil extensão. As alterações feitas tornam também o módulo mais pequeno, em termos de linhas de código, e por isso, bem mais legível. Como antigamente, esta módulo recebe as credenciais da base de dados e o ficheiro \textsc{Bib}\negthinspace\TeX a processar. Uma vez que todos os campos são guardados, deixa de ser necessário especificar a entrada a processar, sendo o conteúdo do ficheiro inserido ou actualizado na base de dados em apenas uma travessia. Outra diferença a notar, a hash interna desta vez está organizada pela key da entrada, deixando de ser o autor o centro de foco, isto, obviamente, elimina a necessidade de ter várias entradas repetidas onde muda apenas a chave, ou seja, o autor. Depois de processado o ficheiro, simplesmente chama-se o método \textit{toDB} e os dados são inseridos ou actualizados na base de dados.
+Para a leitura dos ficheiros \textsc{Bib}\negthinspace\TeX optamos por uma script em perl. Na verdade, esta script está implementada como um módulo, usando, portanto, as capacidades OO do perl. A nível de implementação e para facilitar o desenvolvimento inicial, módulos alternativos como o Moose ou o Moo, os quais tentam implementar as \textit{features} OO do perl 6 foram considerados. No entanto, dado o overhead considerável que estes módulos têm, estes foram descartados e optamos por uma via mais convencional. De notar que foi feito algum esforço para que este módulo fosse o mais genérico, de forma a facilitar eventuais alterações futuras.  Esta script aceita como parâmetros de entrada o ficheiro que é suposto processar, bem como as credenciais da Base de Dados à qual se deve ligar. De seguida, o método \textit{parse} recebe o tipo de publicação a ser processado (article, techreport ou inproceedings). O resto acontece internamente e os dados são colocados numa hash organizada por autor. Por fim, basta chamar o método \textit{insertDB} e os dados são inseridos na base de dados. Obviamente que esta é a parte menos genérica do módulo, pois o schema da base de dados não pode ser definido em run-time, a não ser que se criasse uma Base de Dados apenas para este efeito. 
 
 \subsection{Processador}
-Abaixo segue o código para processar o ficheiro passado e inserir todos os dados numa estrutura adequada.
+Dada a extensão do módulo, segue, apenas, o processamento de um article bem como a sua inserção na base de dados.
 
-\lstset{language=Perl}
-\lstset{basicstyle=\ttfamily\footnotesize}
-\lstset{commentstyle=\textit}
-\lstset{breaklines=true}
-\begin{lstlisting}[numbers=left]
-sub parseBibTeX {
+\begin{verbatim}
+foreach (@bib) {                    
+    
+    $found = 1 if $_ =~ /\@article.*/;
+    
+    if($found) {
 
-  my ($self) = @_;
+      if ($_ =~ m/^\}$/) {
+        $found = 0;
+        $self->{entries} += 1;
+        foreach (@authors) {
+          if (!defined $self->{parsedInfo}->{$_}) {
+            $self->{parsedInfo}->{$_} = [];
+            push $self->{parsedInfo}->{$_}, ["article",$title, $journal,$year];
+          }
+          else {
+            push $self->{parsedInfo}->{$_}, ["article",$title, $journal,$year]; 
+          }
+        }
 
-  my $fh = IO::File->new($self->{bibfile});
-  my $parser = BibTeX::Parser->new($fh);
+        for my $i (0 .. $#authors) {
+          delete $authors[$i];
+        }         
+      }       
 
-  while (my $entry = $parser->next ) {
-    if ($entry->parse_ok) {
-      
-      $self->{entries}++;
-      
-      $self->{parsedInfo}->{$entry->key} = {};
-      $self->{parsedInfo}->{$entry->key}->{entryType} = $entry->type;
-      
-      my @authors = $entry->author;     
+      if ($_ =~ /author\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {                                        
+        my @tmp = split /and/, $1;
 
-      foreach(@authors) {
-        $_ = $_->to_string;       
+        for my $name (@tmp) {
+          push @authors, trim($name);       
+        }               
       }
-            
-      @{$self->{parsedInfo}->{$entry->key}->{authors}} = @authors;
-      
-      $self->{parsedInfo}->{$entry->key}->{year} = $entry->field("year");
 
-      my @fields = $entry->fieldlist;
-
-      foreach(@fields) {
-        if (not $_ eq "authors") {
-                $self->{parsedInfo}->{$entry->key}->{$_} = $entry->field($_);
-              }
+      if ($_ =~ /title\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {       
+        $title = $1;
       }
+
+      if ($_ =~ /journal\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {       
+        $journal = $1;
+      }
+
+      #year = {num}
+      if ($_ =~ /year\s*=\s*(?:\{|\")(.*)(?:\}|\")/) {        
+        $year = $1;
+      }
+
+      #year = num
+      if ($_ =~ /year\s*=\s*(\d+)/) {       
+        $year = $1;
+      }                                         
+      
+    }   
+  }
+\end{verbatim}
+Inserção na BD:\\
+\begin{verbatim}
+  for my $aut (keys $res) {
+    if ($aut eq $user) {
+      $found = 1;
+      last;
     }
   }
-}
-\end{lstlisting}
-Inserção na BD\footnote{Dada a extensão do método de inserção na base de dados, fica um exemplo ilustrativo do código usado}:\\
-\lstset{language=Perl}
-\lstset{basicstyle=\ttfamily\footnotesize}
-\lstset{commentstyle=\textit}
-\lstset{breaklines=true}
-\begin{lstlisting}[numbers=left]
-for my $key (keys $res) {
-    
-    my $entry = $res->{$key};
+  return NO_USER if not $found;
 
-    ($records) = $dbh->selectrow_array("SELECT id FROM publications as p where p.key=\'$key\';");
 
-    if(not $records) {
-      $sth = $dbh->prepare("insert into publications  (`type`, `key`, `title`, `year`) values (?,?,?,?)");
-      
-      
-      $sth->bind_param(1,$entry->{"entryType"});
-      $sth->bind_param(2,$key);
-      $sth->bind_param(3,$entry->{"title"});
-      $sth->bind_param(4,$entry->{"year"});
+  my $sth = $dbh->prepare("select * from info where name = ?");
+  $sth->bind_param(1,$user);
+  $sth->execute;
 
+  while (my @tmp = $sth->fetchrow_array()) {
+    $usr_id = $tmp[0]; #fetch user id
+  }
+  $res = $res->{$user};
+  my $id;
+
+  foreach (@$res) {   
+    my @arr = @$_;      
+    if ($arr[0] eq 'article') {
+      $sth = $dbh->prepare("insert into publications  (`type`, `title`, 
+            `journal`, `year`) values (?,?,?,?)");
+      $sth->bind_param(1,$arr[0]);
+      $sth->bind_param(2,$arr[1]);
+      $sth->bind_param(3,$arr[2]);
+      $sth->bind_param(4,$arr[3]);            
       $sth->execute;
-      $id = $dbh->{ q{mysql_insertid} };
+      $id = $dbh->{ q{mysql_insertid}};
 
-      my $aut = $entry->{author};     
-      my @authors = split /\band\b/, $aut;          
-      
-      foreach my $author (@authors) {
-        $sth = $dbh->prepare("insert into nonusers_publications (`publications_id`, `name`) values (?,?)");   
-        $sth->bind_param(1,$id);
-        $sth->bind_param(2,trim $author);
-        print $author."\n";
-        print $id."\n";
-        $sth->execute;
-      }
-
+      $sth = $dbh->prepare("insert into users_publications values ($usr_id,$id)");
+      $sth->execute;
     }
-    ...
-}
-\end{lstlisting}
+\end{verbatim}
   
 
 \subsection{Exemplo de Utilização}
 
-\lstset{language=Perl}
-\lstset{basicstyle=\ttfamily\footnotesize}
-\lstset{commentstyle=\textit}
-\lstset{breaklines=true}
-\begin{lstlisting}[numbers=left]
-my $f = BibTeX::toDB2->new('file.bib','DBI:mysql:database','user','pass');
+\begin{verbatim}
+  my $f = BibTeX::toDB->new('bibtex.bib','DBI:mysql:database','user','pass');
 
-$f->parseBibTeX;
-$f->insertDB;
-\end{lstlisting}
+  $f->parse("article");
+  $f->parse("techreport");
+  $f->parse("inproceedings");
+  $f->insertDB("J.J. Almeida");
+\end{verbatim}
 
 \section{Interface única para carregamento dos vários dados relativos ao CV}
 A nossa interface para o carregamento dos dados, permite de forma bastante interactiva introduzir os dados referentes à informação básica, formação e actividades desenvolvidas. Atendendo a que o ficheiro de publicações é um simples ficheiro BibTeX, e já existem uma quantidade razoável de ferramentas que permite criar esses mesmos ficheiros, até à 2ª Avaliação Intermédia, apenas tínhamos o local de colocação de um ficheiro. No entanto a interface possui algumas simplificações, mas que podem ser limitativas para alguns CVs. Por isso mesmo é permitida a introdução de um ficheiro único, com todas as informações. Esse ficheiro, mais não é que um zip, contendo um manifesto (\emph{pr.xml}) que indica quais os ficheiros dentro do pacote que se referem à informação e formação, às actividades e às publicações. Para melhor comodidade podem haver mais que um ficheiro para cada uma das categorias (sendo que todos serão processados). Podemos ver um exemplo de um manifesto de um pacote:
@@ -406,8 +421,14 @@ Podemos ver como no entanto é possível a interface adequar-se, por exemplo a c
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.6]{iPublications.png}
-\caption{Formulário para introdução das publicações}
+\caption{Formulário para introdução das publicações (via bibtex)}
 \label{fig:iPublications}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.6]{iPublications2.png}
+\caption{Formulário para introdução das publicações}
+\label{fig:iPublications2}
 \end{figure}
 \begin{figure}[!ht]
 \centering
@@ -420,9 +441,18 @@ Podemos ver como no entanto é possível a interface adequar-se, por exemplo a c
 Com o objectivo de garantir a interoperabilidade do nosso sistema, o mesmo faz a exportação para o formato XML do Europass, utilizando a v3.0. Inicialmente começamos a desenvolver a exportação para o formato Europass v2.0, uma vez que o 3 ainda era bastante recente. Tinha sido lançado por volta do início do ano de 2013. No entanto, quando começamos a fazer a exportação das publicações detectámos algumas dificuldades, devido aos campos existentes no \emph{Schema} da v2.0. Deste modo reformulámos o nosso código, para gerar um Europass XML v3.0 válido. O mesmo possui várias alterações, principalmente nas definições de apresentação que são passadas aos serviços de criação de um documento de apresentação ao utilizador (pdf, odt...).\\
 Também passam a ser permitidas alguns campos extra nos \emph{Achievements}, mas que são essencialmente reduzidos a título descrição. Permitem-nos no entanto fazer uma exportação de coisas como publicações.\\
 O formato Europass XML suporta também a exportação de uma imagem para ser depois renderizada pelos serviços de criação de documento, sendo que o nosso sistema utiliza esse mesmo método.
+
 \subsection{Europass PDF}
 Tal como explicado na secção anterior inicialmente começamos por gerar documentos da versão 2.0. Sendo que para tal utilizávamos os Web Services disponibilizados no próprio \emph{site} (http://europass.cedefop.europa.eu/pt/resources/for-developers). Também tal como foi explicado anteriormente, foi necessário passar a utilizar a versão 3.0. Infelizmente ainda não disponibilizam nenhum Web Service que permita converter directamente um Europass XML v3.0 para um Europass PDF. Assim inicialmente começamos por tentar utilizar o próprio editor deles para fazer a geração do PDF, produzindo um JSON através do XML que tínhamos criado e enviando-o como se fossemos o editor web deles.\\
-Ao mesmo tempo tínhamos entrado em contacto com eles por e-mail a questionar se tinham planos para suportar com Web Services os novos documentos versão 3.0 e se sim para quando. Sendo que alguns dias depois recebemos a resposta indicando exactamente que é uma das prioridades deles o lançamento de um Web Service para a versão 3.0, e que o planeiam fazer no decorrer do mês de Junho. Atendendo a que nós tínhamos explicado a nossa situação e o porquê de necessitarmos do serviço, a Srª Anastasia Theodouli respondeu-nos atenciosamente que poderíamos utilizar o serviço que eles já tinham em versão beta no endereço https://europass.cedefop.europa.eu/rest, enviando também documentação de como utilizar o serviço e exemplos utilizando a linha de comandos.
+Ao mesmo tempo tínhamos entrado em contacto com eles por e-mail a questionar se tinham planos para suportar com Web Services os novos documentos versão 3.0 e se sim para quando. Sendo que alguns dias depois recebemos a resposta indicando exactamente que é uma das prioridades deles o lançamento de um Web Service para a versão 3.0, e que o planeiam fazer no decorrer do mês de Junho. Atendendo a que nós tínhamos explicado a nossa situação e o porquê de necessitarmos do serviço, a Srª Anastasia Theodouli respondeu-nos atenciosamente que poderíamos utilizar o serviço que eles já tinham em versão beta no endereço https://europass.cedefop.europa.eu/rest, enviando também documentação de como utilizar o serviço e exemplos utilizando a linha de comandos. Avisou-nos também que o endereço do serviço pode mudar até à entrada do serviço em pleno funcionamento, assim como pequenas alterações no próprio serviço.
+\section{Importação}
+\subsection{Publicações do RepositoriUM}
+Para ir obter dados de publicações registados noutras plataformas, como o RepositoriUM, o nosso sistema utiliza uma classe que facilita um pouco o processo de \emph{harvesting}, retornando o xml da resposta no caso de o mesmo ser válido.\\
+No entanto os \emph{requests} feitos pela nossa aplicação ao serviço do RepositoriUM são relativamente demorados, ainda para mais pelo facto de o mesmo possuir uma quantidade considerável de publicações inseridas e o seu processamento ser bastante demorado.\\
+Assim e para limitar o tempo gasto por este serviço, primeiro o mesmo foi desenvolvido para ser executado em \emph{background}, como por exemplo uma \emph{cronjob}, sem ser necessária por norma a intervenção do utilizador. Ainda para limitar o tempo, cada utilizador possuirá uma data que indica a última actualização desse utilizador. Desse modo sempre que a tarefa for executada, irá somente até à data de actualização mais antiga do conjunto de todos os utilizadores, e fará harvesting apenas até aí. Isto já que por norma as publicações não são alteradas regularmente. Existirá também a possibilidade (ainda não implementada) de o utilizador obrigar o sistema a fazer um recarregamento de todas as publicações suas obtidas pelo RepositoriUM (quase como que um reset à data de actualização, de modo a verificar novamente tudo).
+\section{RDFa}
+No nosso sistema incluímos alguma semântica, como por exemplo o nome do utilizador, a data de nascimento e o sexo entre outros, todos definidos em http://schema.org, da classe Person.\\
+Devido a limitações de tempo não podemos criar nenhuma ontologia para cobrir, por exemplo as publicações ou actividades.
 \section{Conclusão}
-O objectivo desta segunda avaliação do Projecto Integrado, é garantir que o mesmo segue já a um bom ritmo, servindo também já como um suporte para o desenvolvimento futuro, na medida em que será uma base sobre a qual podemos continuar a construir já mais cientes dos caminhos correctos que escolhemos e daqueles que não estavam assim tão correctos, ao ser mostrado à equipa docente os resultados obtidos até à data. Ao mesmo tempo confrontámos também as alterações que fizemos fruto da primeira avaliação, e das opiniões dos docentes.
+O objectivo desta terceira avaliação do Projecto Integrado, é garantir que o mesmo segue já a um bom ritmo, servindo também já como um suporte para o desenvolvimento futuro, na medida em que será uma base sobre a qual podemos continuar a construir já mais cientes dos caminhos correctos que escolhemos e daqueles que não estavam assim tão correctos, ao ser mostrado à equipa docente os resultados obtidos até à data. Ao mesmo tempo confrontámos também as alterações que fizemos fruto da primeira e segunda avaliações, e das opiniões dos docentes.
 \end{document}
