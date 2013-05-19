@@ -7,7 +7,7 @@ use Test::More tests => 1;
 #use BibTeX::toDB;
 BEGIN { use_ok('BibTeX::toDB2') };
 
-my $f = BibTeX::toDB2->new('jj.bib','DBI:mysql:elcvs','root','root');
+my $f = BibTeX::toDB2->new('jj_utf8.bib','DBI:mysql:elcvs','root','root');
 
 $f->parseBibTeX;
 $f->insertDB;

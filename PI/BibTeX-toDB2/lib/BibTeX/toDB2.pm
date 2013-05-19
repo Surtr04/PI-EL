@@ -38,6 +38,9 @@ sub new {
 		parsedInfo => {},		
 	};	
 
+	$self->{database}->do("set character set utf8");
+	$self->{database}->do('SET NAMES utf8');
+
 	bless $self,$class;
 
 	return $self;
@@ -100,6 +103,7 @@ sub insertDB {
 	my $res = $self->{parsedInfo};
 	my $dbh = $self->{database};
 
+
 	my $sth;
 	my $id;
 	my $field_id;
@@ -130,6 +134,8 @@ sub insertDB {
 				$sth = $dbh->prepare("insert into nonusers_publications (`publications_id`, `name`) values (?,?)");		
 				$sth->bind_param(1,$id);
 				$sth->bind_param(2,trim $author);
+				print $author."\n";
+				print $id."\n";
 				$sth->execute;
 			}
 
@@ -149,11 +155,10 @@ sub insertDB {
 		}
 		
 		foreach my $field (keys $entry) {
-			($records) = $dbh->selectrow_array("SELECT id FROM bibfields as b where b.key=\'$key\' and b.name=\'$field\';");
+			($records) = $dbh->selectrow_array("SELECT id FROM bibfields as b where b.key=\'$field\';");
 			if(not $records) {
-				$sth = $dbh->prepare("insert into bibfields  (`key`, `name`) values (?,?)");
-				$sth->bind_param(1,$key);
-				$sth->bind_param(2,$field);	
+				$sth = $dbh->prepare("insert into bibfields  (`key`) values (?)");
+				$sth->bind_param(1,$field);	
 				$sth->execute;
 
 				$field_id = $dbh->{ q{mysql_insertid} };
@@ -165,15 +170,9 @@ sub insertDB {
 				$sth->execute;
 				
 			}
-			else {
-				$sth = $dbh->prepare("update bibfields as b set b.key=?, b.name=? where b.id=?");
-				$sth->bind_param(1,$key);
-				$sth->bind_param(2,$field);	
-				$sth->bind_param(3,$records);	
-				$sth->execute;
-
-				$field_id = $dbh->{ q{mysql_insertid} };
+			else {				
 				
+				($field_id) = $dbh->selectrow_array("SELECT id FROM bibfields as b where b.key = \'$field\';");
 				my ($id_pf) = $dbh->selectrow_array("SELECT id FROM publications_fields as p where p.publications_id=\'$id\' and p.fields_id=\'$field_id\';");
 				
 				$sth = $dbh->prepare("update publications_fields as p set p.value=? where p.id = ?");			
