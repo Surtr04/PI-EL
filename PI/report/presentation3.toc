@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.20pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Modifica\IeC {\c c}\IeC {\~o}es}{3}{0}{1}
+\beamer@sectionintoc {2}{Europass}{7}{0}{2}
+\beamer@sectionintoc {3}{RepositoriUM}{9}{0}{3}
+\beamer@sectionintoc {4}{Web Sem\IeC {\^a}ntica}{10}{0}{4}
+\beamer@sectionintoc {5}{Quest\IeC {\~o}es}{12}{0}{5}
