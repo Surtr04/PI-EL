@@ -1,0 +1,9 @@
+Aula do dia 17 de Junho de 2013
+Material de Apoio para a criação de um Control Flow Graph (CFG).
+- Package Java graphs e graphs.cfg
+- Walker de AST para criação do CFG para Cmb (Atenção é só uma base... devem alterar de acordo com as vossas necessidades)
+Notas: 
+
+    faz sentido alterar a class Node (extendendo-a para NodeCFG) de modo a que as variáveis contidas em cada nodo façam parte da estrutura do nodo. Isto implica que a classe CFG e seus métodos sejam alterados de forma a eliminar a estrutura "dependencies"...
+    faz sentido incluir uma enumeração que defina os tipos de nodos de acordo com o que é cada um dos statements. Ex.: IF; WHILE; ATRIBUICAO; etc
+    Atenção: o walker para criação de CFG pode conter erros/falhas/simplificações que vocês devem corrigir ao encontrá-los!
